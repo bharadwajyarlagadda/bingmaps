@@ -1,0 +1,7 @@
+recursive-include plonetheme *
+recursive-include docs *
+recursive-include *.rst
+
+global-exclude *pyc
+global-exclude .project
+global-exclude .pydevproject
