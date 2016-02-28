@@ -1,6 +1,8 @@
-recursive-include plonetheme *
 recursive-include docs *
-recursive-include *.rst
+
+include CHANGELOG
+include AUTHORS
+include README
 
 global-exclude *pyc
 global-exclude .project
