@@ -1,9 +1,2 @@
-recursive-include docs *
-
-include CHANGELOG
-include AUTHORS
-include README
-
-global-exclude *pyc
-global-exclude .project
-global-exclude .pydevproject
+include *.rst
+recursive-include requirements *
