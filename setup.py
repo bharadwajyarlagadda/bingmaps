@@ -27,8 +27,8 @@ class Tox(TestCommand):
         sys.exit(errno)
 
 
-def read(fname):
-    with(open(os.path.join(os.path.dirname('__file__'), fname))) as fp:
+def read(path):
+    with(open(os.path.join(os.path.dirname(__file__), path))) as fp:
         return fp.read()
 
 pkg = {}
@@ -70,6 +70,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: System :: Filesystems',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ]
 )
