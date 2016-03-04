@@ -1,0 +1,18 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+# command to install dependencies
+install:
+  - pip install pew
+  - pip install -r requirements/development.txt
+  - pip install coveralls
+# command to run tests
+script:
+  - coverage run --source=bingmaps setup.py test
+# commands to run setup file
+# commands to run some style (pep8, pylint) tests on
+# the package
+after_success:
+# commands to run after tests
+  - coveralls
