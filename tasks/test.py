@@ -1,4 +1,3 @@
-import os
 from invoke import run, task
 
 from .utils import package_name

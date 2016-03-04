@@ -32,7 +32,7 @@ def read(path):
         return fp.read()
 
 pkg = {}
-exec(read(os.path.join('docMaker',
+exec(read(os.path.join('bingmaps',
                        '__pkg__.py')), pkg)
 
 requirements = os.path.join('requirements',
@@ -60,7 +60,7 @@ setup(
     entry_points=entry_points,
     cmdclass={'test': Tox},
     test_suite='tests',
-    keywords='docMaker',
+    keywords='bingmaps',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
