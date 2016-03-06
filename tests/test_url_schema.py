@@ -1,4 +1,4 @@
-from bingmaps.utils.url_structure import QueryParameters, build_url
+from bingmaps.utils.url_structure import QueryParameters
 from bingmaps.location import LocationByAddress
 from .fixtures import parametrie
 from bingmaps import BING_MAPS_KEY
