@@ -1,8 +1,9 @@
-from bingmaps.utils.url_structure import QueryParameters
-from bingmaps.location import LocationByAddress
-from .fixtures import parametrie
-from bingmaps import BING_MAPS_KEY
 import pytest
+
+from bingmaps import BING_MAPS_KEY
+from bingmaps.location import LocationByAddress
+from bingmaps.urlschema import LocationByAddressQueryString
+from .fixtures import parametrie
 
 http_protocol = 'http'
 https_protocol = 'https'
@@ -53,7 +54,7 @@ EXPECTED = [
                 (DATA[0], EXPECTED[0])
             ])
 def test_schema_without_key(data, expected):
-    schema = QueryParameters()
+    schema = LocationByAddressQueryString()
     is_valid_schema = schema.validate(data)
     assert bool(is_valid_schema) is expected
 
@@ -63,7 +64,7 @@ def test_schema_without_key(data, expected):
                 (DATA[1], EXPECTED[1])
             ])
 def test_schema_with_key(data, expected):
-    schema = QueryParameters()
+    schema = LocationByAddressQueryString()
     is_valid_schema = schema.validate(data)
     assert bool(is_valid_schema) is expected
 
@@ -73,7 +74,7 @@ def test_schema_with_key(data, expected):
                 (DATA[2], EXPECTED[2])
             ])
 def test_consolidate_query_dict(data, expected):
-    query = QueryParameters()
+    query = LocationByAddressQueryString()
     query_string = query.dump(data['queryParameters']).data
     assert query_string == expected
 
@@ -112,7 +113,18 @@ def test_build_url_https_protocol_output_xml(data, expected):
             [
                 (DATA[0])
             ])
-def test_schema_without_key1(data):
+def test_schema_without_key_exception(data):
     loc_by_address = LocationByAddress(data)
     with pytest.raises(KeyError) as exc:
         schema = loc_by_address.build_url(data, https_protocol)
+        assert exc == {'queryParameters': {'key': ['Please provide a key']}}
+
+
+@parametrie('data',
+            [
+                ('')
+            ])
+def test_schema_no_data(data):
+    with pytest.raises(TypeError) as exc:
+        loc_by_address = LocationByAddress(data)
+        assert exc == "No data given"
