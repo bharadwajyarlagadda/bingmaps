@@ -1,50 +1,30 @@
 import requests
 from bingmaps.urlschema import LocationByAddressUrl
+from .location_api import LocationApi
 import os
 import json
 from collections import namedtuple
 
 
-class LocationByAddress(object):
+class LocationByAddress(LocationApi):
     def __init__(self, data, http_protocol='http'):
-        if bool(data):
-            self.data = data
-        else:
+        if not bool(data):
             raise TypeError('No data given')
-        self.http_protocol = http_protocol
-        self.file_name = 'locationByAddress'
-        self.locationByAddressData = None
+        schema = LocationByAddressUrl(data, protocol=http_protocol)
+        super().__init__(schema, http_protocol)
 
     def get_data(self):
-        url = self.build_url(self.data, self.http_protocol)
-        self.locationByAddressData = requests.get(url)
+        """Gets data from the given url"""
+        url = self.build_url()
+        self.locationApiData = requests.get(url)
 
-    def build_url(self, data, protocol):
-        schema = LocationByAddressUrl(data, protocol)
-        url = '{protocol}/{url}/{rest}/{version}/{restapi}/{rscpath}/' \
-              '{query}'.format(protocol=schema.protocol,
-                               url=schema.main_url,
-                               rest=schema.rest,
-                               version=schema.version,
-                               restapi=schema.restApi,
-                               rscpath=schema.resourcePath,
-                               query=schema.query)
-        if '//?' in url:
-            return url.replace('//?', '?')
+    def build_url(self):
+        """Build the url and replaces /None/ with empty string"""
+        url = super().build_url()
+        if '/None/' in url:
+            return url.replace('/None/', '')
         else:
             return url
-
-    @property
-    def response(self):
-        return self.locationByAddressData.text
-
-    @property
-    def response_to_json(self):
-        return json.loads(self.locationByAddressData.text)
-
-    @property
-    def status_code(self):
-        return self.locationByAddressData.status_code
 
     def get_resource(self):
         try:
