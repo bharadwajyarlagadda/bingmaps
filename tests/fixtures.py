@@ -1,6 +1,6 @@
 import pytest
 
-parametrie = pytest.mark.parametrize
+parametrize = pytest.mark.parametrize
 
 
 @pytest.fixture
