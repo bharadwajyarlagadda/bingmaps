@@ -3,10 +3,7 @@ from bingmaps.location import LocationByAddress
 import os
 import json
 from collections import namedtuple
-from .fixtures import (
-    parametrie,
-    create_tmp_dir
-)
+from .fixtures import parametrize
 
 DATA = [{'queryParameters': {'adminDistrict': 'WA'}},
         {'key': 'vds'},
@@ -49,7 +46,7 @@ DATA = [{'queryParameters': {'adminDistrict': 'WA'}},
 expected_coordinates = namedtuple('expected', ['latitude', 'longitude'])
 
 
-@parametrie('data', [
+@parametrize('data', [
     (DATA[6]),
     (DATA[3]),
     (DATA[7]),
@@ -57,13 +54,13 @@ expected_coordinates = namedtuple('expected', ['latitude', 'longitude'])
     (DATA[9]),
     (DATA[10])
 ])
-def test_get_data_from_url(data):
+def test_get_data_from_loaction_by_address(data):
     url = LocationByAddress(data)
     url.get_data()
     assert url.status_code == 200
 
 
-@parametrie('data', [
+@parametrize('data', [
     (DATA[3]),
     (DATA[4]),
     (DATA[6]),
@@ -81,7 +78,7 @@ def test_create_json_file(create_tmp_dir, data):
         assert len(json.load(fp)) > 0
 
 
-@parametrie('data', [
+@parametrize('data', [
     (DATA[4]),
     (DATA[3]),
     (DATA[6]),
@@ -97,7 +94,7 @@ def test_get_coordinates(data):
     assert len(coordinates) >= 1
 
 
-@parametrie('data', [
+@parametrize('data', [
     (DATA[3]),
     (DATA[4]),
     (DATA[6]),
@@ -113,7 +110,7 @@ def test_get_address(data):
     assert len(addresses) >= 1
 
 
-@parametrie('data', [
+@parametrize('data', [
     (DATA[3]),
     (DATA[4]),
     (DATA[6]),
