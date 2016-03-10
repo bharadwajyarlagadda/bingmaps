@@ -1,6 +1,7 @@
 import pytest
 
 parametrize = pytest.mark.parametrize
+https_protocol = 'https'
 
 
 @pytest.fixture
