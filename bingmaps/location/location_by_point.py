@@ -8,7 +8,9 @@ class LocationByPoint(LocationApi):
         if not bool(data):
             raise TypeError('No data given')
         schema = LocationByPointUrl(data, protocol=http_protocol)
-        super().__init__(schema, http_protocol)
+        filename = 'locationByPoint'
+        super().__init__(schema, filename, http_protocol)
+        self.get_data()
 
     def get_data(self):
         """Gets data from the given url"""
