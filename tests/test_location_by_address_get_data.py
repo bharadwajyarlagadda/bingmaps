@@ -3,7 +3,7 @@ from bingmaps.location import LocationByAddress
 import os
 import json
 from collections import namedtuple
-from .fixtures import parametrize
+from .fixtures import parametrize, https_protocol
 
 DATA = [{'queryParameters': {'adminDistrict': 'WA'}},
         {'key': 'vds'},
@@ -56,7 +56,6 @@ expected_coordinates = namedtuple('expected', ['latitude', 'longitude'])
 ])
 def test_get_data_from_loaction_by_address(data):
     url = LocationByAddress(data)
-    url.get_data()
     assert url.status_code == 200
 
 
@@ -71,7 +70,6 @@ def test_get_data_from_loaction_by_address(data):
 ])
 def test_create_json_file(create_tmp_dir, data):
     url = LocationByAddress(data)
-    url.get_data()
     url.to_json_file(create_tmp_dir)
     with open(os.path.join(create_tmp_dir,
                            'locationByAddress.json'), 'r') as fp:
@@ -89,7 +87,6 @@ def test_create_json_file(create_tmp_dir, data):
 ])
 def test_get_coordinates(data):
     url = LocationByAddress(data)
-    url.get_data()
     coordinates = url.get_coordinates
     assert len(coordinates) >= 1
 
@@ -104,8 +101,7 @@ def test_get_coordinates(data):
     (DATA[10])
 ])
 def test_get_address(data):
-    url = LocationByAddress(data)
-    url.get_data()
+    url = LocationByAddress(data, https_protocol)
     addresses = url.get_address
     assert len(addresses) >= 1
 
@@ -121,6 +117,19 @@ def test_get_address(data):
 ])
 def test_get_bbox(data):
     url = LocationByAddress(data)
-    url.get_data()
     bbox_list = url.get_bbox
     assert len(bbox_list) >= 1
+
+
+@parametrize('data', [
+    (DATA[3]),
+    (DATA[4]),
+    (DATA[6]),
+    (DATA[7]),
+    (DATA[8]),
+    (DATA[9]),
+    (DATA[10])
+])
+def test_location_by_address_response(data):
+    url = LocationByAddress(data)
+    assert bool(url.response) is True
