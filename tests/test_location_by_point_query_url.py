@@ -79,18 +79,3 @@ def test_location_by_point_url_http_protocol(data, expected):
 def test_location_by_point_url_https_protocol(data, expected):
     loc_by_point = LocationByPoint(data, https_protocol)
     assert loc_by_point.build_url() == expected
-
-
-@parametrize('data,expected', [
-    (DATA[0], EXPECTED[0]),
-    (DATA[1], EXPECTED[1]),
-    (DATA[2], EXPECTED[2]),
-    (DATA[3], EXPECTED[3]),
-    (DATA[4], EXPECTED[4]),
-    (DATA[5], EXPECTED[5]),
-    (DATA[6], EXPECTED[6])
-])
-def test_location_by_point_url_get_data(data, expected):
-    loc_by_point = LocationByPoint(data)
-    loc_by_point.get_data()
-    assert loc_by_point.status_code == 200
