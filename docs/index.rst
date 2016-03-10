@@ -10,6 +10,15 @@ Guide
 
    devguide
 
+Examples
+========
+
+.. toctree::
+   :maxdepth: 2
+
+   locationsapi
+
+
 Project Info
 ============
 
