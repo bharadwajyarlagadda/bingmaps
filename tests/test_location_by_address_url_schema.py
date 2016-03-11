@@ -33,18 +33,18 @@ EXPECTED = [
     True,
     False,
     'adminDistrict=WA&locality=Seattle&includeNeighborhood='
-    '1&include=ciso2&maxResults=20&key=abs',
+    '0&include=ciso2&maxResults=20&key=abs',
     'http://dev.virtualearth.net/REST/v1/Locations?'
     'adminDistrict=WA&locality=Seattle&includeNeighborhood='
-    '1&include=ciso2&maxResults='
+    '0&include=ciso2&maxResults='
     '20&key={0}'.format(BING_MAPS_KEY),
     'https://dev.virtualearth.net/REST/v1/Locations?'
     'adminDistrict=WA&locality=Seattle&includeNeighborhood='
-    '1&include=ciso2&maxResults='
+    '0&include=ciso2&maxResults='
     '20&key={0}'.format(BING_MAPS_KEY),
     'https://dev.virtualearth.net/REST/v1/Locations?'
     'adminDistrict=WA&locality=Seattle&o=xml&includeNeighborhood='
-    '1&include=ciso2&maxResults='
+    '0&include=ciso2&maxResults='
     '20&key={0}'.format(BING_MAPS_KEY)
 ]
 
