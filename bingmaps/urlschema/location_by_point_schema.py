@@ -7,7 +7,7 @@ class LocationByPointQueryString(Schema):
     point = fields.Str()
     includeEntityTypes = fields.Str()
     includeNeighborhood = fields.Int(
-        default=1
+        default=0
     )
     include = fields.Str(
         default='ciso2'
