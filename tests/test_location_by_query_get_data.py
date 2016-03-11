@@ -14,7 +14,15 @@ DATA = [
         'key': BING_MAPS_KEY
     }},
     {'queryParameters': {
-        'query': '9159 Highland Avenue Danbury, CT 06810',
+        'query': 'hyderabad',
+        'o': 'xml',
+        'c': 'te',
+        'key': BING_MAPS_KEY
+    }},
+    {'queryParameters': {
+        'query': 'Memphis',
+        'o': 'xml',
+        'c': 'te',
         'key': BING_MAPS_KEY
     }},
     {'queryParameters': {
@@ -38,7 +46,8 @@ DATA = [
     (DATA[2], 200),
     (DATA[3], 200),
     (DATA[4], 200),
-    (DATA[5], 200)
+    (DATA[5], 200),
+    (DATA[6], 200)
 ])
 def test_location_by_query_url_get_data(data, expected):
     loc_by_query = LocationByQuery(data)
@@ -51,7 +60,8 @@ def test_location_by_query_url_get_data(data, expected):
     (DATA[2]),
     (DATA[3]),
     (DATA[4]),
-    (DATA[5])
+    (DATA[5]),
+    (DATA[6])
 ])
 def test_create_json_file_location_by_query(create_tmp_dir, data):
     url = LocationByQuery(data, http_protocol=https_protocol)
@@ -67,7 +77,8 @@ def test_create_json_file_location_by_query(create_tmp_dir, data):
     (DATA[2]),
     (DATA[3]),
     (DATA[4]),
-    (DATA[5])
+    (DATA[5]),
+    (DATA[6])
 ])
 def test_location_by_query_get_coordinates(data):
     loc_by_point = LocationByQuery(data)
@@ -80,7 +91,8 @@ def test_location_by_query_get_coordinates(data):
     (DATA[2]),
     (DATA[3]),
     (DATA[4]),
-    (DATA[5])
+    (DATA[5]),
+    (DATA[6])
 ])
 def test_location_by_query_get_addresses(data):
     loc_by_point = LocationByQuery(data)
@@ -93,7 +105,8 @@ def test_location_by_query_get_addresses(data):
     (DATA[2]),
     (DATA[3]),
     (DATA[4]),
-    (DATA[5])
+    (DATA[5]),
+    (DATA[6])
 ])
 def test_location_by_query_get_bbox(data):
     loc_by_point = LocationByQuery(data)
