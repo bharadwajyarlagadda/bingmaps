@@ -1,8 +1,6 @@
 from bingmaps.location import LocationByPoint
 from bingmaps import BING_MAPS_KEY
-from .fixtures import parametrize
-
-https_protocol = 'https'
+from .fixtures import parametrize, https_protocol
 
 DATA = [
     {'queryParameters': {
@@ -37,25 +35,25 @@ DATA = [
 
 EXPECTED = [
     'http://dev.virtualearth.net/REST/v1/Locations/1,2?includeEntityTypes='
-    'address&includeNeighborhood=1&include='
+    'address&includeNeighborhood=0&include='
     'ciso2&key={0}'.format(BING_MAPS_KEY),
     'http://dev.virtualearth.net/REST/v1/Locations/3,4?includeEntityTypes='
-    'Neighborhood&includeNeighborhood=1&include='
+    'Neighborhood&includeNeighborhood=0&include='
     'ciso2&key={0}'.format(BING_MAPS_KEY),
     'http://dev.virtualearth.net/REST/v1/Locations/5,6?includeEntityTypes='
-    'PopulatedPlace&includeNeighborhood=1&include='
+    'PopulatedPlace&includeNeighborhood=0&include='
     'ciso2&key={0}'.format(BING_MAPS_KEY),
     'http://dev.virtualearth.net/REST/v1/Locations/9,10?includeEntityTypes='
-    'Postcode1&includeNeighborhood=1&include='
+    'Postcode1&includeNeighborhood=0&include='
     'ciso2&key={0}'.format(BING_MAPS_KEY),
     'https://dev.virtualearth.net/REST/v1/Locations/1,2?includeEntityTypes='
-    'AdminDivision1&includeNeighborhood=1&include='
+    'AdminDivision1&includeNeighborhood=0&include='
     'ciso2&key={0}'.format(BING_MAPS_KEY),
     'https://dev.virtualearth.net/REST/v1/Locations/1,2?includeEntityTypes='
-    'AdminDivision2&includeNeighborhood=1&include='
+    'AdminDivision2&includeNeighborhood=0&include='
     'ciso2&key={0}'.format(BING_MAPS_KEY),
     'https://dev.virtualearth.net/REST/v1/Locations/1,2?includeEntityTypes='
-    'CountryRegion&includeNeighborhood=1&include='
+    'CountryRegion&includeNeighborhood=0&include='
     'ciso2&key={0}'.format(BING_MAPS_KEY),
 ]
 
