@@ -12,6 +12,7 @@ class LocationByQueryString(Schema):
     include = fields.Str(
         default='ciso2'
     )
+    c = fields.Str()
     o = fields.Str()
     maxResults = fields.Int(
         default=20
@@ -22,7 +23,7 @@ class LocationByQueryString(Schema):
     )
 
     class Meta():
-        fields = ('query', 'includeNeighborhood', 'include', 'o',
+        fields = ('query', 'includeNeighborhood', 'include', 'c', 'o',
                   'maxResults', 'key')
         ordered = True
 
