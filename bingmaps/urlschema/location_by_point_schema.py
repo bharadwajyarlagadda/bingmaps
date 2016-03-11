@@ -12,6 +12,7 @@ class LocationByPointQueryString(Schema):
     include = fields.Str(
         default='ciso2'
     )
+    c = fields.Str()
     o = fields.Str()
     key = fields.Str(
         required=True,
