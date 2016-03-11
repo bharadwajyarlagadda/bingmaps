@@ -9,3 +9,9 @@ from .location_by_point_schema import (
     LocationByPointSchema,
     LocationByPointUrl
 )
+
+from .location_by_query_schema import (
+    LocationByQuerySchema,
+    LocationByQueryString,
+    LocationByQueryUrl
+)
