@@ -22,13 +22,13 @@ DATA = [
 ]
 
 EXPECTED = [
-    '1,2?includeEntityTypes=address&includeNeighborhood=1&include=ciso2&key='
+    '1,2?includeEntityTypes=address&includeNeighborhood=0&include=ciso2&key='
     '{0}'.format(BING_MAPS_KEY),
     True,
     False,
     {'version': 'v1', 'restApi': 'Locations', 'queryParameters':
         '1,2?includeEntityTypes=address&includeNeighborhood='
-        '1&include=ciso2&key={0}'.format(BING_MAPS_KEY)}
+        '0&include=ciso2&key={0}'.format(BING_MAPS_KEY)}
 ]
 
 
