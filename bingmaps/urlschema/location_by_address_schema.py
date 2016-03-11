@@ -44,7 +44,7 @@ class LocationByAddressQueryString(Schema):
     countryRegion = fields.Str()
     o = fields.Str()
     includeNeighborhood = fields.Int(
-        default=1
+        default=0
     )
     include = fields.Str(
         default='ciso2'
