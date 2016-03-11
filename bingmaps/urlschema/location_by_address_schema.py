@@ -42,6 +42,7 @@ class LocationByAddressQueryString(Schema):
     postalCode = fields.Int()
     addressLine = fields.Str()
     countryRegion = fields.Str()
+    c = fields.Str()
     o = fields.Str()
     includeNeighborhood = fields.Int(
         default=0
