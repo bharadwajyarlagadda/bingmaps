@@ -62,8 +62,8 @@ class LocationByAddressQueryString(Schema):
         """Meta class helps in ordering all the fields in the specified order
         """
         fields = ('adminDistrict', 'locality', 'postalCode',
-                  'addressLine', 'countryRegion', 'o', 'includeNeighborhood',
-                  'include', 'maxResults', 'key')
+                  'addressLine', 'countryRegion', 'c', 'o',
+                  'includeNeighborhood', 'include', 'maxResults', 'key')
         ordered = True
 
     @post_dump
