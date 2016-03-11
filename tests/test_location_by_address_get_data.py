@@ -22,6 +22,7 @@ DATA = [{'queryParameters': {'adminDistrict': 'WA'}},
         {'queryParameters':
             {'adminDistrict': 'WA',
              'locality': 'Seattle',
+             'c': 'te',
              'o': 'xml',
              'key': BING_MAPS_KEY}},
         {'queryParameters':
@@ -41,6 +42,10 @@ DATA = [{'queryParameters': {'adminDistrict': 'WA'}},
         {'queryParameters':
             {'locality': 'Vijayawada',
              'key': BING_MAPS_KEY}},
+        {'queryParameters':
+            {'locality': 'Vijayawada',
+             'o': 'xml',
+             'key': BING_MAPS_KEY}},
         ]
 
 expected_coordinates = namedtuple('expected', ['latitude', 'longitude'])
@@ -52,7 +57,8 @@ expected_coordinates = namedtuple('expected', ['latitude', 'longitude'])
     (DATA[7]),
     (DATA[8]),
     (DATA[9]),
-    (DATA[10])
+    (DATA[10]),
+    (DATA[11])
 ])
 def test_get_data_from_loaction_by_address(data):
     url = LocationByAddress(data)
@@ -66,7 +72,8 @@ def test_get_data_from_loaction_by_address(data):
     (DATA[7]),
     (DATA[8]),
     (DATA[9]),
-    (DATA[10])
+    (DATA[10]),
+    (DATA[11])
 ])
 def test_create_json_file(create_tmp_dir, data):
     url = LocationByAddress(data)
@@ -83,7 +90,8 @@ def test_create_json_file(create_tmp_dir, data):
     (DATA[7]),
     (DATA[8]),
     (DATA[9]),
-    (DATA[10])
+    (DATA[10]),
+    (DATA[11])
 ])
 def test_get_coordinates(data):
     url = LocationByAddress(data)
@@ -98,7 +106,8 @@ def test_get_coordinates(data):
     (DATA[7]),
     (DATA[8]),
     (DATA[9]),
-    (DATA[10])
+    (DATA[10]),
+    (DATA[11])
 ])
 def test_get_address(data):
     url = LocationByAddress(data, https_protocol)
@@ -113,7 +122,8 @@ def test_get_address(data):
     (DATA[7]),
     (DATA[8]),
     (DATA[9]),
-    (DATA[10])
+    (DATA[10]),
+    (DATA[11])
 ])
 def test_get_bbox(data):
     url = LocationByAddress(data)
@@ -128,7 +138,8 @@ def test_get_bbox(data):
     (DATA[7]),
     (DATA[8]),
     (DATA[9]),
-    (DATA[10])
+    (DATA[10]),
+    (DATA[11])
 ])
 def test_location_by_address_response(data):
     url = LocationByAddress(data)
