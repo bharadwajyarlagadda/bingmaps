@@ -1,6 +1,7 @@
 import json
 import os
 from collections import namedtuple
+import xmltodict
 
 
 class LocationApi(object):
@@ -29,19 +30,28 @@ class LocationApi(object):
 
     def get_resource(self):
         try:
-            resourceSets = self.response_to_json['resourceSets']
+            resourceSets = self.response_to_dict()['resourceSets']
             for resource in resourceSets:
                 return [rsc for rsc in resource['resources']]
         except KeyError:
-            print(KeyError)
+            try:
+                response = self.response_to_dict()['Response']
+                resourceSets = response['ResourceSets']
+                location = resourceSets['ResourceSet']['Resources']['Location']
+                return location
+            except KeyError:
+                print(KeyError)
+
+    def response_to_dict(self):
+        try:
+            return json.loads(self.locationApiData.text)
+        except Exception:
+            return json.loads(json.dumps(xmltodict.parse(
+                self.locationApiData.text)))
 
     @property
     def response(self):
         return self.locationApiData.text
-
-    @property
-    def response_to_json(self):
-        return json.loads(self.locationApiData.text)
 
     @property
     def status_code(self):
@@ -52,22 +62,53 @@ class LocationApi(object):
         """Write output schema for this"""
         resource_list = self.get_resource()
         coordinates = namedtuple('coordinates', ['latitude', 'longitude'])
-        return [coordinates(*resource['point']['coordinates'])
-                for resource in resource_list]
+        try:
+            return [coordinates(*resource['point']['coordinates'])
+                    for resource in resource_list]
+        except (KeyError, TypeError):
+            try:
+                if isinstance(resource_list, dict):
+                    resource_list = [resource_list]
+                return [coordinates(resource['Point']['Latitude'],
+                                    resource['Point']['Longitude'])
+                        for resource in resource_list]
+            except (KeyError, ValueError) as exc:
+                print(exc)
 
     @property
     def get_address(self):
         resource_list = self.get_resource()
-        return [resource['address'] for resource in resource_list]
+        try:
+            return [resource['address'] for resource in resource_list]
+        except (KeyError, TypeError):
+            try:
+                if isinstance(resource_list, dict):
+                    resource_list = [resource_list]
+                return [resource['Address'] for resource in resource_list]
+            except (KeyError, TypeError) as exc:
+                print(exc)
 
     @property
     def get_bbox(self):
         resource_list = self.get_resource()
-        bounding_box = namedtuple('boundingBox', ['SouthLatitude',
-                                                  'WestLongitude',
-                                                  'NorthLatitude',
-                                                  'EastLongitude'])
-        return [bounding_box(*resource['bbox']) for resource in resource_list]
+        bounding_box = namedtuple('boundingbox', ['southlatitude',
+                                                  'westlongitude',
+                                                  'northlatitude',
+                                                  'eastlongitude'])
+        try:
+            return [bounding_box(*resource['bbox'])
+                    for resource in resource_list]
+        except (KeyError, TypeError):
+            try:
+                if isinstance(resource_list, dict):
+                    resource_list = [resource_list]
+                return [bounding_box(resource['BoundingBox']['SouthLatitude'],
+                                     resource['BoundingBox']['WestLongitude'],
+                                     resource['BoundingBox']['NorthLatitude'],
+                                     resource['BoundingBox']['EastLongitude'])
+                        for resource in resource_list]
+            except (KeyError, TypeError) as exc:
+                print(exc)
 
     def to_json_file(self, path, file_name=None):
         if bool(path) and os.path.isdir(path):
@@ -81,4 +122,4 @@ class LocationApi(object):
         with open(os.path.join(path,
                                '{0}.{1}'.format(file_name,
                                                 'json')), 'w') as fp:
-            json.dump(self.response_to_json, fp)
+            json.dump(self.response, fp)
