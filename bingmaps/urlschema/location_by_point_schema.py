@@ -21,7 +21,7 @@ class LocationByPointQueryString(Schema):
 
     class Meta:
         fields = ('point', 'includeEntityTypes', 'includeNeighborhood',
-                  'include', 'o', 'key')
+                  'include', 'c', 'o', 'key')
         ordered = True
 
     @post_dump
