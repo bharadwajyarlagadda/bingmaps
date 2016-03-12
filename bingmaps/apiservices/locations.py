@@ -1,7 +1,13 @@
 import json
 import os
+import requests
 from collections import namedtuple
 import xmltodict
+from bingmaps.urls import (
+    LocationByAddressUrl,
+    LocationByQueryUrl,
+    LocationByPointUrl
+)
 
 
 class LocationApi(object):
@@ -123,3 +129,82 @@ class LocationApi(object):
                                '{0}.{1}'.format(file_name,
                                                 'json')), 'w') as fp:
             json.dump(self.response, fp)
+
+
+class LocationByAddress(LocationApi):
+    def __init__(self, data, http_protocol='http'):
+        if not bool(data):
+            raise TypeError('No data given')
+        schema = LocationByAddressUrl(data, protocol=http_protocol)
+        filename = 'locationByAddress'
+        super().__init__(schema, filename, http_protocol)
+        self.get_data()
+
+    def get_data(self):
+        """Gets data from the given url"""
+        url = self.build_url()
+        self.locationApiData = requests.get(url)
+        if not self.locationApiData.status_code == 200:
+            raise self.locationApiData.raise_for_status()
+
+    def build_url(self):
+        """Build the url and replaces /None/ with empty string"""
+        url = super().build_url()
+        if '/None/' in url:
+            return url.replace('/None/', '')
+        else:
+            return url
+
+    def to_xml(self):
+        pass
+
+    def to_csv(self):
+        pass
+
+
+class LocationByPoint(LocationApi):
+    def __init__(self, data, http_protocol='http'):
+        if not bool(data):
+            raise TypeError('No data given')
+        schema = LocationByPointUrl(data, protocol=http_protocol)
+        filename = 'locationByPoint'
+        super().__init__(schema, filename, http_protocol)
+        self.get_data()
+
+    def get_data(self):
+        """Gets data from the given url"""
+        url = self.build_url()
+        self.locationApiData = requests.get(url)
+        if not self.locationApiData.status_code == 200:
+            raise self.locationApiData.raise_for_status()
+
+    def build_url(self):
+        """Build the url and replaces /None/ with empty string"""
+        url = super().build_url()
+        if '/None/' in url:
+            return url.replace('/None/', '/')
+        else:
+            return url
+
+
+class LocationByQuery(LocationApi):
+    def __init__(self, data, http_protocol='http'):
+        if not bool(data):
+            raise TypeError('No data given')
+        schema = LocationByQueryUrl(data, protocol=http_protocol)
+        filename = 'locationByQuery'
+        super().__init__(schema, filename, http_protocol)
+        self.get_data()
+
+    def get_data(self):
+        url = self.build_url()
+        self.locationApiData = requests.get(url)
+        if not self.locationApiData.status_code == 200:
+            raise self.locationApiData.raise_for_status()
+
+    def build_url(self):
+        url = super().build_url()
+        if '/None/' in url:
+            return url.replace('/None/', '')
+        else:
+            return url
