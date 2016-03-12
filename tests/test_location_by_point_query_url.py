@@ -1,4 +1,4 @@
-from bingmaps.location import LocationByPoint
+from bingmaps.apiservices import LocationByPoint
 from bingmaps import BING_MAPS_KEY
 from .fixtures import parametrize, https_protocol
 

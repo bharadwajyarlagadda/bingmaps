@@ -1,5 +1,5 @@
 from bingmaps import BING_MAPS_KEY
-from bingmaps.location import LocationByAddress
+from bingmaps.apiservices import LocationByAddress
 import os
 import json
 from collections import namedtuple

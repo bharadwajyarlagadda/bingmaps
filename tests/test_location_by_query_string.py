@@ -1,4 +1,4 @@
-from bingmaps.urlschema import (
+from bingmaps.urls import (
     LocationByQueryString,
     LocationByQuerySchema
 )

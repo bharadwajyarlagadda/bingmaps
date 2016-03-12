@@ -2,7 +2,7 @@ from .fixtures import parametrize, create_tmp_dir, https_protocol
 from bingmaps import BING_MAPS_KEY
 import json
 import os
-from bingmaps.location import LocationByPoint
+from bingmaps.apiservices import LocationByPoint
 
 DATA = [
     {'queryParameters': {
