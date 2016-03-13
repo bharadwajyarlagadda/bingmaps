@@ -8,7 +8,7 @@ install:
   - pip install coveralls
 # command to run tests
 script:
-  - coverage run --source=bingmaps -m pytest tests
+  - coverage run --source=bingmaps -m py.test tests
   - coverage report -m
 # commands to run setup file
 # commands to run some style (pep8, pylint) tests on
