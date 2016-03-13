@@ -5,11 +5,10 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements/development.txt
-  - pip install coverage
   - pip install coveralls
 # command to run tests
 script:
-  - coverage run --source bingmaps setup.py test
+  - coverage run --source=bingmaps setup.py test
 # commands to run setup file
 # commands to run some style (pep8, pylint) tests on
 # the package
