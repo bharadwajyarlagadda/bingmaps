@@ -4,6 +4,8 @@ python:
   - "3.5"
 # command to install dependencies
 install:
+  - sudo apt-get install python-pip
+  - sudo /usr/bin/pip install -U pytest
   - pip install -r requirements/development.txt
   - pip install coveralls
 # command to run tests
