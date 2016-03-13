@@ -135,7 +135,7 @@ class LocationByAddress(LocationApi):
     def __init__(self, data, http_protocol='http'):
         if not bool(data):
             raise TypeError('No data given')
-        schema = LocationByAddressUrl(data, protocol=http_protocol)
+        schema = LocationByAddressUrl(data, httpprotocol=http_protocol)
         filename = 'locationByAddress'
         super().__init__(schema, filename, http_protocol)
         self.get_data()
@@ -166,7 +166,7 @@ class LocationByPoint(LocationApi):
     def __init__(self, data, http_protocol='http'):
         if not bool(data):
             raise TypeError('No data given')
-        schema = LocationByPointUrl(data, protocol=http_protocol)
+        schema = LocationByPointUrl(data, httpprotocol=http_protocol)
         filename = 'locationByPoint'
         super().__init__(schema, filename, http_protocol)
         self.get_data()
@@ -191,7 +191,7 @@ class LocationByQuery(LocationApi):
     def __init__(self, data, http_protocol='http'):
         if not bool(data):
             raise TypeError('No data given')
-        schema = LocationByQueryUrl(data, protocol=http_protocol)
+        schema = LocationByQueryUrl(data, httpprotocol=http_protocol)
         filename = 'locationByQuery'
         super().__init__(schema, filename, http_protocol)
         self.get_data()
