@@ -27,20 +27,6 @@ class Tox(TestCommand):
         sys.exit(errno)
 
 
-class PyTest(TestCommand):
-    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
-
-    def initialize_options(self):
-        TestCommand.initialize_options(self)
-        self.pytest_args = []
-
-    def run_tests(self):
-        # import here, cause outside the eggs aren't loaded
-        import pytest
-        errno = pytest.main(self.pytest_args)
-        sys.exit(errno)
-
-
 def read(path):
     with(open(os.path.join(os.path.dirname(__file__), path))) as fp:
         return fp.read()
@@ -70,9 +56,9 @@ setup(
     long_description=readme + '\n\n' + changelog,
     packages=find_packages(exclude=['tests', 'tasks']),
     install_requires=install_requires,
-    tests_require=['pytest'],
+    tests_require=['tox'],
     entry_points=entry_points,
-    cmdclass={'test': PyTest},
+    cmdclass={'test': Tox},
     test_suite='tests',
     keywords='bingmaps',
     classifiers=[
