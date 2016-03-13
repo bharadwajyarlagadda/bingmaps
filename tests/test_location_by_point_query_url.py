@@ -36,25 +36,25 @@ DATA = [
 EXPECTED = [
     'http://dev.virtualearth.net/REST/v1/Locations/1,2?includeEntityTypes='
     'address&includeNeighborhood=0&include='
-    'ciso2&key={0}'.format(BING_MAPS_KEY),
+    'ciso2&maxResults=20&key={0}'.format(BING_MAPS_KEY),
     'http://dev.virtualearth.net/REST/v1/Locations/3,4?includeEntityTypes='
     'Neighborhood&includeNeighborhood=0&include='
-    'ciso2&key={0}'.format(BING_MAPS_KEY),
+    'ciso2&maxResults=20&key={0}'.format(BING_MAPS_KEY),
     'http://dev.virtualearth.net/REST/v1/Locations/5,6?includeEntityTypes='
     'PopulatedPlace&includeNeighborhood=0&include='
-    'ciso2&key={0}'.format(BING_MAPS_KEY),
+    'ciso2&maxResults=20&key={0}'.format(BING_MAPS_KEY),
     'http://dev.virtualearth.net/REST/v1/Locations/9,10?includeEntityTypes='
     'Postcode1&includeNeighborhood=0&include='
-    'ciso2&key={0}'.format(BING_MAPS_KEY),
+    'ciso2&maxResults=20&key={0}'.format(BING_MAPS_KEY),
     'https://dev.virtualearth.net/REST/v1/Locations/1,2?includeEntityTypes='
     'AdminDivision1&includeNeighborhood=0&include='
-    'ciso2&key={0}'.format(BING_MAPS_KEY),
+    'ciso2&maxResults=20&key={0}'.format(BING_MAPS_KEY),
     'https://dev.virtualearth.net/REST/v1/Locations/1,2?includeEntityTypes='
     'AdminDivision2&includeNeighborhood=0&include='
-    'ciso2&key={0}'.format(BING_MAPS_KEY),
+    'ciso2&maxResults=20&key={0}'.format(BING_MAPS_KEY),
     'https://dev.virtualearth.net/REST/v1/Locations/1,2?includeEntityTypes='
     'CountryRegion&includeNeighborhood=0&include='
-    'ciso2&key={0}'.format(BING_MAPS_KEY),
+    'ciso2&maxResults=20&key={0}'.format(BING_MAPS_KEY),
 ]
 
 
