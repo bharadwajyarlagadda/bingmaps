@@ -10,6 +10,33 @@ Guide
 
    devguide
 
+
+REST Services
+=============
+
+.. toctree::
+   :maxdepth: 2
+
+   rest_services
+
+
+Schemas
+=======
+
+.. toctree::
+   :maxdepth: 2
+
+   schemas
+
+URLs
+====
+
+.. toctree::
+   :maxdepth: 2
+
+   urls
+
+
 Examples
 ========
 
