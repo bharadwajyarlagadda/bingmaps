@@ -2,8 +2,7 @@ from bingmaps.urls import (
     LocationByQueryString,
     LocationByQuerySchema
 )
-from .fixtures import parametrize
-from bingmaps import BING_MAPS_KEY
+from .fixtures import parametrize, BING_MAPS_KEY
 
 DATA = [
     {'query': '1014 Oatney Ridge Ln., Morrisville, NC-27560',

@@ -1,9 +1,8 @@
-from bingmaps import BING_MAPS_KEY
 from bingmaps.apiservices import LocationByAddress
 import os
 import json
 from collections import namedtuple
-from .fixtures import parametrize, https_protocol
+from .fixtures import parametrize, https_protocol, BING_MAPS_KEY
 
 DATA = [{'queryParameters': {'adminDistrict': 'WA'}},
         {'key': 'vds'},
