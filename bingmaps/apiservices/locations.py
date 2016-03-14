@@ -155,12 +155,6 @@ class LocationByAddress(LocationApi):
         else:
             return url
 
-    def to_xml(self):
-        pass
-
-    def to_csv(self):
-        pass
-
 
 class LocationByPoint(LocationApi):
     def __init__(self, data, http_protocol='http'):
