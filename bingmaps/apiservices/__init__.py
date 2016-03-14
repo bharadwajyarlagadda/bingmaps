@@ -3,3 +3,5 @@ from .locations import (
     LocationByPoint,
     LocationByQuery
 )
+
+from .elevations import ElevationsApi
