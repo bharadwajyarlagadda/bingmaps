@@ -1,5 +1,3 @@
-from .config import BING_MAPS_KEY
-
 from .__pkg__ import (
     __author__,
     __description__,
