@@ -2,6 +2,43 @@ from marshmallow import fields, Schema, post_dump, validate
 
 
 class ElevationsUrl(object):
+    """This class helps in building a url for elevations API service.
+
+    :ivar data: Data required for building up the URL
+    :ivar protocol: http protocol for the url
+    :ivar schema: Elevations schema to which the data will be dumped
+
+    All the URL values are retrieved from the schema.
+
+    Example:
+
+        ::
+
+            >>> data = { 'queryParameters':
+            ...              {'method': 'Polyline',
+            ...                    'points': [35.89431,
+            ...                               -110.72522,
+            ...                               35.89393,
+            ...                               -110.72578],
+            ...                    'samples': 10,
+            ...                    'key': 'abs'}}
+            >>> url = ElevationsUrl(data, 'http', PolylineSchema())
+            >>> url.main_url
+            'dev.virtualearth.net'
+            >>> url.protocol
+            'http:/'
+            >>> url.resourcePath
+
+            >>> url.restApi
+            'Elevation'
+            >>> url.rest
+            'REST'
+            >>> url.version
+            'v1'
+            >>> url.query
+            'Polyline?points=35.89431,-110.72522,35.89393,-110.72578&h\
+eights=sealevel&samples=10&key=abs'
+    """
     def __init__(self, data, protocol, schema):
         self.data = data
         self.http_protocol = protocol
@@ -103,13 +140,54 @@ class ElevationsUrl(object):
         """This property helps in retrieving the query part of the URL
 
         :getter: Returns a part of the URL which consist of all the query
-            parameters. The query is formatted with a ``?`` in front of it.
+            parameters.
         :type: string
         """
         return self.schema_dict['queryParameters']
 
 
 class Elevations(Schema):
+    """Main class for Elevations API schema
+
+    Data Fields:
+
+    :ivar version: A string containing v and an integer that specifies
+        the version of the Bing Maps REST Services.
+          - default: v1
+    :ivar restApi: A part of the URL path that identifies the REST
+        API.
+          - default: 'Elevation' (for Elevations API services)
+    :ivar resourcePath: A part of the URL path that specifies a
+        resource, such as an address or landmark.
+
+    This schema helps in creating the main parameters of all types of
+    elevations API based services (List, Polyline, SeaLevel, Bounds). The
+    above mentioned data fields make up the main parameters of the
+    url.
+
+    Example:
+        The below example can show you a typical example for how the main URL
+        parameters can be passed in as a dictionary
+        ::
+
+            >>> data = {'version': 'v1',
+            ...         'restApi': 'Elevation',
+            ...         'resourcePath': ''}
+
+        When you dump an empty dictionary, the class helps you in filling the
+        dictionary with default values. You can see the same behaviour in the
+        below example:
+
+        ::
+
+            >>> data = {}
+            >>> schema = Elevations()
+            >>> schema.dump(data).data
+            OrderedDict([('version', 'v1'), ('restApi', 'Elevation')])
+
+    .. note:: Elevations class is common for all the elevations based services
+        with the same default data.
+    """
     version = fields.Str(
         default='v1'
     )
@@ -126,11 +204,54 @@ class Elevations(Schema):
 
 
 class Coordinates(Schema):
+    """Schema for query parameters in which all the fields will be in a ordered
+    way. All the fields will be dumped in the same order as mentioned in the
+    schema.
+
+    Data Fields for the schema:
+
+    :ivar method: A method for calculating elevations
+        (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field
+          - 'List' [default]: Use this for returning elevations for a given
+            pair of coordinates.
+    :ivar points:  A set of coordinates on the Earth to use in elevation
+        calculations. The exact use of these points depends on the type of
+        elevation request. A set of latitude and longitude values in WGS84
+        decimal degrees. If you are requesting elevations or elevation offsets
+        for a set of points, the maximum number of points is 1024.
+        Points should be given as ``lat1,long1,lat2,long2,latn,longn`` -
+        REQUIRED field
+    :ivar heights: A string that specifies which sea level model to use to
+        calculate elevation. One of the following values:
+          - sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).
+          - ellipsoid: Use the ellipsoid Earth model (WGS84).
+    :ivar o: A string specifying the output as JSON or xml.
+    :ivar key: Bing maps key - REQUIRED field
+
+    This schema helps in serializing the data.
+
+    Post-Dump:
+        After dumping the data, build_query_string builds up the
+        queryParameters string. The final value after dumping the data would
+        be a string.
+
+    Example:
+
+        ::
+
+            >>> data = {'method': 'List',
+            ...         'points': [15.5467, 34.5676],
+            ...         'key': 'abs'
+            ...         },
+            >>> query = Coordinates()
+            >>> query.dump(data).data   # doctest: +SKIP
+            'List?points=15.5467,34.5676&heights=sealevel&key=abs'
+    """
     method = fields.Str(
         required=True,
         validate=validate.Equal(
             'List',
-            error='The method should be Bounds'
+            error='The method should be List'
         ),
         error_messages={'required': 'method for calculating elevations should'
                                     'be specified'}
@@ -159,6 +280,15 @@ class Coordinates(Schema):
 
     @post_dump
     def build_query_string(self, data):
+        """This method occurs after dumping the data into the class.
+
+        Args:
+            data (dict): dictionary of all the query values
+
+        Returns:
+            str: query string consisting of all the values concatenated
+            with '&' and '?'
+        """
         query = []
         for key, value in data.items():
             if not key == 'method':
@@ -170,6 +300,30 @@ class Coordinates(Schema):
 
 
 class CoordinatesSchema(Elevations, Schema):
+    """Inherits from :class:`Elevations` schema.
+
+    :ivar queryParameters: Depending on the request, query parameters may be
+        optional or required. Query parameters consist of global parameters
+        and parameters that are specific to each REST API.
+
+    ``queryParameters`` is a nested schema referring to :class:`Coordinates`
+    for the elevations API (calculate elevations for latitude and longitude
+    coordinates) query parameters.
+
+    Example:
+
+        ::
+
+            >>> data = {'version': 'v1',
+            ...         'restApi': 'Elevation',
+            ...         'queryParameters': {'method': 'List',
+            ...                             'points': [15.5467, 34.5676],
+            ...                             'key': 'abs'}}
+            >>> schema = CoordinatesSchema()
+            >>> schema.dump(data).data
+            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
+Parameters', 'List?points=15.5467,34.5676&heights=sealevel&key=abs')])
+    """
     queryParameters = fields.Nested(
         Coordinates
     )
@@ -179,12 +333,60 @@ class CoordinatesSchema(Elevations, Schema):
         ordered = True
 
 
-class Polyline(Elevations, Schema):
+class Polyline(Schema):
+    """Schema for query parameters in which all the fields will be in a ordered
+    way. All the fields will be dumped in the same order as mentioned in the
+    schema.
+
+    Data Fields for the schema:
+
+    :ivar method: A method for calculating elevations
+        (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field
+          - 'Polyline' [default]: Use this for returning elevations for a
+            given pair of coordinates.
+    :ivar points:  A set of coordinates on the Earth to use in elevation
+        calculations. The exact use of these points depends on the type of
+        elevation request. A set of latitude and longitude values in WGS84
+        decimal degrees. If you are requesting elevations or elevation offsets
+        for a set of points, the maximum number of points is 1024. Points
+        should be at least 2 pairs of latitudes and longitudes for Polyline
+        method - It should be a minimum total of 4 points for Polyline method.
+        Points should be given as ``lat1,long1,lat2,long2,latn,longn`` -
+        REQUIRED field
+    :ivar heights: A string that specifies which sea level model to use to
+        calculate elevation. One of the following values:
+          - sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).
+          - ellipsoid: Use the ellipsoid Earth model (WGS84).
+    :ivar samples: Specifies the number of equally-spaced elevation values to
+        provide along a polyline path. A positive integer. The maximum number
+        of samples is 1024.
+    :ivar o: A string specifying the output as JSON or xml.
+    :ivar key: Bing maps key - REQUIRED field
+
+    This schema helps in serializing the data.
+
+    Post-Dump:
+        After dumping the data, build_query_string builds up the
+        queryParameters string. The final value after dumping the data would
+        be a string.
+
+    Example:
+
+        ::
+
+            >>> data = {'method': 'Polyline',
+            ...         'points': [35.89431, -110.72522, 35.89393, -110.72578],
+            ...         'samples': 10,
+            ...         'key': 'abs'}
+            >>> schema = Polyline()
+            >>> schema.dump(data).data
+            'Polyline?points=35.89431,-110.72522,35.89393,-110.72578&heights=sealevel&samples=10&key=abs'
+    """
     method = fields.Str(
         required=True,
         validate=validate.Equal(
             'Polyline',
-            error='The method should be Bounds'
+            error='The method should be Polyline'
         ),
         error_messages={'required': 'method for calculating elevations should'
                                     'be specified'}
@@ -217,6 +419,15 @@ class Polyline(Elevations, Schema):
 
     @post_dump
     def build_query_string(self, data):
+        """This method occurs after dumping the data into the class.
+
+        Args:
+            data (dict): dictionary of all the query values
+
+        Returns:
+            str: query string consisting of all the values concatenated
+            with '&' and '?'
+        """
         query = []
         for key, value in data.items():
             if not key == 'method':
@@ -228,6 +439,35 @@ class Polyline(Elevations, Schema):
 
 
 class PolylineSchema(Elevations, Schema):
+    """Inherits from :class:`Elevations` schema.
+
+    :ivar queryParameters: Depending on the request, query parameters may be
+        optional or required. Query parameters consist of global parameters
+        and parameters that are specific to each REST API.
+
+    ``queryParameters`` is a nested schema referring to :class:`Polyline`
+    for the elevations API (calculate elevations at equally-spaced locations
+    along a polyline path) query parameters.
+
+    Example:
+
+        ::
+
+            >>> data = {'version': 'v1',
+            ...         'restApi': 'Elevation',
+            ...         'queryParameters': {'method': 'Polyline',
+            ...                             'points': [35.89431,
+            ...                                        -110.72522,
+            ...                                        35.89393,
+            ...                                        -110.72578],
+            ...                             'samples': 10,
+            ...                             'key': 'abs'}}
+            >>> schema = PolylineSchema()
+            >>> schema.dump(data).data
+            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
+Parameters', 'Polyline?points=35.89431,-110.72522,35.89393,-110.72578&h\
+eights=sealevel&samples=10&key=abs')])
+    """
     queryParameters = fields.Nested(
         Polyline
     )
@@ -238,11 +478,49 @@ class PolylineSchema(Elevations, Schema):
 
 
 class Offset(Schema):
+    """Schema for query parameters in which all the fields will be in a ordered
+    way. All the fields will be dumped in the same order as mentioned in the
+    schema.
+
+    Data Fields for the schema:
+
+    :ivar method: A method for calculating elevations
+        (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field
+          - 'SeaLevel' [default]: Use this for returning elevations for a given
+            pair of coordinates.
+    :ivar points:  A set of coordinates on the Earth to use in elevation
+        calculations. The exact use of these points depends on the type of
+        elevation request. A set of latitude and longitude values in WGS84
+        decimal degrees. If you are requesting elevations or elevation offsets
+        for a set of points, the maximum number of points is 1024.
+        Points should be given as ``lat1,long1,lat2,long2,latn,longn`` -
+        REQUIRED field
+    :ivar o: A string specifying the output as JSON or xml.
+    :ivar key: Bing maps key - REQUIRED field
+
+    This schema helps in serializing the data.
+
+    Post-Dump:
+        After dumping the data, build_query_string builds up the
+        queryParameters string. The final value after dumping the data would
+        be a string.
+
+    Example:
+
+        ::
+
+            >>> data = {'method': 'SeaLevel',
+            ...         'points': [15.5467, 34.5676],
+            ...         'key': 'abs'}
+            >>> schema = Offset()
+            >>> schema.dump(data).data
+            'SeaLevel?points=15.5467,34.5676&key=abs'
+    """
     method = fields.Str(
         required=True,
         validate=validate.Equal(
             'SeaLevel',
-            error='The method should be Bounds'
+            error='The method should be SeaLevel'
         ),
         error_messages={'required': 'method for calculating elevations should'
                                     'be specified'}
@@ -268,6 +546,15 @@ class Offset(Schema):
 
     @post_dump
     def build_query_string(self, data):
+        """This method occurs after dumping the data into the class.
+
+        Args:
+            data (dict): dictionary of all the query values
+
+        Returns:
+            str: query string consisting of all the values concatenated
+            with '&' and '?'
+        """
         query = []
         for key, value in data.items():
             if not key == 'method':
@@ -279,6 +566,30 @@ class Offset(Schema):
 
 
 class OffsetSchema(Elevations, Schema):
+    """Inherits from :class:`Elevations` schema.
+
+    :ivar queryParameters: Depending on the request, query parameters may be
+        optional or required. Query parameters consist of global parameters
+        and parameters that are specific to each REST API.
+
+    ``queryParameters`` is a nested schema referring to :class:`Offset`
+    for the elevations API (Get offset at a set of latitude and longitude
+    coordinates) query parameters.
+
+    Example:
+
+        ::
+
+            >>> data = {'version': 'v1',
+            ...         'restApi': 'Elevation',
+            ...         'queryParameters': {'method': 'SeaLevel',
+            ...                             'points': [15.5467, 34.5676],
+            ...                             'key': 'abs'}}
+            >>> schema = OffsetSchema()
+            >>> schema.dump(data).data
+            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
+Parameters', 'SeaLevel?points=15.5467,34.5676&key=abs')])
+    """
     queryParameters = fields.Nested(
         Offset
     )
@@ -289,6 +600,54 @@ class OffsetSchema(Elevations, Schema):
 
 
 class BoundingBox(Schema):
+    """Schema for query parameters in which all the fields will be in a ordered
+    way. All the fields will be dumped in the same order as mentioned in the
+    schema.
+
+    Data Fields for the schema:
+
+    :ivar method: A method for calculating elevations
+        (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field
+          - 'Bounds' [default]: Use this for returning elevations for a given
+            pair of coordinates.
+    :ivar bounds: Specifies the rectangular area over which to provide
+        elevation values. A bounding box defined as a set of WGS84 latitudes
+        and longitudes in the following order:
+          - south latitude, west longitude, north latitude, east longitude
+          - REQUIRED field
+    :ivar rows,cols: Specifies the number of rows and columns to use to
+        divide the bounding box area into a grid. The rows and columns that
+        define the bounding box each count as two (2) of the rows and columns.
+        Elevation values are returned for all vertices of the grid. Integers
+        with a value of two (2) or greater. The number of rows and columns
+        can define a maximum of 1024 locations (rows * cols <= 1024).
+    :ivar heights: A string that specifies which sea level model to use to
+        calculate elevation. One of the following values:
+          - sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).
+          - ellipsoid: Use the ellipsoid Earth model (WGS84).
+    :ivar o: A string specifying the output as JSON or xml.
+    :ivar key: Bing maps key - REQUIRED field
+
+    This schema helps in serializing the data.
+
+    Post-Dump:
+        After dumping the data, build_query_string builds up the
+        queryParameters string. The final value after dumping the data would
+        be a string.
+
+    Example:
+
+        ::
+
+            >>> data = {'method': 'Bounds',
+            ...         'bounds': [15.5463, 34.6577, 16.4365, 35.3245],
+            ...         'rows': 4,
+            ...         'cols': 5,
+            ...         'key': 'abs'}
+            >>> schema = BoundingBox()
+            >>> schema.dump(data).data
+            'Bounds?bounds=15.5463,34.6577,16.4365,35.3245&rows=4&cols=5&heights=sealevel&key=abs'
+    """
     method = fields.Str(
         required=True,
         validate=validate.Equal(
@@ -332,6 +691,15 @@ class BoundingBox(Schema):
 
     @post_dump
     def build_query_string(self, data):
+        """This method occurs after dumping the data into the class.
+
+        Args:
+            data (dict): dictionary of all the query values
+
+        Returns:
+            str: query string consisting of all the values concatenated
+            with '&' and '?'
+        """
         query = []
         for key, value in data.items():
             if not key == 'method':
@@ -343,6 +711,36 @@ class BoundingBox(Schema):
 
 
 class BoundingBoxSchema(Elevations, Schema):
+    """Inherits from :class:`Elevations` schema.
+
+    :ivar queryParameters: Depending on the request, query parameters may be
+        optional or required. Query parameters consist of global parameters
+        and parameters that are specific to each REST API.
+
+    ``queryParameters`` is a nested schema referring to :class:`BoundingBox`
+    for the elevations API (Get offset at a set of latitude and longitude
+    coordinates) query parameters.
+
+    Example:
+
+        ::
+
+            >>> data = {'version': 'v1',
+            ...         'restApi': 'Elevation',
+            ...         'queryParameters': {'method': 'Bounds',
+            ...                             'bounds': [15.5463,
+            ...                                        34.6577,
+            ...                                        16.4365,
+            ...                                        35.3245],
+            ...                             'rows': 4,
+            ...                             'cols': 5,
+            ...                             'key': 'abs'}}
+            >>> schema = BoundingBoxSchema()
+            >>> schema.dump(data).data
+            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
+Parameters', 'Bounds?bounds=15.5463,34.6577,16.4365,35.3245&rows=4&cols=5&\
+heights=sealevel&key=abs')])
+    """
     queryParameters = fields.Nested(
         BoundingBox
     )
