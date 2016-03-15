@@ -267,7 +267,7 @@ class LocationByPoint(LocationApi):
             raise self.locationApiData.raise_for_status()
 
     def build_url(self):
-        """Build the url and replaces /None/ with empty string"""
+        """Build the url and replaces /None/ with '/'"""
         url = super().build_url()
         if '/None/' in url:
             return url.replace('/None/', '/')
