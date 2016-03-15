@@ -13,6 +13,41 @@ import xmltodict
 
 
 class ElevationsApi(object):
+    """Elevations API class
+
+    This class is used to retrieve the output from the given data from the
+    user.
+      - First, the data is used to build a URL which is related to the
+        Elevations API.
+      - Second, this class helps in retrieving the response from the URL built
+      - Third, based on the response, this class helps in retrieving all the
+        corresponding output data from the response. Some of the output data
+        which this class would be retrieving is:
+          - Elevations
+          - Offsets
+          - Zoom Level
+
+    The output from the URL can be either JSON/XML based on the output
+    parameter mentioned in the data. Even the output response is 'xml', this
+    class helps in converting the xml response to JSON data first and then
+    retrieve all the necessary output from it.
+
+    :ivar data: The data that the user will send in to the ElevationsApi to
+        retrieve all the respective output from the response
+    :ivar url: The url that gets built based on the user's given data
+    :ivar http_protocol: Http protocol for the URL. Can be either of the
+        following:
+          - http
+          - https
+    :ivar schema: The schema that gets used to build the URL and the schema
+        is based in the 'method' field in the data.
+    :ivar file_name: The filename that the class can write the JSON response
+        to.
+          - file_name - 'elevations'
+    :ivar elevationdata: Response from the URL
+
+    Some of the examples are illustrated in Examples page
+    """
     def __init__(self, data, http_protocol='http'):
         self.http_protocol = http_protocol
         schema = None
@@ -32,6 +67,12 @@ class ElevationsApi(object):
         self.get_data()
 
     def build_url(self):
+        """Builds the URL for elevations API services based on the data given
+        by the user.
+
+        Returns:
+            url (str): URL for the elevations API services
+        """
         url = '{protocol}/{url}/{rest}/{version}/{restapi}/{rscpath}/' \
               '{query}'.format(protocol=self.schema.protocol,
                                url=self.schema.main_url,
@@ -67,13 +108,22 @@ class ElevationsApi(object):
 
     @property
     def response(self):
+        """Response from the built URL"""
         return self.elevationdata.text
 
     @property
     def status_code(self):
+        """Status code of the response from the URL"""
         return self.elevationdata.status_code
 
     def response_to_dict(self):
+        """This method helps in returning the output JSON data from the URL
+        and also it helps in converting the XML output/response (string) to a
+        JSON object
+
+        Returns:
+            data (dict): JSON data from the output/response
+        """
         try:
             return json.loads(self.elevationdata.text)
         except Exception:
@@ -82,6 +132,12 @@ class ElevationsApi(object):
 
     @property
     def elevations(self):
+        """Retrieves elevations/offsets from the output response
+
+        Returns:
+            elevations/offsets (namedtuple): A named tuple of list of
+            elevations/offsets
+        """
         resources = self.get_resource()
         elevations = namedtuple('elevations_data', 'elevations')
         try:
@@ -104,6 +160,12 @@ class ElevationsApi(object):
 
     @property
     def zoomlevel(self):
+        """Retrieves zoomlevel from the output response
+
+        Returns:
+            zoomlevel (namedtuple): A namedtuple of zoomlevel from the output
+            response
+        """
         resources = self.get_resource()
         zoomlevel = namedtuple('zoomlevel', 'zoomLevel')
         try:
@@ -122,6 +184,7 @@ class ElevationsApi(object):
                     print(KeyError)
 
     def to_json_file(self, path, file_name=None):
+        """Writes output to a JSON file with the given file name"""
         if bool(path) and os.path.isdir(path):
             self.write_to_json(path, file_name)
         else:
