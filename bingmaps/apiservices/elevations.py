@@ -50,12 +50,20 @@ class ElevationsApi(object):
             raise self.elevationdata.raise_for_status()
 
     def get_resource(self):
+        resourceSets = self.response_to_dict()
         try:
-            resourceSets = self.response_to_dict()['resourceSets']
-            for resource in resourceSets:
+            for resource in resourceSets['resourceSets']:
                 return [rsc for rsc in resource['resources']]
         except KeyError:
-            print(KeyError)
+            try:
+                resourcesSets = resourceSets['Response']['ResourceSets']
+                resourceSet = resourcesSets['ResourceSet']
+                if isinstance(resourceSet, dict):
+                    return resourceSet['Resources']
+                elif isinstance((resourceSet, list)):
+                    return [rsc for rsc in resourceSet['Resources']]
+            except KeyError:
+                print(KeyError)
 
     @property
     def response(self):
@@ -82,13 +90,36 @@ class ElevationsApi(object):
         except KeyError:
             return [elevations(resource['offsets'])
                     for resource in resources]
+        except TypeError:
+            try:
+                if isinstance(resources['ElevationData']['Elevations'], dict):
+                    return elevations(resources['ElevationData']['Elevations'])
+            except KeyError:
+                offsets = namedtuple('offsets_data', 'offsets')
+                try:
+                    if isinstance(resources['SeaLevelData']['Offsets'], dict):
+                        return offsets(resources['SeaLevelData']['Offsets'])
+                except KeyError:
+                    print(KeyError)
 
     @property
     def zoomlevel(self):
         resources = self.get_resource()
         zoomlevel = namedtuple('zoomlevel', 'zoomLevel')
-        return [zoomlevel(resource['zoomLevel'])
-                for resource in resources]
+        try:
+            return [zoomlevel(resource['zoomLevel'])
+                    for resource in resources]
+        except TypeError:
+            try:
+                if isinstance(resources['ElevationData'], dict):
+                    return zoomlevel(resources['ElevationData']['ZoomLevel'])
+            except KeyError:
+                try:
+                    if isinstance(resources['SeaLevelData'], dict):
+                        zoom = resources['SeaLevelData']['ZoomLevel']
+                        return zoomlevel(zoom)
+                except KeyError:
+                    print(KeyError)
 
     def to_json_file(self, path, file_name=None):
         if bool(path) and os.path.isdir(path):
