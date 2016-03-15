@@ -16,8 +16,9 @@ Location By Point API
 
 .. autoclass:: bingmaps.apiservices.LocationByPoint
    :inherited-members:
+   :members: build_url
 
-Location By Point API
+Location By Query API
 ---------------------
 
 .. autoclass:: bingmaps.apiservices.LocationByQuery
