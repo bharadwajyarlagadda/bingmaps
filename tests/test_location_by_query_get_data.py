@@ -1,5 +1,9 @@
-from .fixtures import parametrize, https_protocol, create_tmp_dir
-from bingmaps import BING_MAPS_KEY
+from .fixtures import (
+    parametrize,
+    https_protocol,
+    create_tmp_dir,
+    BING_MAPS_KEY
+)
 import json
 import os
 from bingmaps.apiservices import LocationByQuery

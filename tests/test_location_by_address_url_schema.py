@@ -1,9 +1,8 @@
 import pytest
 
-from bingmaps import BING_MAPS_KEY
 from bingmaps.apiservices import LocationByAddress
 from bingmaps.urls import LocationByAddressQueryString
-from .fixtures import parametrize
+from .fixtures import parametrize, BING_MAPS_KEY
 
 http_protocol = 'http'
 https_protocol = 'https'

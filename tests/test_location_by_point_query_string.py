@@ -2,8 +2,7 @@ from bingmaps.urls import (
     LocationByPointQueryString,
     LocationByPointSchema
 )
-from .fixtures import parametrize
-from bingmaps import BING_MAPS_KEY
+from .fixtures import parametrize, BING_MAPS_KEY
 
 
 DATA = [

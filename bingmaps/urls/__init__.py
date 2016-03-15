@@ -7,5 +7,17 @@ from .locations_build_urls import (
     LocationByPointUrl,
     LocationByQuerySchema,
     LocationByQueryString,
-    LocationByQueryUrl
+    LocationByQueryUrl,
+)
+
+from .elevations_build_urls import (
+    ElevationsUrl,
+    Coordinates,
+    Polyline,
+    Offset,
+    BoundingBox,
+    CoordinatesSchema,
+    PolylineSchema,
+    BoundingBoxSchema,
+    OffsetSchema
 )

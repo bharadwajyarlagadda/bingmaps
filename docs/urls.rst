@@ -23,3 +23,10 @@ Location By Query
 
 .. autoclass:: bingmaps.urls.locations_build_urls.LocationByQueryUrl
    :inherited-members:
+
+
+Elevations API
+==============
+
+.. autoclass:: bingmaps.urls.elevations_build_urls.ElevationsUrl
+   :members: protocol, main_url, rest, version, restApi, resourcePath, query

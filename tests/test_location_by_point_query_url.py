@@ -1,6 +1,5 @@
 from bingmaps.apiservices import LocationByPoint
-from bingmaps import BING_MAPS_KEY
-from .fixtures import parametrize, https_protocol
+from .fixtures import parametrize, https_protocol, BING_MAPS_KEY
 
 DATA = [
     {'queryParameters': {

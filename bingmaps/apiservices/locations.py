@@ -19,10 +19,11 @@ class LocationApi(object):
         self.schema = schema
 
     def build_url(self):
-        """Method for building a url based on the schema given
+        """Builds the URL for elevations API services based on the data given
+        by the user.
 
         Returns:
-            url (str): http/https url for locations API
+            url (str): URL for the elevations API services
         """
         url = '{protocol}/{url}/{rest}/{version}/{restapi}/{rscpath}/' \
               '{query}'.format(protocol=self.schema.protocol,
@@ -57,15 +58,23 @@ class LocationApi(object):
 
     @property
     def response(self):
+        """Returns response form the URL"""
         return self.locationApiData.text
 
     @property
     def status_code(self):
+        """Returns status code from the URL response"""
         return self.locationApiData.status_code
 
     @property
     def get_coordinates(self):
-        """Write output schema for this"""
+        """Retrieves coordinates (latitudes/longitudes) from the output
+        JSON/XML response
+
+        Returns:
+            coordinates (namedtuple): List of named tuples of coordinates
+            (latitudes and longitudes)
+        """
         resource_list = self.get_resource()
         coordinates = namedtuple('coordinates', ['latitude', 'longitude'])
         try:
@@ -83,6 +92,11 @@ class LocationApi(object):
 
     @property
     def get_address(self):
+        """Retrieves addresses from the output JSON/XML response
+
+        Returns:
+            address (namedtuple): List of named tuples of addresses
+        """
         resource_list = self.get_resource()
         try:
             return [resource['address'] for resource in resource_list]
@@ -96,6 +110,13 @@ class LocationApi(object):
 
     @property
     def get_bbox(self):
+        """Retrieves the bounding box coordinates from the output JSON/XML
+        response
+
+        Returns:
+            boundingbox (namedtuple): List of named tuples of bounding box
+            coordinates
+        """
         resource_list = self.get_resource()
         bounding_box = namedtuple('boundingbox', ['southlatitude',
                                                   'westlongitude',
@@ -117,6 +138,7 @@ class LocationApi(object):
                 print(exc)
 
     def to_json_file(self, path, file_name=None):
+        """Method to write response to a JSON file with the given file name"""
         if bool(path) and os.path.isdir(path):
             self.write_to_json(path, file_name)
         else:
@@ -132,6 +154,42 @@ class LocationApi(object):
 
 
 class LocationByAddress(LocationApi):
+    """Location by address API class
+
+    This class is used to retrieve the output from the given data from the
+    user.
+      - First, the data is used to build a URL which is related to the
+        Elevations API.
+      - Second, this class helps in retrieving the response from the URL built
+      - Third, based on the response, this class helps in retrieving all the
+        corresponding output data from the response. Some of the output data
+        which this class would be retrieving is:
+          - Coordinates (latitude/longitude)
+          - BoundingBox coordinates (south latitude, west longitude,
+            north latitude, east longitude)
+          - Address
+
+    The output from the URL can be either JSON/XML based on the output
+    parameter mentioned in the data. Even the output response is 'xml', this
+    class helps in converting the xml response to JSON data first and then
+    retrieve all the necessary output from it.
+
+    :ivar data: The data that the user will send in to the Location by address
+        to retrieve all the respective output from the response
+    :ivar url: The url that gets built based on the user's given data
+    :ivar http_protocol: Http protocol for the URL. Can be either of the
+        following:
+          - http
+          - https
+    :ivar schema: The schema that gets used to build the URL and the schema
+        is LocationByAddressUrl for location by address API service.
+    :ivar file_name: The filename that the class can write the JSON response
+        to.
+          - file_name - 'locationByAddress'
+    :ivar locationApiData: Response from the URL
+
+    Some of the examples are illustrated in Examples page
+    """
     def __init__(self, data, http_protocol='http'):
         if not bool(data):
             raise TypeError('No data given')
@@ -141,7 +199,7 @@ class LocationByAddress(LocationApi):
         self.get_data()
 
     def get_data(self):
-        """Gets data from the given url"""
+        """Gets data from the built url"""
         url = self.build_url()
         self.locationApiData = requests.get(url)
         if not self.locationApiData.status_code == 200:
@@ -155,14 +213,44 @@ class LocationByAddress(LocationApi):
         else:
             return url
 
-    def to_xml(self):
-        pass
-
-    def to_csv(self):
-        pass
-
 
 class LocationByPoint(LocationApi):
+    """Location by point API class
+
+    This class is used to retrieve the output from the given data from the
+    user.
+      - First, the data is used to build a URL which is related to the
+        Elevations API.
+      - Second, this class helps in retrieving the response from the URL built
+      - Third, based on the response, this class helps in retrieving all the
+        corresponding output data from the response. Some of the output data
+        which this class would be retrieving is:
+          - Coordinates (latitude/longitude)
+          - BoundingBox coordinates (south latitude, west longitude,
+            north latitude, east longitude)
+          - Address
+
+    The output from the URL can be either JSON/XML based on the output
+    parameter mentioned in the data. Even the output response is 'xml', this
+    class helps in converting the xml response to JSON data first and then
+    retrieve all the necessary output from it.
+
+    :ivar data: The data that the user will send in to the Location by point
+        to retrieve all the respective output from the response
+    :ivar url: The url that gets built based on the user's given data
+    :ivar http_protocol: Http protocol for the URL. Can be either of the
+        following:
+          - http
+          - https
+    :ivar schema: The schema that gets used to build the URL and the schema
+        is LocationByPointUrl for location by point API service.
+    :ivar file_name: The filename that the class can write the JSON response
+        to.
+          - file_name - 'locationByPoint'
+    :ivar locationApiData: Response from the URL
+
+    Some of the examples are illustrated in Examples page
+    """
     def __init__(self, data, http_protocol='http'):
         if not bool(data):
             raise TypeError('No data given')
@@ -172,14 +260,14 @@ class LocationByPoint(LocationApi):
         self.get_data()
 
     def get_data(self):
-        """Gets data from the given url"""
+        """Gets data from the built url"""
         url = self.build_url()
         self.locationApiData = requests.get(url)
         if not self.locationApiData.status_code == 200:
             raise self.locationApiData.raise_for_status()
 
     def build_url(self):
-        """Build the url and replaces /None/ with empty string"""
+        """Build the url and replaces /None/ with '/'"""
         url = super().build_url()
         if '/None/' in url:
             return url.replace('/None/', '/')
@@ -188,6 +276,42 @@ class LocationByPoint(LocationApi):
 
 
 class LocationByQuery(LocationApi):
+    """Location by query API class
+
+    This class is used to retrieve the output from the given data from the
+    user.
+      - First, the data is used to build a URL which is related to the
+        Elevations API.
+      - Second, this class helps in retrieving the response from the URL built
+      - Third, based on the response, this class helps in retrieving all the
+        corresponding output data from the response. Some of the output data
+        which this class would be retrieving is:
+          - Coordinates (latitude/longitude)
+          - BoundingBox coordinates (south latitude, west longitude,
+            north latitude, east longitude)
+          - Address
+
+    The output from the URL can be either JSON/XML based on the output
+    parameter mentioned in the data. Even the output response is 'xml', this
+    class helps in converting the xml response to JSON data first and then
+    retrieve all the necessary output from it.
+
+    :ivar data: The data that the user will send in to the Location by query
+        to retrieve all the respective output from the response
+    :ivar url: The url that gets built based on the user's given data
+    :ivar http_protocol: Http protocol for the URL. Can be either of the
+        following:
+          - http
+          - https
+    :ivar schema: The schema that gets used to build the URL and the schema
+        is LocationByQueryUrl for location by query API service.
+    :ivar file_name: The filename that the class can write the JSON response
+        to.
+          - file_name - 'locationByQuery'
+    :ivar locationApiData: Response from the URL
+
+    Some of the examples are illustrated in Examples page
+    """
     def __init__(self, data, http_protocol='http'):
         if not bool(data):
             raise TypeError('No data given')
@@ -197,12 +321,14 @@ class LocationByQuery(LocationApi):
         self.get_data()
 
     def get_data(self):
+        """Gets data from the built url"""
         url = self.build_url()
         self.locationApiData = requests.get(url)
         if not self.locationApiData.status_code == 200:
             raise self.locationApiData.raise_for_status()
 
     def build_url(self):
+        """Build the url and replaces /None/ with empty string"""
         url = super().build_url()
         if '/None/' in url:
             return url.replace('/None/', '')
