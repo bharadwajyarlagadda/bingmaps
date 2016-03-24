@@ -21,3 +21,8 @@ from .elevations_build_urls import (
     BoundingBoxSchema,
     OffsetSchema
 )
+
+from .traffic_build_urls import (
+    TrafficIncidentsSchema,
+    TrafficIncidentsUrl
+)
