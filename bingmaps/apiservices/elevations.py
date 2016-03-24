@@ -1,9 +1,9 @@
 from bingmaps.urls import (
     ElevationsUrl,
-    CoordinatesSchema,
-    OffsetSchema,
-    PolylineSchema,
-    BoundingBoxSchema
+    Coordinates,
+    Offset,
+    Polyline,
+    BoundingBox
 )
 from collections import namedtuple
 import requests
@@ -50,17 +50,20 @@ class ElevationsApi(object):
     """
     def __init__(self, data, http_protocol='http'):
         self.http_protocol = http_protocol
-        schema = None
         if not bool(data):
             raise TypeError('No data given')
-        if data['queryParameters']['method'] == 'List':
-            schema = CoordinatesSchema()
-        elif data['queryParameters']['method'] == 'Polyline':
-            schema = PolylineSchema()
-        elif data['queryParameters']['method'] == 'SeaLevel':
-            schema = OffsetSchema()
-        elif data['queryParameters']['method'] == 'Bounds':
-            schema = BoundingBoxSchema()
+        if data['method'] == 'List':
+            schema = Coordinates()
+        elif data['method'] == 'Polyline':
+            schema = Polyline()
+        elif data['method'] == 'SeaLevel':
+            schema = Offset()
+        elif data['method'] == 'Bounds':
+            schema = BoundingBox()
+        else:
+            raise KeyError('method should be either of '
+                           'List/Polyline/SeaLevel/Bounds')
+
         self.schema = ElevationsUrl(data, http_protocol, schema)
         self.file_name = 'elevations'
         self.elevationdata = None
