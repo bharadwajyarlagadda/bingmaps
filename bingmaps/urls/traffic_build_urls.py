@@ -2,6 +2,40 @@ from marshmallow import Schema, fields, post_dump, validate, pre_dump
 
 
 class TrafficIncidentsUrl(object):
+    """This class helps in building a url for elevations API service.
+
+    :ivar data: Data required for building up the URL
+    :ivar protocol: http protocol for the url
+    :ivar schema: Elevations schema to which the data will be dumped
+
+    All the URL values are retrieved from the schema.
+
+    Example:
+
+        ::
+
+            >>> data = {'mapArea': [37, -105, 45, -94],
+            ...         'includeLocationCodes': 'true',
+            ...         'type': [5],
+            ...         'o': 'xml',
+            ...         'key': 'abs'}
+            >>> url = TrafficIncidentsUrl(data, TrafficIncidentsSchema(),
+            ...                           'http')
+            >>> url.main_url
+            'dev.virtualearth.net'
+            >>> url.protocol
+            'http:/'
+            >>> url.resourcePath
+            'Incidents'
+            >>> url.restApi
+            'Traffic'
+            >>> url.rest
+            'REST'
+            >>> url.version
+            'v1'
+            >>> url.query
+            '37.0,-105.0,45.0,-94.0/true?type=5&o=xml&key=abs'
+    """
     def __init__(self, data, schema, protocol='http'):
         self.data = data
         self.http_protocol = protocol
@@ -125,6 +159,67 @@ class MainParams(Schema):
 
 
 class TrafficIncidentsSchema(MainParams, Schema):
+    """Schema for query parameters in which all the fields will be in a ordered
+    way. All the fields will be dumped in the same order as mentioned in the
+    schema.
+
+    Data Fields for the schema:
+
+    :ivar mapArea[Required]: A rectangular area specified as a bounding box.
+        The size of the area can be a maximum of 500 km x 500 km. A bounding
+        box defines an area by specifying SouthLatitude, WestLongitude,
+        NorthLatitude, and EastLongitude values.
+    :ivar includeLocationCodes[Optional]:  One of the following
+        values:
+          - 'true'
+          - 'false' [default]
+        If you want to use the default value, you can omit this parameter from
+        the URL request.
+    :ivar severity[Optional]: One or more of the following integer
+        values:
+          - 1: LowImpact
+          - 2: Minor
+          - 3: Moderate
+          - 4: Serious
+        The default is to return traffic incidents for all severity levels.
+    :ivar type[Optional]: One or more of the following integer
+        values:
+          - 1: Accident
+          - 2: Congestion
+          - 3: DisabledVehicle
+          - 4: MassTransit
+          - 5: Miscellaneous
+          - 6: OtherNews
+          - 7: PlannedEvent
+          - 8: RoadHazard
+          - 9: Construction
+          - 10: Alert
+          - 11: Weather
+    :ivar o: A string specifying the output as JSON or xml.
+    :ivar key[Required]: Bing maps key - REQUIRED field
+
+    This schema helps in serializing the data.
+
+    Post-Dump:
+        After dumping the data, build_query_string builds up the
+        queryParameters string. The final value after dumping the data would
+        be a string.
+
+    Example:
+
+        ::
+
+            >>> data = {'mapArea': [37, -105, 45, -94],
+            ...         'includeLocationCodes': 'true',
+            ...         'type': [5],
+            ...         'o': 'xml',
+            ...         'key': 'abs'}
+            >>> query = TrafficIncidentsSchema()
+            >>> query.dump(data).data
+            OrderedDict([('version', 'v1'), ('restApi', 'Traffic'), \
+('resourcePath', 'Incidents'), ('query', \
+'37.0,-105.0,45.0,-94.0/true?type=5&o=xml&key=abs')])
+    """
     mapArea = fields.List(
         fields.Float,
         required=True,
@@ -159,6 +254,14 @@ class TrafficIncidentsSchema(MainParams, Schema):
 
     @post_dump
     def build_url(self, data):
+        """This method occurs after dumping the data into the class.
+
+        Args:
+            data (dict): dictionary of all the query values
+
+        Returns:
+            data (dict): ordered dict of all the values
+        """
         query_part_one = []
         query_part_two = []
         keys_to_be_removed = []

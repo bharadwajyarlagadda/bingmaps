@@ -6,6 +6,51 @@ import xmltodict
 
 
 class TrafficIncidentsApi(object):
+    """Traffic Incidents API class
+
+    This class is used to retrieve the output from the given data from the
+    user.
+      - First, the data is used to build a URL which is related to the
+        Traffic Incidents API.
+      - Second, this class helps in retrieving the response from the URL built
+      - Third, based on the response, this class helps in retrieving all the
+        corresponding output data from the response. Some of the output data
+        which this class would be retrieving is:
+          - coordinates
+          - description
+          - congestion
+          - detour info
+          - road closed info
+          - incident id
+          - lane info
+          - start time of the incident
+          - end time of the incident
+          - last modified time of the incident
+          - severity of the incident
+          - type of the incident
+          - verification status
+
+    The output from the URL can be either JSON/XML based on the output
+    parameter mentioned in the data. Even the output response is 'xml', this
+    class helps in converting the xml response to JSON data first and then
+    retrieve all the necessary output from it.
+
+    :ivar data: The data that the user will send in to the TrafficIncidentsApi
+        to retrieve all the respective output from the response
+    :ivar url: The url that gets built based on the user's given data
+    :ivar http_protocol: Http protocol for the URL. Can be either of the
+        following:
+          - http
+          - https
+    :ivar schema: The schema that gets used to build the URL and the schema
+        would be .
+    :ivar file_name: The filename that the class can write the JSON response
+        to TrafficIncidentsSchema.
+          - file_name - 'traffic_incidents'
+    :ivar incidents_data: Response from the URL
+
+    Some of the examples are illustrated in Examples page
+    """
     def __init__(self, data, http_protocol='http'):
         self.http_protocol = http_protocol
         self.schema = TrafficIncidentsUrl(data,
@@ -119,6 +164,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def description(self):
+        """Retrieves the description of the incident/incidents from the output
+        response
+
+        Returns:
+            description(namedtuple): List of named tuples of descriptions of
+            the incident/incidents
+        """
         resource_list = self.traffic_incident()
         description = namedtuple('description', 'description')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -136,6 +188,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def congestion(self):
+        """Retrieves the congestion information of the incident/incidents from
+        the output response
+
+        Returns:
+            congestion(namedtuple): List of named tuples of congestion info of
+            the incident/incidents
+        """
         resource_list = self.traffic_incident()
         congestion = namedtuple('congestion', 'congestion')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -153,6 +212,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def detour_info(self):
+        """Retrieves the detour information of the incident/incidents from
+        the output response
+
+        Returns:
+            detour_info(namedtuple): List of named tuples of detour info of
+            the incident/incidents
+        """
         resource_list = self.traffic_incident()
         detour_info = namedtuple('detour_info', 'detour_info')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -170,6 +236,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def start_time(self):
+        """Retrieves the start time of the incident/incidents from the output
+        response
+
+        Returns:
+            start_time(namedtuple): List of named tuples of start time of the
+            incident/incidents
+        """
         resource_list = self.traffic_incident()
         start_time = namedtuple('start_time', 'start_time')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -184,6 +257,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def end_time(self):
+        """Retrieves the end time of the incident/incidents from the output
+        response
+
+        Returns:
+            end_time(namedtuple): List of named tuples of end time of the
+            incident/incidents
+        """
         resource_list = self.traffic_incident()
         end_time = namedtuple('end_time', 'end_time')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -198,6 +278,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def incident_id(self):
+        """Retrieves the incident id/ids of the incident/incidents from the
+        output response
+
+        Returns:
+            incident_id(namedtuple): List of named tuples of incident id/ids of
+            the incident/incidents
+        """
         resource_list = self.traffic_incident()
         incident_id = namedtuple('incident_id', 'incident_id')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -212,6 +299,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def lane_info(self):
+        """Retrieves the lane info of the incident/incidents from the
+        output response
+
+        Returns:
+            lane_info(namedtuple): List of named tuples of lane info of the
+            incident/incidents
+        """
         resource_list = self.traffic_incident()
         lane_info = namedtuple('lane_info', 'lane_info')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -229,6 +323,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def last_modified(self):
+        """Retrieves the last modified time stamp of the incident/incidents
+        from the output response
+
+        Returns:
+            last_modified(namedtuple): List of named tuples of last modified
+            time stamp of the incident/incidents
+        """
         resource_list = self.traffic_incident()
         last_modified = namedtuple('last_modified', 'last_modified')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -243,6 +344,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def road_closed(self):
+        """Retrieves the road closed information for the incident/incidents
+        from the output response
+
+        Returns:
+            road_closed(namedtuple): List of named tuples of road closed
+            information for the incident/incidents
+        """
         resource_list = self.traffic_incident()
         road_closed = namedtuple('road_closed', 'road_closed')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -257,6 +365,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def severity(self):
+        """Retrieves the severity for the incident/incidents from the
+        output response
+
+        Returns:
+            severity(namedtuple): List of named tuples of severity for the
+            incident/incidents
+        """
         resource_list = self.traffic_incident()
         severity = namedtuple('severity', 'severity')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -271,6 +386,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def type(self):
+        """Retrieves the type of the incident/incidents from the output
+        response
+
+        Returns:
+            type(namedtuple): List of named tuples of type of the
+            incident/incidents
+        """
         resource_list = self.traffic_incident()
         type = namedtuple('type', 'type')
         if len(resource_list) == 1 and resource_list[0] is None:
@@ -285,6 +407,13 @@ class TrafficIncidentsApi(object):
 
     @property
     def is_verified(self):
+        """Retrieves the verification status of the incident/incidents from the
+        output response
+
+        Returns:
+            verified(namedtuple): List of named tuples of verification status
+            of the incident/incidents
+        """
         resource_list = self.traffic_incident()
         verified = namedtuple('verified', 'verified')
         if len(resource_list) == 1 and resource_list[0] is None:

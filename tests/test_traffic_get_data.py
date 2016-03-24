@@ -10,12 +10,6 @@ DATA = [
      'includeLocationCodes': 'true',
      'type': [5],
      'o': 'xml',
-     'key': BING_MAPS_KEY},
-    {'mapArea': [45.219, -122.325, 47.610, -122.107],
-     'includeLocationCodes': 'true',
-     'severity': [2, 4],
-     'type': [2, 3],
-     'o': 'xml',
      'key': BING_MAPS_KEY}
 ]
 
@@ -161,11 +155,3 @@ def tests_get_type(data):
 def tests_get_verification(data):
     incidents = TrafficIncidentsApi(data)
     assert len(incidents.is_verified) >= 1
-
-
-@parametrize('data', [
-    (DATA[2])
-])
-def test_get_resource_none(data):
-    incidents = TrafficIncidentsApi(data)
-    assert incidents.get_resource()[0] is None
