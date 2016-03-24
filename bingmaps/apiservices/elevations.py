@@ -101,7 +101,7 @@ class ElevationsApi(object):
                 resourceSet = resourcesSets['ResourceSet']
                 if isinstance(resourceSet, dict):
                     return resourceSet['Resources']
-                elif isinstance((resourceSet, list)):
+                elif isinstance(resourceSet, list):
                     return [rsc for rsc in resourceSet['Resources']]
             except KeyError:
                 print(KeyError)
