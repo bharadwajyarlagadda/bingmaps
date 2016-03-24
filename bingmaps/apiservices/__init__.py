@@ -5,3 +5,5 @@ from .locations import (
 )
 
 from .elevations import ElevationsApi
+
+from .trafficincidents import TrafficIncidentsApi
