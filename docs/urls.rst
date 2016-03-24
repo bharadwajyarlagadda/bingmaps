@@ -30,3 +30,9 @@ Elevations API
 
 .. autoclass:: bingmaps.urls.elevations_build_urls.ElevationsUrl
    :members: protocol, main_url, rest, version, restApi, resourcePath, query
+
+Traffic Incidents API
+=====================
+
+.. autoclass:: bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl
+   :members: protocol, main_url, rest, version, restApi, resourcePath, query
