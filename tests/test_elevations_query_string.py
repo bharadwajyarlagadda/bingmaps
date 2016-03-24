@@ -71,7 +71,7 @@ EXPECTED = [
 def test_elevations_list_query_string(data, expected):
     elevations = Coordinates()
     elevations_query = elevations.dump(data).data
-    assert elevations_query == expected
+    assert elevations_query['query'] == expected
 
 
 @parametrize('data,expected', [
@@ -91,7 +91,7 @@ def test_validate_elevations_list(data, expected):
 def test_elevations_polyline_query_string(data, expected):
     polyline = Polyline()
     polyline_query = polyline.dump(data).data
-    assert polyline_query == expected
+    assert polyline_query['query'] == expected
 
 
 @parametrize('data,expected', [
@@ -111,7 +111,7 @@ def test_validate_elevations_polyline(data, expected):
 def test_elevations_offset_query_string(data, expected):
     offset = Offset()
     offset_query = offset.dump(data).data
-    assert offset_query == expected
+    assert offset_query['query'] == expected
 
 
 @parametrize('data,expected', [
@@ -131,7 +131,7 @@ def test_validate_elevations_offset(data, expected):
 def test_elevations_bounding_box_query_string(data, expected):
     bounding_box = BoundingBox()
     offset_query = bounding_box.dump(data).data
-    assert offset_query == expected
+    assert offset_query['query'] == expected
 
 
 @parametrize('data,expected', [

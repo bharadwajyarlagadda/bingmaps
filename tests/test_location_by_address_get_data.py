@@ -4,47 +4,37 @@ import json
 from collections import namedtuple
 from .fixtures import parametrize, https_protocol, BING_MAPS_KEY
 
-DATA = [{'queryParameters': {'adminDistrict': 'WA'}},
+DATA = [{'adminDistrict': 'WA'},
         {'key': 'vds'},
-        {'queryParameters':
-            {'adminDistrict': 'WA',
-             'locality': 'Seattle',
-             'key': 'abs'}},
-        {'queryParameters':
-            {'adminDistrict': 'FL',
-             'locality': 'Miami',
-             'key': BING_MAPS_KEY}},
-        {'queryParameters':
-            {'adminDistrict': 'WA',
-             'locality': 'Seattle',
-             'key': BING_MAPS_KEY}},
-        {'queryParameters':
-            {'adminDistrict': 'WA',
-             'locality': 'Seattle',
-             'c': 'te',
-             'o': 'xml',
-             'key': BING_MAPS_KEY}},
-        {'queryParameters':
-            {'postalCode': 32310,
-             'key': BING_MAPS_KEY
-             }},
-        {'queryParameters':
-            {'adminDistrict': 'FL',
-             'locality': 'Tallahassee',
-             'key': BING_MAPS_KEY}},
-        {'queryParameters':
-            {'adminDistrict': 'TX',
-             'key': BING_MAPS_KEY}},
-        {'queryParameters':
-            {'countryRegion': 'India',
-             'key': BING_MAPS_KEY}},
-        {'queryParameters':
-            {'locality': 'Vijayawada',
-             'key': BING_MAPS_KEY}},
-        {'queryParameters':
-            {'locality': 'Vijayawada',
-             'o': 'xml',
-             'key': BING_MAPS_KEY}},
+        {'adminDistrict': 'WA',
+         'locality': 'Seattle',
+         'key': 'abs'},
+        {'adminDistrict': 'FL',
+         'locality': 'Miami',
+         'key': BING_MAPS_KEY},
+        {'adminDistrict': 'WA',
+         'locality': 'Seattle',
+         'key': BING_MAPS_KEY},
+        {'adminDistrict': 'WA',
+         'locality': 'Seattle',
+         'c': 'te',
+         'o': 'xml',
+         'key': BING_MAPS_KEY},
+        {'postalCode': 32310,
+         'key': BING_MAPS_KEY
+         },
+        {'adminDistrict': 'FL',
+         'locality': 'Tallahassee',
+         'key': BING_MAPS_KEY},
+        {'adminDistrict': 'TX',
+         'key': BING_MAPS_KEY},
+        {'countryRegion': 'India',
+         'key': BING_MAPS_KEY},
+        {'locality': 'Vijayawada',
+         'key': BING_MAPS_KEY},
+        {'locality': 'Vijayawada',
+         'o': 'xml',
+         'key': BING_MAPS_KEY},
         ]
 
 expected_coordinates = namedtuple('expected', ['latitude', 'longitude'])

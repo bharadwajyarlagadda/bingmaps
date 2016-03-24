@@ -2,34 +2,41 @@ from bingmaps.apiservices import LocationByPoint
 from .fixtures import parametrize, https_protocol, BING_MAPS_KEY
 
 DATA = [
-    {'queryParameters': {
+    {
         'point': '1,2',
         'includeEntityTypes': 'address',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '3,4',
         'includeEntityTypes': 'Neighborhood',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '5,6',
         'includeEntityTypes': 'PopulatedPlace',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '9,10',
         'includeEntityTypes': 'Postcode1',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '1,2',
         'includeEntityTypes': 'AdminDivision1',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '1,2',
         'includeEntityTypes': 'AdminDivision2',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '1,2',
         'includeEntityTypes': 'CountryRegion',
-        'key': BING_MAPS_KEY}},
+        'key': BING_MAPS_KEY
+    },
 ]
 
 EXPECTED = [

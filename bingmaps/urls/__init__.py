@@ -1,13 +1,10 @@
 from .locations_build_urls import (
-    LocationByAddressQueryString,
     LocationByAddressSchema,
     LocationByAddressUrl,
-    LocationByPointQueryString,
     LocationByPointSchema,
     LocationByPointUrl,
     LocationByQuerySchema,
-    LocationByQueryString,
-    LocationByQueryUrl,
+    LocationByQueryUrl
 )
 
 from .elevations_build_urls import (
@@ -15,9 +12,10 @@ from .elevations_build_urls import (
     Coordinates,
     Polyline,
     Offset,
-    BoundingBox,
-    CoordinatesSchema,
-    PolylineSchema,
-    BoundingBoxSchema,
-    OffsetSchema
+    BoundingBox
+)
+
+from .traffic_build_urls import (
+    TrafficIncidentsSchema,
+    TrafficIncidentsUrl
 )

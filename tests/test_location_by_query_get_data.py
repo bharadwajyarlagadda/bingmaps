@@ -9,38 +9,38 @@ import os
 from bingmaps.apiservices import LocationByQuery
 
 DATA = [
-    {'queryParameters': {
-        'query': '8672 Eagle Road Teaneck, NJ 07666',
+    {
+        'q': '8672 Eagle Road Teaneck, NJ 07666',
         'key': BING_MAPS_KEY
-    }},
-    {'queryParameters': {
-        'query': '7266 Canterbury Court Oshkosh, WI 54901',
+    },
+    {
+        'q': '7266 Canterbury Court Oshkosh, WI 54901',
         'key': BING_MAPS_KEY
-    }},
-    {'queryParameters': {
-        'query': 'hyderabad',
+    },
+    {
+        'q': 'hyderabad',
         'o': 'xml',
         'c': 'te',
         'key': BING_MAPS_KEY
-    }},
-    {'queryParameters': {
-        'query': 'Memphis',
+    },
+    {
+        'q': 'Memphis',
         'o': 'xml',
         'c': 'te',
         'key': BING_MAPS_KEY
-    }},
-    {'queryParameters': {
-        'query': '9106 Lakeview Drive Madison Heights, MI 48071',
+    },
+    {
+        'q': '9106 Lakeview Drive Madison Heights, MI 48071',
         'key': BING_MAPS_KEY
-    }},
-    {'queryParameters': {
-        'query': '4566 Clay Street Bolingbrook, IL 60440',
+    },
+    {
+        'q': '4566 Clay Street Bolingbrook, IL 60440',
         'key': BING_MAPS_KEY
-    }},
-    {'queryParameters': {
-        'query': '4856 Lawrence Street Burke, VA 22015',
+    },
+    {
+        'q': '4856 Lawrence Street Burke, VA 22015',
         'key': BING_MAPS_KEY
-    }},
+    },
 ]
 
 

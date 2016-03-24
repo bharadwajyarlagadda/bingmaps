@@ -2,23 +2,23 @@ from .fixtures import BING_MAPS_KEY, parametrize
 from bingmaps.apiservices import ElevationsApi
 
 DATA = [
-    {'queryParameters': {'method': 'List',
+    {'method': 'List',
      'points': [15.5467, 34.5676],
      'key': BING_MAPS_KEY
-     }},
-    {'queryParameters': {'method': 'Polyline',
+     },
+    {'method': 'Polyline',
      'points': [35.89431, -110.72522, 35.89393, -110.72578],
      'samples': 10,
-     'key': BING_MAPS_KEY}},
-    {'queryParameters': {'method': 'SeaLevel',
+     'key': BING_MAPS_KEY},
+    {'method': 'SeaLevel',
      'points': [15.5467, 34.5676],
      'key': BING_MAPS_KEY
-     }},
-    {'queryParameters': {'method': 'Bounds',
+     },
+    {'method': 'Bounds',
      'bounds': [15.5463, 34.6577, 16.4365, 35.3245],
      'rows': 4,
      'cols': 5,
-     'key': BING_MAPS_KEY}}
+     'key': BING_MAPS_KEY}
 ]
 
 EXPECTED = [

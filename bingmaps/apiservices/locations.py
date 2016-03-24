@@ -19,11 +19,11 @@ class LocationApi(object):
         self.schema = schema
 
     def build_url(self):
-        """Builds the URL for elevations API services based on the data given
+        """Builds the URL for location API services based on the data given
         by the user.
 
         Returns:
-            url (str): URL for the elevations API services
+            url (str): URL for the location API services
         """
         url = '{protocol}/{url}/{rest}/{version}/{restapi}/{rscpath}/' \
               '{query}'.format(protocol=self.schema.protocol,
@@ -159,7 +159,7 @@ class LocationByAddress(LocationApi):
     This class is used to retrieve the output from the given data from the
     user.
       - First, the data is used to build a URL which is related to the
-        Elevations API.
+        Locations by Address API.
       - Second, this class helps in retrieving the response from the URL built
       - Third, based on the response, this class helps in retrieving all the
         corresponding output data from the response. Some of the output data
@@ -220,7 +220,7 @@ class LocationByPoint(LocationApi):
     This class is used to retrieve the output from the given data from the
     user.
       - First, the data is used to build a URL which is related to the
-        Elevations API.
+        Location by Point API.
       - Second, this class helps in retrieving the response from the URL built
       - Third, based on the response, this class helps in retrieving all the
         corresponding output data from the response. Some of the output data
@@ -281,7 +281,7 @@ class LocationByQuery(LocationApi):
     This class is used to retrieve the output from the given data from the
     user.
       - First, the data is used to build a URL which is related to the
-        Elevations API.
+        Location by Query API.
       - Second, this class helps in retrieving the response from the URL built
       - Third, based on the response, this class helps in retrieving all the
         corresponding output data from the response. Some of the output data

@@ -14,15 +14,14 @@ class ElevationsUrl(object):
 
         ::
 
-            >>> data = { 'queryParameters':
-            ...              {'method': 'Polyline',
-            ...                    'points': [35.89431,
-            ...                               -110.72522,
-            ...                               35.89393,
-            ...                               -110.72578],
-            ...                    'samples': 10,
-            ...                    'key': 'abs'}}
-            >>> url = ElevationsUrl(data, 'http', PolylineSchema())
+            >>> data = {'method': 'Polyline',
+            ...         'points': [35.89431,
+            ...                    -110.72522,
+            ...                    35.89393,
+            ...                    -110.72578],
+            ...         'samples': 10,
+            ...         'key': 'abs'}
+            >>> url = ElevationsUrl(data, 'http', Polyline())
             >>> url.main_url
             'dev.virtualearth.net'
             >>> url.protocol
@@ -143,7 +142,7 @@ eights=sealevel&samples=10&key=abs'
             parameters.
         :type: string
         """
-        return self.schema_dict['queryParameters']
+        return self.schema_dict['query']
 
 
 class Elevations(Schema):
@@ -188,11 +187,11 @@ class Elevations(Schema):
     .. note:: Elevations class is common for all the elevations based services
         with the same default data.
     """
-    version = fields.Str(
-        default='v1'
+    version = fields.Constant(
+        'v1'
     )
-    restApi = fields.Str(
-        default='Elevation'
+    restApi = fields.Constant(
+        'Elevation'
     )
     resourcePath = fields.Str()
 
@@ -203,8 +202,10 @@ class Elevations(Schema):
         ordered = True
 
 
-class Coordinates(Schema):
-    """Schema for query parameters in which all the fields will be in a ordered
+class Coordinates(Elevations, Schema):
+    """Inherited from :class:`Elevations`
+
+    Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
@@ -241,11 +242,11 @@ class Coordinates(Schema):
 
             >>> data = {'method': 'List',
             ...         'points': [15.5467, 34.5676],
-            ...         'key': 'abs'
-            ...         },
-            >>> query = Coordinates()
-            >>> query.dump(data).data   # doctest: +SKIP
-            'List?points=15.5467,34.5676&heights=sealevel&key=abs'
+            ...         'key': 'abs'}
+            >>> schema = Coordinates()
+            >>> schema.dump(data).data
+            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
+', 'List?points=15.5467,34.5676&heights=sealevel&key=abs')])
     """
     method = fields.Str(
         required=True,
@@ -275,7 +276,8 @@ class Coordinates(Schema):
     )
 
     class Meta:
-        fields = ('method', 'points', 'heights', 'o', 'key')
+        fields = ('version', 'restApi', 'resourcePath', 'method', 'points',
+                  'heights', 'o', 'key')
         ordered = True
 
     @post_dump
@@ -286,55 +288,30 @@ class Coordinates(Schema):
             data (dict): dictionary of all the query values
 
         Returns:
-            str: query string consisting of all the values concatenated
-            with '&' and '?'
+            data (dict): ordered dict of all the values
         """
         query = []
+        keys_to_be_removed = []
         for key, value in data.items():
-            if not key == 'method':
-                if key == 'points':
-                    value = ','.join(str(val) for val in value)
-                query.append('{0}={1}'.format(key, value))
+            if key not in ['version', 'restApi', 'resourcePath']:
+                if not key == 'method':
+                    if key == 'points':
+                        value = ','.join(str(val) for val in value)
+                        keys_to_be_removed.append(key)
+                    query.append('{0}={1}'.format(key, value))
+                    keys_to_be_removed.append(key)
+                keys_to_be_removed.append(key)
         querystring = '&'.join(query)
-        return '{0}?{1}'.format(data['method'], querystring)
+        data['query'] = '{0}?{1}'.format(data['method'], querystring)
+        for k in list(set(keys_to_be_removed)):
+            del data[k]
+        return data
 
 
-class CoordinatesSchema(Elevations, Schema):
-    """Inherits from :class:`Elevations` schema.
+class Polyline(Elevations, Schema):
+    """Inherited from :class:`Elevations`
 
-    :ivar queryParameters: Depending on the request, query parameters may be
-        optional or required. Query parameters consist of global parameters
-        and parameters that are specific to each REST API.
-
-    ``queryParameters`` is a nested schema referring to :class:`Coordinates`
-    for the elevations API (calculate elevations for latitude and longitude
-    coordinates) query parameters.
-
-    Example:
-
-        ::
-
-            >>> data = {'version': 'v1',
-            ...         'restApi': 'Elevation',
-            ...         'queryParameters': {'method': 'List',
-            ...                             'points': [15.5467, 34.5676],
-            ...                             'key': 'abs'}}
-            >>> schema = CoordinatesSchema()
-            >>> schema.dump(data).data
-            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
-Parameters', 'List?points=15.5467,34.5676&heights=sealevel&key=abs')])
-    """
-    queryParameters = fields.Nested(
-        Coordinates
-    )
-
-    class Meta:
-        fields = ('version', 'restApi', 'resourcePath', 'queryParameters')
-        ordered = True
-
-
-class Polyline(Schema):
-    """Schema for query parameters in which all the fields will be in a ordered
+    Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
@@ -380,7 +357,9 @@ class Polyline(Schema):
             ...         'key': 'abs'}
             >>> schema = Polyline()
             >>> schema.dump(data).data
-            'Polyline?points=35.89431,-110.72522,35.89393,-110.72578&heights=sealevel&samples=10&key=abs'
+            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
+', 'Polyline?points=35.89431,-110.72522,35.89393,-110.72578&heights=sealevel&\
+samples=10&key=abs')])
     """
     method = fields.Str(
         required=True,
@@ -414,7 +393,8 @@ class Polyline(Schema):
     )
 
     class Meta:
-        fields = ('method', 'points', 'heights', 'samples', 'o', 'key')
+        fields = ('version', 'restApi', 'resourcePath', 'method', 'points',
+                  'heights', 'samples', 'o', 'key')
         ordered = True
 
     @post_dump
@@ -425,60 +405,30 @@ class Polyline(Schema):
             data (dict): dictionary of all the query values
 
         Returns:
-            str: query string consisting of all the values concatenated
-            with '&' and '?'
+            data (dict): ordered dict of all the values
         """
         query = []
+        keys_to_be_removed = []
         for key, value in data.items():
-            if not key == 'method':
-                if key == 'points':
-                    value = ','.join(str(val) for val in value)
-                query.append('{0}={1}'.format(key, value))
+            if key not in ['version', 'restApi', 'resourcePath']:
+                if not key == 'method':
+                    if key == 'points':
+                        value = ','.join(str(val) for val in value)
+                        keys_to_be_removed.append(key)
+                    query.append('{0}={1}'.format(key, value))
+                    keys_to_be_removed.append(key)
+                keys_to_be_removed.append(key)
         querystring = '&'.join(query)
-        return '{0}?{1}'.format(data['method'], querystring)
+        data['query'] = '{0}?{1}'.format(data['method'], querystring)
+        for k in list(set(keys_to_be_removed)):
+            del data[k]
+        return data
 
 
-class PolylineSchema(Elevations, Schema):
-    """Inherits from :class:`Elevations` schema.
+class Offset(Elevations, Schema):
+    """Inherited from :class:`Elevations`
 
-    :ivar queryParameters: Depending on the request, query parameters may be
-        optional or required. Query parameters consist of global parameters
-        and parameters that are specific to each REST API.
-
-    ``queryParameters`` is a nested schema referring to :class:`Polyline`
-    for the elevations API (calculate elevations at equally-spaced locations
-    along a polyline path) query parameters.
-
-    Example:
-
-        ::
-
-            >>> data = {'version': 'v1',
-            ...         'restApi': 'Elevation',
-            ...         'queryParameters': {'method': 'Polyline',
-            ...                             'points': [35.89431,
-            ...                                        -110.72522,
-            ...                                        35.89393,
-            ...                                        -110.72578],
-            ...                             'samples': 10,
-            ...                             'key': 'abs'}}
-            >>> schema = PolylineSchema()
-            >>> schema.dump(data).data
-            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
-Parameters', 'Polyline?points=35.89431,-110.72522,35.89393,-110.72578&h\
-eights=sealevel&samples=10&key=abs')])
-    """
-    queryParameters = fields.Nested(
-        Polyline
-    )
-
-    class Meta:
-        fields = ('version', 'restApi', 'resourcePath', 'queryParameters')
-        ordered = True
-
-
-class Offset(Schema):
-    """Schema for query parameters in which all the fields will be in a ordered
+    Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
@@ -514,7 +464,8 @@ class Offset(Schema):
             ...         'key': 'abs'}
             >>> schema = Offset()
             >>> schema.dump(data).data
-            'SeaLevel?points=15.5467,34.5676&key=abs'
+            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
+', 'SeaLevel?points=15.5467,34.5676&key=abs')])
     """
     method = fields.Str(
         required=True,
@@ -541,7 +492,8 @@ class Offset(Schema):
     )
 
     class Meta:
-        fields = ('method', 'points', 'o', 'key')
+        fields = ('version', 'restApi', 'resourcePath', 'method', 'points',
+                  'o', 'key')
         ordered = True
 
     @post_dump
@@ -552,55 +504,30 @@ class Offset(Schema):
             data (dict): dictionary of all the query values
 
         Returns:
-            str: query string consisting of all the values concatenated
-            with '&' and '?'
+            data (dict): ordered dict of all the values
         """
         query = []
+        keys_to_be_removed = []
         for key, value in data.items():
-            if not key == 'method':
-                if key == 'points':
-                    value = ','.join(str(val) for val in value)
-                query.append('{0}={1}'.format(key, value))
+            if key not in ['version', 'restApi', 'resourcePath']:
+                if not key == 'method':
+                    if key == 'points':
+                        value = ','.join(str(val) for val in value)
+                        keys_to_be_removed.append(key)
+                    query.append('{0}={1}'.format(key, value))
+                    keys_to_be_removed.append(key)
+                keys_to_be_removed.append(key)
         querystring = '&'.join(query)
-        return '{0}?{1}'.format(data['method'], querystring)
+        data['query'] = '{0}?{1}'.format(data['method'], querystring)
+        for k in list(set(keys_to_be_removed)):
+            del data[k]
+        return data
 
 
-class OffsetSchema(Elevations, Schema):
-    """Inherits from :class:`Elevations` schema.
+class BoundingBox(Elevations, Schema):
+    """Inherited from :class:`Elevations`
 
-    :ivar queryParameters: Depending on the request, query parameters may be
-        optional or required. Query parameters consist of global parameters
-        and parameters that are specific to each REST API.
-
-    ``queryParameters`` is a nested schema referring to :class:`Offset`
-    for the elevations API (Get offset at a set of latitude and longitude
-    coordinates) query parameters.
-
-    Example:
-
-        ::
-
-            >>> data = {'version': 'v1',
-            ...         'restApi': 'Elevation',
-            ...         'queryParameters': {'method': 'SeaLevel',
-            ...                             'points': [15.5467, 34.5676],
-            ...                             'key': 'abs'}}
-            >>> schema = OffsetSchema()
-            >>> schema.dump(data).data
-            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
-Parameters', 'SeaLevel?points=15.5467,34.5676&key=abs')])
-    """
-    queryParameters = fields.Nested(
-        Offset
-    )
-
-    class Meta:
-        fields = ('version', 'restApi', 'resourcePath', 'queryParameters')
-        ordered = True
-
-
-class BoundingBox(Schema):
-    """Schema for query parameters in which all the fields will be in a ordered
+    Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
@@ -646,7 +573,9 @@ class BoundingBox(Schema):
             ...         'key': 'abs'}
             >>> schema = BoundingBox()
             >>> schema.dump(data).data
-            'Bounds?bounds=15.5463,34.6577,16.4365,35.3245&rows=4&cols=5&heights=sealevel&key=abs'
+            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
+', 'Bounds?bounds=15.5463,34.6577,16.4365,35.3245&rows=4&cols=5&heights=\
+sealevel&key=abs')])
     """
     method = fields.Str(
         required=True,
@@ -686,7 +615,8 @@ class BoundingBox(Schema):
     )
 
     class Meta:
-        fields = ('method', 'bounds', 'rows', 'cols', 'heights', 'o', 'key')
+        fields = ('version', 'restApi', 'resourcePath', 'method', 'bounds',
+                  'rows', 'cols', 'heights', 'o', 'key')
         ordered = True
 
     @post_dump
@@ -697,54 +627,21 @@ class BoundingBox(Schema):
             data (dict): dictionary of all the query values
 
         Returns:
-            str: query string consisting of all the values concatenated
-            with '&' and '?'
+            data (dict): ordered dict of all the values
         """
         query = []
+        keys_to_be_removed = []
         for key, value in data.items():
-            if not key == 'method':
-                if key == 'bounds':
-                    value = ','.join(str(val) for val in value)
-                query.append('{0}={1}'.format(key, value))
+            if key not in ['version', 'restApi', 'resourcePath']:
+                if not key == 'method':
+                    if key == 'bounds':
+                        value = ','.join(str(val) for val in value)
+                        keys_to_be_removed.append(key)
+                    query.append('{0}={1}'.format(key, value))
+                    keys_to_be_removed.append(key)
+                keys_to_be_removed.append(key)
         querystring = '&'.join(query)
-        return '{0}?{1}'.format(data['method'], querystring)
-
-
-class BoundingBoxSchema(Elevations, Schema):
-    """Inherits from :class:`Elevations` schema.
-
-    :ivar queryParameters: Depending on the request, query parameters may be
-        optional or required. Query parameters consist of global parameters
-        and parameters that are specific to each REST API.
-
-    ``queryParameters`` is a nested schema referring to :class:`BoundingBox`
-    for the elevations API (Get offset at a set of latitude and longitude
-    coordinates) query parameters.
-
-    Example:
-
-        ::
-
-            >>> data = {'version': 'v1',
-            ...         'restApi': 'Elevation',
-            ...         'queryParameters': {'method': 'Bounds',
-            ...                             'bounds': [15.5463,
-            ...                                        34.6577,
-            ...                                        16.4365,
-            ...                                        35.3245],
-            ...                             'rows': 4,
-            ...                             'cols': 5,
-            ...                             'key': 'abs'}}
-            >>> schema = BoundingBoxSchema()
-            >>> schema.dump(data).data
-            OrderedDict([('version', 'v1'), ('restApi', 'Elevation'), ('query\
-Parameters', 'Bounds?bounds=15.5463,34.6577,16.4365,35.3245&rows=4&cols=5&\
-heights=sealevel&key=abs')])
-    """
-    queryParameters = fields.Nested(
-        BoundingBox
-    )
-
-    class Meta:
-        fields = ('version', 'restApi', 'resourcePath', 'queryParameters')
-        ordered = True
+        data['query'] = '{0}?{1}'.format(data['method'], querystring)
+        for k in list(set(keys_to_be_removed)):
+            del data[k]
+        return data

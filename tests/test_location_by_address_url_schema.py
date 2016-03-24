@@ -1,31 +1,27 @@
 import pytest
 
 from bingmaps.apiservices import LocationByAddress
-from bingmaps.urls import LocationByAddressQueryString
+from bingmaps.urls import LocationByAddressSchema
 from .fixtures import parametrize, BING_MAPS_KEY
 
 http_protocol = 'http'
 https_protocol = 'https'
 
-DATA = [{'queryParameters': {'adminDistrict': 'WA'}},
+DATA = [{'adminDistrict': 'WA'},
         {'key': 'vds'},
-        {'queryParameters':
-            {'adminDistrict': 'WA',
-             'locality': 'Seattle',
-             'key': 'abs'}},
-        {'queryParameters':
-            {'adminDistrict': 'WA',
-             'locality': 'Seattle',
-             'key': BING_MAPS_KEY}},
-        {'queryParameters':
-            {'adminDistrict': 'WA',
-             'locality': 'Seattle',
-             'key': BING_MAPS_KEY}},
-        {'queryParameters':
-            {'adminDistrict': 'WA',
-             'locality': 'Seattle',
-             'o': 'xml',
-             'key': BING_MAPS_KEY}}
+        {'adminDistrict': 'WA',
+         'locality': 'Seattle',
+         'key': 'abs'},
+        {'adminDistrict': 'WA',
+         'locality': 'Seattle',
+         'key': BING_MAPS_KEY},
+        {'adminDistrict': 'WA',
+         'locality': 'Seattle',
+         'key': BING_MAPS_KEY},
+        {'adminDistrict': 'WA',
+         'locality': 'Seattle',
+         'o': 'xml',
+         'key': BING_MAPS_KEY}
         ]
 
 EXPECTED = [
@@ -53,7 +49,7 @@ EXPECTED = [
     (DATA[1], EXPECTED[1])
 ])
 def test_schema_without_key(data, expected):
-    schema = LocationByAddressQueryString()
+    schema = LocationByAddressSchema()
     is_valid_schema = schema.validate(data)
     assert bool(is_valid_schema) is expected
 
@@ -62,9 +58,9 @@ def test_schema_without_key(data, expected):
     (DATA[2], EXPECTED[2])
 ])
 def test_consolidate_query_dict(data, expected):
-    query = LocationByAddressQueryString()
-    query_string = query.dump(data['queryParameters']).data
-    assert query_string == expected
+    query = LocationByAddressSchema()
+    query_string = query.dump(data).data
+    assert query_string['query'] == expected
 
 
 @parametrize('data,expected', [
