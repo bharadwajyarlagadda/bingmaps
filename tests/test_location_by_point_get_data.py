@@ -9,40 +9,48 @@ import os
 from bingmaps.apiservices import LocationByPoint
 
 DATA = [
-    {'queryParameters': {
+    {
         'point': '16.506174,80.648015',
         'includeEntityTypes': 'address',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '30.438256,-84.280733',
         'includeEntityTypes': 'Neighborhood',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '35.689487,139.691706',
         'includeEntityTypes': 'PopulatedPlace',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '39.904211,116.407395',
         'includeEntityTypes': 'Postcode1',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '12.971599,77.594563',
         'includeEntityTypes': 'AdminDivision1',
         'c': 'te',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '28.613939,77.209021',
         'includeEntityTypes': 'AdminDivision2',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '26.449923,80.331874',
         'includeEntityTypes': 'CountryRegion',
-        'key': BING_MAPS_KEY}},
-    {'queryParameters': {
+        'key': BING_MAPS_KEY
+    },
+    {
         'point': '26.449923,80.331874',
         'o': 'xml',
         'includeEntityTypes': 'CountryRegion',
-        'key': BING_MAPS_KEY}},
+        'key': BING_MAPS_KEY
+    },
 ]
 
 

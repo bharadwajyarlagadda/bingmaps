@@ -1,7 +1,4 @@
-from bingmaps.urls import (
-    LocationByPointQueryString,
-    LocationByPointSchema
-)
+from bingmaps.urls import LocationByPointSchema
 from .fixtures import parametrize, BING_MAPS_KEY
 
 
@@ -13,11 +10,11 @@ DATA = [
     {'point': '2,3',
      'includeEntityTypes': 'address',
      },
-    {'queryParameters': {
+    {
         'point': '1,2',
         'includeEntityTypes': 'address',
         'key': BING_MAPS_KEY
-    }}
+    }
 ]
 
 EXPECTED = [
@@ -25,7 +22,7 @@ EXPECTED = [
     'maxResults=20&key={0}'.format(BING_MAPS_KEY),
     True,
     False,
-    {'version': 'v1', 'restApi': 'Locations', 'queryParameters':
+    {'version': 'v1', 'restApi': 'Locations', 'query':
         '1,2?includeEntityTypes=address&includeNeighborhood='
         '0&include=ciso2&maxResults=20&key={0}'.format(BING_MAPS_KEY)}
 ]
@@ -36,7 +33,7 @@ EXPECTED = [
     (DATA[0], EXPECTED[2])
 ])
 def test_validate_location_by_point_query_string(data, expected):
-    query = LocationByPointQueryString()
+    query = LocationByPointSchema()
     is_valid_schema = query.validate(data)
     assert bool(is_valid_schema) == expected
 
@@ -45,9 +42,9 @@ def test_validate_location_by_point_query_string(data, expected):
     (DATA[0], EXPECTED[0])
 ])
 def test_location_by_point_query(data, expected):
-    query = LocationByPointQueryString()
+    query = LocationByPointSchema()
     query_string = query.dump(data).data
-    assert query_string == expected
+    assert query_string['query'] == expected
 
 
 @parametrize('data,expected', [

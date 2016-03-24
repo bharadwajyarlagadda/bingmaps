@@ -157,7 +157,7 @@ class Location(Schema):
         ordered = True
 
 
-class LocationByAddressQueryString(Schema):
+class LocationByAddressSchema(Location, Schema):
     """Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
@@ -208,9 +208,11 @@ class LocationByAddressQueryString(Schema):
             ...          'includeNeighborhood': 1,
             ...          'key': 'abs'
             ...         }
-            >>> query = LocationByAddressQueryString()
+            >>> query = LocationByAddressSchema()
             >>> query.dump(data).data
-            'adminDistrict=WA&locality=Seattle&c=te&o=xml&includeNeighborhood=1&include=ciso2&maxResults=20&key=abs'
+            OrderedDict([('version', 'v1'), ('restApi', 'Locations'), ('query\
+', 'adminDistrict=WA&locality=Seattle&c=te&o=xml&\
+includeNeighborhood=1&include=ciso2&maxResults=20&key=abs')])
 
         In the output, you can see 'include', 'maxResults' in the string
         although we haven't specified any values because they are default
@@ -240,7 +242,8 @@ class LocationByAddressQueryString(Schema):
     class Meta:
         """Meta class helps in ordering all the fields in the specified order
         """
-        fields = ('adminDistrict', 'locality', 'postalCode',
+        fields = ('version', 'restApi', 'resourcePath',
+                  'adminDistrict', 'locality', 'postalCode',
                   'addressLine', 'countryRegion', 'c', 'o',
                   'includeNeighborhood', 'include', 'maxResults', 'key')
         ordered = True
@@ -253,58 +256,24 @@ class LocationByAddressQueryString(Schema):
             data (dict): dictionary of all the query values
 
         Returns:
-            str: query string consisting of all the values concatenated
-            with '&'
+            data (dict): ordered dict of all the values
         """
         query_params = []
+        keys_to_be_removed = []
         for key, value in data.items():
-            if key == 'addressLine':
-                query_params.append('{0}={1}'.format(key,
-                                                     quote(value)))
-            else:
-                query_params.append('{0}={1}'.format(key,
-                                                     value))
-        return "&".join(query_params)
-
-
-class LocationByAddressSchema(Location, Schema):
-    """Inherits from :class:`Location` schema.
-
-    :ivar queryParameters: Depending on the request, query parameters may be
-        optional or required. Query parameters consist of global parameters
-        and parameters that are specific to each REST API. The Bing Maps Key
-        is a required query parameter.
-
-    ``queryParameters`` is a nested schema referring to
-    :class:`LocationByAddressQueryString` for the location by address API
-    query parameters
-
-    Example:
-
-        ::
-
-            >>> data = {'version': 'v1',
-            ...         'restApi': 'Locations',
-            ...         'queryParameters': { 'adminDistrict': 'WA',
-            ...                              'locality': 'Seattle',
-            ...                              'c': 'te',
-            ...                              'o': 'xml',
-            ...                              'includeNeighborhood': 1,
-            ...                              'key': 'abs'}
-            ...         }
-            >>> location_by_address = LocationByAddressSchema()
-            >>> location_by_address.dump(data).data
-            OrderedDict([('version', 'v1'), ('restApi', 'Locations'), ('query\
-Parameters', 'adminDistrict=WA&locality=Seattle&c=te&o=xml&\
-includeNeighborhood=1&include=ciso2&maxResults=20&key=abs')])
-    """
-    queryParameters = fields.Nested(
-        LocationByAddressQueryString
-    )
-
-    class Meta:
-        fields = ('version', 'restApi', 'resourcePath', 'queryParameters')
-        ordered = True
+            if key not in ['version', 'restApi', 'resourcePath']:
+                if key == 'addressLine':
+                    query_params.append('{0}={1}'.format(key,
+                                                         quote(value)))
+                    keys_to_be_removed.append(key)
+                else:
+                    query_params.append('{0}={1}'.format(key,
+                                                         value))
+                    keys_to_be_removed.append(key)
+        data['query'] = "&".join(query_params)
+        for k in keys_to_be_removed:
+            del data[k]
+        return data
 
 
 class LocationByAddressUrl(LocationUrl):
@@ -320,12 +289,12 @@ class LocationByAddressUrl(LocationUrl):
 
         ::
 
-            >>> data = {'queryParameters': { 'adminDistrict': 'WA',
-            ...                              'locality': 'Seattle',
-            ...                              'c': 'te',
-            ...                              'o': 'xml',
-            ...                              'includeNeighborhood': 1,
-            ...                              'key': 'abs'}}
+            >>> data = { 'adminDistrict': 'WA',
+            ...          'locality': 'Seattle',
+            ...          'c': 'te',
+            ...          'o': 'xml',
+            ...          'includeNeighborhood': 1,
+            ...          'key': 'abs'}
             >>> loc_by_address = LocationByAddressUrl(data, 'http')
             >>> loc_by_address.main_url
             'dev.virtualearth.net'
@@ -355,10 +324,10 @@ includeNeighborhood=1&include=ciso2&maxResults=20&key=abs'
             parameters. The query is formatted with a ``?`` in front of it.
         :type: string
         """
-        return '?{0}'.format(self._schema_dict['queryParameters'])
+        return '?{0}'.format(self._schema_dict['query'])
 
 
-class LocationByPointQueryString(Schema):
+class LocationByPointSchema(Location, Schema):
     """Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
@@ -422,9 +391,12 @@ class LocationByPointQueryString(Schema):
             ...          'includeNeighborhood': 1,
             ...          'key': 'abs'
             ...         }
-            >>> query = LocationByPointQueryString()
+            >>> query = LocationByPointSchema()
             >>> query.dump(data).data
-            '47.64054,-122.12934?includeEntityTypes=Address&includeNeighborhood=1&include=ciso2&c=te&o=xml&maxResults=20&key=abs'
+            OrderedDict([('version', 'v1'), ('restApi', 'Locations'), ('query\
+', '47.64054,-122.12934?includeEntityTypes=Address&\
+includeNeighborhood=1&include=ciso2&c=te&o=xml&maxResults=20&key=abs')])
+
 
         In the output, you can see 'include', 'maxResults' in the string
         although we haven't specified any values because they are default
@@ -449,7 +421,8 @@ class LocationByPointQueryString(Schema):
     )
 
     class Meta:
-        fields = ('point', 'includeEntityTypes', 'includeNeighborhood',
+        fields = ('version', 'restApi', 'resourcePath',
+                  'point', 'includeEntityTypes', 'includeNeighborhood',
                   'include', 'c', 'o', 'maxResults', 'key')
         ordered = True
 
@@ -461,58 +434,21 @@ class LocationByPointQueryString(Schema):
             data (dict): dictionary of all the query values
 
         Returns:
-            str: query string consisting of all the values concatenated
-            with '&'. As part of the location by point services the url will
-            not contain the string value 'point'; the string starts with the
-            '<point_value>?'
+            data (dict): ordered dict of all the values
         """
         queryValues = []
+        keys_to_be_removed = []
         for key, value in data.items():
-            if not key == 'point':
-                queryValues.append('{0}={1}'.format(key, value))
+            if key not in ['version', 'restApi', 'resourcePath']:
+                if not key == 'point':
+                    queryValues.append('{0}={1}'.format(key, value))
+                    keys_to_be_removed.append(key)
+                keys_to_be_removed.append(key)
         queryString = '&'.join(queryValues)
-        return '{0}?{1}'.format(data['point'], queryString)
-
-
-class LocationByPointSchema(Location, Schema):
-    """Inherits from :class:`Location` schema.
-
-    :ivar queryParameters: Depending on the request, query parameters may be
-        optional or required. Query parameters consist of global parameters
-        and parameters that are specific to each REST API. The Bing Maps Key
-        is a required query parameter.
-
-    ``queryParameters`` is a nested schema referring to
-    :class:`LocationByPointQueryString` for the location by point API query
-    parameters
-
-    Example:
-
-        ::
-
-            >>> data = {'version': 'v1',
-            ...         'restApi': 'Locations',
-            ...         'queryParameters': { 'point': '47.64054,-122.12934',
-            ...                              'includeEntityTypes': 'Address',
-            ...                              'c': 'te',
-            ...                              'o': 'xml',
-            ...                              'includeNeighborhood': 1,
-            ...                              'key': 'abs'
-            ...         }
-            ...         }
-            >>> location_by_point = LocationByPointSchema()
-            >>> location_by_point.dump(data).data
-            OrderedDict([('version', 'v1'), ('restApi', 'Locations'), ('query\
-Parameters', '47.64054,-122.12934?includeEntityTypes=Address&\
-includeNeighborhood=1&include=ciso2&c=te&o=xml&maxResults=20&key=abs')])
-    """
-    queryParameters = fields.Nested(
-        LocationByPointQueryString
-    )
-
-    class Meta:
-        fields = ('version', 'restApi', 'resourcePath', 'queryParameters')
-        ordered = True
+        data['query'] = '{0}?{1}'.format(data['point'], queryString)
+        for k in list(set(keys_to_be_removed)):
+            del data[k]
+        return data
 
 
 class LocationByPointUrl(LocationUrl):
@@ -528,12 +464,12 @@ class LocationByPointUrl(LocationUrl):
 
         ::
 
-            >>> data = {'queryParameters': { 'point': '47.64054,-122.12934',
-            ...                              'includeEntityTypes': 'Address',
-            ...                              'c': 'te',
-            ...                              'o': 'xml',
-            ...                              'includeNeighborhood': 1,
-            ...                              'key': 'abs'}}
+            >>> data = { 'point': '47.64054,-122.12934',
+            ...          'includeEntityTypes': 'Address',
+            ...          'c': 'te',
+            ...          'o': 'xml',
+            ...          'includeNeighborhood': 1,
+            ...          'key': 'abs'}
             >>> loc_by_point = LocationByPointUrl(data, 'http')
             >>> loc_by_point.main_url
             'dev.virtualearth.net'
@@ -563,18 +499,18 @@ includeNeighborhood=1&include=ciso2&c=te&o=xml&maxResults=20&key=abs'
             parameters
         :type: string
         """
-        return self._schema_dict['queryParameters']
+        return self._schema_dict['query']
 
 
-class LocationByQueryString(Schema):
+class LocationByQuerySchema(Location, Schema):
     """Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
     Data Fields for the schema:
 
-    :ivar query: A string that contains information about a location, such as
-        an address or landmark name.
+    :ivar q: A string (query) that contains information about a location, such
+        as an address or landmark name.
     :ivar includeNeighborhood: One of the following
         values:
           - 1: Include neighborhood information when available.
@@ -609,17 +545,22 @@ class LocationByQueryString(Schema):
 
         ::
 
-            >>> data = {'query': '1014 Oatney Ridge Ln., Morrisville,NC-27560',
+            >>> data = {'q': '1014 Oatney Ridge Ln., Morrisville,NC-27560',
             ...         'key': 'abs'}
-            >>> query = LocationByQueryString()
+            >>> query = LocationByQuerySchema()
             >>> query.dump(data).data
-            'query=1014%20Oatney%20Ridge%20Ln.%2C%20Morrisville%2CNC-27560&includeNeighborhood=0&include=ciso2&maxResults=20&key=abs'
+            OrderedDict([('version', 'v1'), ('restApi', 'Locations'), ('query\
+', 'q=1014%20Oatney%20Ridge%20Ln.%2C%20Morrisville\
+%2CNC-27560&includeNeighborhood=0&include=ciso2&maxResults=20&key=abs')])
 
         In the output, you can see 'include', 'maxResults' in the string
         although we haven't specified any values because they are default
         values specified in the schema.
     """
-    query = fields.Str()
+    q = fields.Str(
+        required=True,
+        error_messages={'required': 'require a query string'}
+    )
     includeNeighborhood = fields.Int(
         default=0
     )
@@ -636,8 +577,9 @@ class LocationByQueryString(Schema):
         error_messages={'required': 'Please provide a key'}
     )
 
-    class Meta():
-        fields = ('query', 'includeNeighborhood', 'include', 'c', 'o',
+    class Meta:
+        fields = ('version', 'restApi', 'resourcePath',
+                  'q', 'includeNeighborhood', 'include', 'c', 'o',
                   'maxResults', 'key')
         ordered = True
 
@@ -649,62 +591,33 @@ class LocationByQueryString(Schema):
             data (dict): dictionary of all the query values
 
         Returns:
-            str: query string consisting of all the values concatenated
-            with '&'. As part of the location by query services, the url will
-            be encoded. If the 'query' consists of spaces, commas, or other
-            special characters all those will be encoded.
+            data (dict): ordered dict of all the values
 
-            For example:
-              - space(' ') - %20
-              - comma(,) - %2C, etc.
+        The query string consists of all the values concatenated
+        with '&'. As part of the location by query services, the url will
+        be encoded. If the 'query' consists of spaces, commas, or other
+        special characters all those will be encoded.
+
+        For example:
+          - space(' ') - %20
+          - comma(,) - %2C, etc.
         """
         query_params = []
+        keys_to_be_removed = []
         for key, value in data.items():
-            if key == 'query':
-                query_params.append('{0}={1}'.format(key,
-                                                     quote(value)))
-            else:
-                query_params.append('{0}={1}'.format(key,
-                                                     value))
-
-        return "&".join(query_params)
-
-
-class LocationByQuerySchema(Location, Schema):
-    """Inherits from :class:`Location` schema.
-
-    :ivar queryParameters: Depending on the request, query parameters may be
-        optional or required. Query parameters consist of global parameters
-        and parameters that are specific to each REST API. The Bing Maps Key
-        is a required query parameter.
-
-    ``queryParameters`` is a nested schema referring to
-    :class:`LocationByQueryString` for the location by query API query
-    parameters
-
-    Example:
-
-        ::
-
-            >>> data = {'version': 'v1',
-            ...         'restApi': 'Locations',
-            ...         'queryParameters':
-            ...         {'query': '1014 Oatney Ridge Ln.,Morrisville,NC-27560',
-            ...                             'key': 'abs'}
-            ...         }
-            >>> location_by_query = LocationByQuerySchema()
-            >>> location_by_query.dump(data).data
-            OrderedDict([('version', 'v1'), ('restApi', 'Locations'), ('query\
-Parameters', 'query=1014%20Oatney%20Ridge%20Ln.%2CMorrisville\
-%2CNC-27560&includeNeighborhood=0&include=ciso2&maxResults=20&key=abs')])
-    """
-    queryParameters = fields.Nested(
-        LocationByQueryString
-    )
-
-    class Meta:
-        fields = ('version', 'restApi', 'resourcePath', 'queryParameters')
-        ordered = True
+            if key not in ['version', 'restApi', 'resourcePath']:
+                if key == 'q':
+                    query_params.append('{0}={1}'.format(key,
+                                                         quote(value)))
+                    keys_to_be_removed.append(key)
+                else:
+                    query_params.append('{0}={1}'.format(key,
+                                                         value))
+                    keys_to_be_removed.append(key)
+        for k in list(set(keys_to_be_removed)):
+            del data[k]
+        data['query'] = "&".join(query_params)
+        return data
 
 
 class LocationByQueryUrl(LocationUrl):
@@ -720,9 +633,8 @@ class LocationByQueryUrl(LocationUrl):
 
         ::
 
-            >>> data = {'queryParameters':
-            ...         {'query': '1014 Oatney Ridge Ln.,Morrisville,NC-27560',
-            ...                             'key': 'abs'}}
+            >>> data = {'q': '1014 Oatney Ridge Ln.,Morrisville,NC-27560',
+            ...         'key': 'abs'}
             >>> loc_by_query = LocationByQueryUrl(data, 'http')
             >>> loc_by_query.main_url
             'dev.virtualearth.net'
@@ -737,7 +649,7 @@ class LocationByQueryUrl(LocationUrl):
             >>> loc_by_query.version
             'v1'
             >>> loc_by_query.query
-            '?query=1014%20Oatney%20Ridge%20Ln.%2CMorrisville\
+            '?q=1014%20Oatney%20Ridge%20Ln.%2CMorrisville\
 %2CNC-27560&includeNeighborhood=0&include=ciso2&maxResults=20&key=abs'
     """
     def __init__(self, data, httpprotocol):
@@ -752,4 +664,4 @@ class LocationByQueryUrl(LocationUrl):
             parameters. The query is formatted with a ``?`` in front of it.
         :type: string
         """
-        return '?{0}'.format(self._schema_dict['queryParameters'])
+        return '?{0}'.format(self._schema_dict['query'])
