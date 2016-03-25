@@ -60,7 +60,12 @@ setup(
     entry_points=entry_points,
     cmdclass={'test': Tox},
     test_suite='tests',
-    keywords='bingmaps',
+    keywords=['bingmaps',
+              'bingmaps REST services',
+              'bingmaps API services',
+              'bingmaps location API services',
+              'bingmaps elevations API services',
+              'bingmaps traffic incidents API services'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
@@ -70,6 +75,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: System :: Filesystems',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ]
