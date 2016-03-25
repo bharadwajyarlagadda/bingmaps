@@ -12,3 +12,11 @@ This package is a python implementation of retrieving the data from bing maps AP
  - Project link: https://github.com/bharadwajyarlagadda/bingmaps
  - Bing Maps API services: https://msdn.microsoft.com/en-us/library/ff701713.aspx
  - Project Documentation: http://bharadwajyarlagadda.github.io/bingmaps
+ - Pypi: https://pypi.python.org/pypi/bingmaps/
+
+You can install the package using pip:
+
+::
+
+   pip install bingmaps
+
