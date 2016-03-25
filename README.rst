@@ -5,4 +5,8 @@
 .. image:: https://coveralls.io/repos/github/bharadwajyarlagadda/bingmaps/badge.svg?branch=develop
     :target: https://coveralls.io/github/bharadwajyarlagadda/bingmaps?branch=develop
 
-Work in Progress!!!
+Links
+=====
+This package is a python implementation of retrieving the data from bing maps API services
+ - Project link: https://github.com/bharadwajyarlagadda/bingmaps
+ - Bing Maps API services: https://msdn.microsoft.com/en-us/library/ff701713.aspx

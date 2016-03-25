@@ -1,5 +1,5 @@
-REST Services Schemas
-*********************
+API Services Schemas
+********************
 
 
 Locations API

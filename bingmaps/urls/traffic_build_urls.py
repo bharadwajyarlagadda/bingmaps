@@ -163,7 +163,8 @@ class TrafficIncidentsSchema(MainParams, Schema):
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
-    Data Fields for the schema:
+    Data Fields for the schema (taken from
+    https://msdn.microsoft.com/en-us/library/hh441726.aspx):
 
     :ivar mapArea[Required]: A rectangular area specified as a bounding box.
         The size of the area can be a maximum of 500 km x 500 km. A bounding
@@ -195,7 +196,7 @@ class TrafficIncidentsSchema(MainParams, Schema):
           - 9: Construction
           - 10: Alert
           - 11: Weather
-    :ivar o: A string specifying the output as JSON or xml.
+    :ivar o[Optional]: A string specifying the output as JSON or xml.
     :ivar key[Required]: Bing maps key - REQUIRED field
 
     This schema helps in serializing the data.

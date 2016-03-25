@@ -1,5 +1,5 @@
-REST Services
-*************
+API Services
+************
 
 
 Locations API
