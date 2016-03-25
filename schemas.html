@@ -1,0 +1,1144 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Services Schemas &mdash; Bingmaps 0.3.7 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_override.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Bingmaps 0.3.7 documentation" href="index.html"/>
+        <link rel="next" title="API Services URLs" href="urls.html"/>
+        <link rel="prev" title="API Services" href="rest_services.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Bingmaps
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="devguide.html">Developer Guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rest_services.html">API Services</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">API Services Schemas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#locations-api">Locations API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#location-by-address">Location By Address</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#location-by-point">Location By Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#location-by-query">Location By Query</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#elevations-api">Elevations API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#elevations-for-latitude-and-longitude-coordinates">Elevations for latitude and longitude coordinates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#elevations-at-equally-spaced-locations-along-a-polyline-path">Elevations at equally-spaced locations along a polyline path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-offset-at-a-set-of-latitude-and-longitude-coordinates">Get offset at a set of latitude and longitude coordinates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-elevations-within-an-area-on-the-earth-defined-as-a-bounding-box">Get elevations within an area on the Earth defined as a bounding box</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#traffic-incidents-api">Traffic Incidents API</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">API Services URLs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="locationsapi.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Release 0.3.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Bingmaps</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>API Services Schemas</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/schemas.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-services-schemas">
+<h1>API Services Schemas<a class="headerlink" href="#api-services-schemas" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="locations-api">
+<h2>Locations API<a class="headerlink" href="#locations-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bingmaps.urls.locations_build_urls.Location">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.locations_build_urls.</code><code class="descname">Location</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#Location"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.Location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main class for Locations API schema</p>
+<p>Data Fields:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="urls.html#bingmaps.urls.locations_build_urls.LocationByAddressUrl.version" title="bingmaps.urls.locations_build_urls.LocationByAddressUrl.version"><strong>version</strong></a> &#8211; <p>A string containing v and an integer that specifies
+the version of the Bing Maps REST Services.</p>
+<blockquote>
+<div><ul>
+<li>default: v1</li>
+</ul>
+</div></blockquote>
+</li>
+<li><a class="reference internal" href="urls.html#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.restApi" title="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.restApi"><strong>restApi</strong></a> &#8211; <p>A part of the URL path that identifies the REST
+API.</p>
+<blockquote>
+<div><ul>
+<li>default: &#8216;Locations&#8217; (for Locations API services)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><a class="reference internal" href="urls.html#bingmaps.urls.locations_build_urls.LocationByPointUrl.resourcePath" title="bingmaps.urls.locations_build_urls.LocationByPointUrl.resourcePath"><strong>resourcePath</strong></a> &#8211; A part of the URL path that specifies a
+resource, such as an address or landmark.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This schema helps in creating the main parameters of all types of locations
+API based services (location by address, location by point, location by
+query. The above mentioned data fields make up the main parameters of the
+url.</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><p class="first">The below example can show you a typical example for how the main URL
+parameters can be passed in as a dictionary</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;v1&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;restApi&#39;</span><span class="p">:</span> <span class="s1">&#39;Locations&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;resourcePath&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>When you dump an empty dictionary, the class helps you in filling the
+dictionary with default values. You can see the same behaviour in the
+below example:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span> <span class="o">=</span> <span class="n">Location</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Locations&#39;)])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Location class is common for all the location based services
+with the same default data.</p>
+</div>
+</dd></dl>
+
+<div class="section" id="location-by-address">
+<h3>Location By Address<a class="headerlink" href="#location-by-address" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressSchema">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.locations_build_urls.</code><code class="descname">LocationByAddressSchema</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#LocationByAddressSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits from <code class="xref py py-class docutils literal"><span class="pre">Location</span></code></p>
+<p>Schema for query parameters in which all the fields will be in a ordered
+way. All the fields will be dumped in the same order as mentioned in the
+schema.</p>
+<p>Data Fields for the schema (taken from
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/ff701714.aspx">https://msdn.microsoft.com/en-us/library/ff701714.aspx</a>):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>adminDistrict[Optional]</strong> &#8211; A string that contains a subdivision, such
+as the abbreviation of a US state</li>
+<li><strong>locality[Optional]</strong> &#8211; A string that contains the locality, such as a
+US city</li>
+<li><strong>postalCode[Optional]</strong> &#8211; An integer value that contains the postal
+code, such as a US ZIP Code</li>
+<li><strong>addressLine[Optional]</strong> &#8211; A string specifying the street line of an
+address</li>
+<li><strong>countryRegion[Optional]</strong> &#8211; A string specifying the ISO country code</li>
+<li><strong>c[Optional]</strong> &#8211; A string specifying the culture parameter</li>
+<li><strong>o[Optional]</strong> &#8211; <p>A string for specifying the format of output(response)
+Ex. - xml/json</p>
+<blockquote>
+<div><ul>
+<li>If empty, default output would be a JSON data string</li>
+<li>If given xml, the output would be an xml data string</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>includeNeighborhood[Optional]</strong> &#8211; <p>One of the following
+values</p>
+<blockquote>
+<div><ul>
+<li>1: Include neighborhood information when available</li>
+<li>0 [default]: Do not include neighborhood information</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>include[Optional]</strong> &#8211; <p>The only value for this parameter is ciso2. When
+you specify include=ciso2, the two-letter ISO country code is included
+for addresses in the response</p>
+<blockquote>
+<div><ul>
+<li>default=&#8217;ciso2&#8217;</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>maxResults[Optional]</strong> &#8211; <p>An integer between 1 and 20 (number of
+results)</p>
+<blockquote>
+<div><ul>
+<li>default=20</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>key[Required]</strong> &#8211; Bing maps api key
+- Required</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This schema helps in serializing the data.</p>
+<dl class="docutils">
+<dt>Post-Dump:</dt>
+<dd>After dumping the data, build_query_string builds up the
+queryParameters string. The final value after dumping the data would
+be a string.</dd>
+</dl>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;adminDistrict&#39;</span><span class="p">:</span> <span class="s1">&#39;WA&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;locality&#39;</span><span class="p">:</span> <span class="s1">&#39;Seattle&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;te&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;includeNeighborhood&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span>
+<span class="gp">... </span>        <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">LocationByAddressSchema</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Locations&#39;), (&#39;query&#39;, &#39;adminDistrict=WA&amp;locality=Seattle&amp;c=te&amp;o=xml&amp;includeNeighborhood=1&amp;include=ciso2&amp;maxResults=20&amp;key=abs&#39;)])</span>
+</pre></div>
+</div>
+<p>In the output, you can see &#8216;include&#8217;, &#8216;maxResults&#8217; in the string
+although we haven&#8217;t specified any values because they are default
+values specified in the schema.</p>
+</div></blockquote>
+<dl class="method">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressSchema.build_query_string">
+<code class="descname">build_query_string</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#LocationByAddressSchema.build_query_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressSchema.build_query_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method occurs after dumping the data into the class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>data (dict): dictionary of all the query values</dd>
+<dt>Returns:</dt>
+<dd>data (dict): ordered dict of all the values</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="location-by-point">
+<h3>Location By Point<a class="headerlink" href="#location-by-point" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointSchema">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.locations_build_urls.</code><code class="descname">LocationByPointSchema</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#LocationByPointSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits from <code class="xref py py-class docutils literal"><span class="pre">Location</span></code></p>
+<p>Schema for query parameters in which all the fields will be in a ordered
+way. All the fields will be dumped in the same order as mentioned in the
+schema.</p>
+<p>Data Fields for the schema (taken from
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/ff701710.aspx">https://msdn.microsoft.com/en-us/library/ff701710.aspx</a>):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>point[Required]</strong> &#8211; A point on the Earth specified by a latitude and
+longitude.</li>
+<li><strong>includeEntityTypes[Optional]</strong> &#8211; <p>A comma separated list of entity types
+selected from the following options:</p>
+<blockquote>
+<div><ul>
+<li>Address</li>
+<li>Neighborhood</li>
+<li>PopulatedPlace</li>
+<li>Postcode1</li>
+<li>AdminDivision1</li>
+<li>AdminDivision2</li>
+<li>CountryRegion</li>
+</ul>
+</div></blockquote>
+<p>These entity types are ordered from the most specific entity to the
+least specific entity. When entities of more than one entity type are
+found, only the most specific entity is returned. For example, if you
+specify Address and AdminDistrict1 as entity types and entities were
+found for both types, only the Address entity information is returned
+in the response. One exception to this rule is when both
+PopulatedPlace and Neighborhood entity types are specified and
+information is found for both. In this case, the information for both
+entity types is returned. Also, more than one Neighborhood may be
+returned because the area covered by two different neighborhoods can
+overlap.</p>
+</li>
+<li><strong>includeNeighborhood[Optional]</strong> &#8211; <p>One of the following
+values:</p>
+<blockquote>
+<div><ul>
+<li>1: Include neighborhood information when available.</li>
+<li>0 [default]: Do not include neighborhood information.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>include[Optional]</strong> &#8211; The only value for this parameter is ciso2. When
+you specify include=ciso2, the two-letter ISO country code is included
+for addresses in the response.</li>
+<li><strong>c[Optional]</strong> &#8211; A string specifying the culture parameter</li>
+<li><strong>o[Optional]</strong> &#8211; <p>A string for specifying the format of output(response)
+Ex. - xml/json</p>
+<blockquote>
+<div><ul>
+<li>If empty, default output would be a JSON data string</li>
+<li>If given xml, the output would be an xml data string</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>maxResults[Optional]</strong> &#8211; <p>An integer between 1 and 20 (number of
+results)</p>
+<blockquote>
+<div><ul>
+<li>default=20</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>key[Required]</strong> &#8211; <p>Bing maps api
+key</p>
+<blockquote>
+<div><ul>
+<li>Required</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Post-Dump:</dt>
+<dd>After dumping the data, build_query_string builds up the
+queryParameters string. The final value after dumping the data would
+be a string. The string would be similar to the one mentioned in the
+below example.</dd>
+</dl>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;point&#39;</span><span class="p">:</span> <span class="s1">&#39;47.64054,-122.12934&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;includeEntityTypes&#39;</span><span class="p">:</span> <span class="s1">&#39;Address&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;te&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;includeNeighborhood&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span>
+<span class="gp">... </span>        <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">LocationByPointSchema</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Locations&#39;), (&#39;query&#39;, &#39;47.64054,-122.12934?includeEntityTypes=Address&amp;includeNeighborhood=1&amp;include=ciso2&amp;c=te&amp;o=xml&amp;maxResults=20&amp;key=abs&#39;)])</span>
+</pre></div>
+</div>
+<p>In the output, you can see &#8216;include&#8217;, &#8216;maxResults&#8217; in the string
+although we haven&#8217;t specified any values because they are default
+values specified in the schema.</p>
+</div></blockquote>
+<dl class="method">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointSchema.build_query_string">
+<code class="descname">build_query_string</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#LocationByPointSchema.build_query_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointSchema.build_query_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method occurs after dumping the data into the class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>data (dict): dictionary of all the query values</dd>
+<dt>Returns:</dt>
+<dd>data (dict): ordered dict of all the values</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="location-by-query">
+<h3>Location By Query<a class="headerlink" href="#location-by-query" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQuerySchema">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.locations_build_urls.</code><code class="descname">LocationByQuerySchema</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#LocationByQuerySchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQuerySchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits from <code class="xref py py-class docutils literal"><span class="pre">Location</span></code></p>
+<p>Schema for query parameters in which all the fields will be in a ordered
+way. All the fields will be dumped in the same order as mentioned in the
+schema.</p>
+<p>Data Fields for the schema (taken from
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/ff701711.aspx">https://msdn.microsoft.com/en-us/library/ff701711.aspx</a>):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>q[Required]</strong> &#8211; A string (query) that contains information about a
+location, such as an address or landmark name.</li>
+<li><strong>includeNeighborhood[Optional]</strong> &#8211; <p>One of the following
+values:</p>
+<blockquote>
+<div><ul>
+<li>1: Include neighborhood information when available.</li>
+<li>0 [default]: Do not include neighborhood information.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>include[Optional]</strong> &#8211; <p>One or more of the following
+options:</p>
+<blockquote>
+<div><ul>
+<li>queryParse: Specifies that the response shows how the query string
+was parsed into address values, such as addressLine, locality,
+adminDistrict, and postalCode.</li>
+<li>ciso2: Specifies to include the two-letter ISO country code.</li>
+</ul>
+</div></blockquote>
+<p>If you specify more than one include value, separate the values with a
+comma.</p>
+</li>
+<li><strong>c[Optional]</strong> &#8211; A string specifying the culture parameter</li>
+<li><strong>o[Optional]</strong> &#8211; <p>A string for specifying the format of output(response)
+Ex. - xml/json</p>
+<blockquote>
+<div><ul>
+<li>If empty, default output would be a JSON data string</li>
+<li>If given xml, the output would be an xml data string</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>maxResults[Optional]</strong> &#8211; <p>An integer between 1 and 20 (number of
+results)</p>
+<blockquote>
+<div><ul>
+<li>default=20</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>key[Required]</strong> &#8211; <p>Bing maps api
+key</p>
+<blockquote>
+<div><ul>
+<li>Required</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Post-Dump:</dt>
+<dd>After dumping the data, build_query_string builds up the
+queryParameters string. The final value after dumping the data would
+be a string. The string would be similar to the one mentioned in the
+below example.</dd>
+</dl>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="s1">&#39;1014 Oatney Ridge Ln., Morrisville,NC-27560&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">LocationByQuerySchema</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Locations&#39;), (&#39;query&#39;, &#39;q=1014%20Oatney%20Ridge%20Ln.%2C%20Morrisville%2CNC-27560&amp;includeNeighborhood=0&amp;include=ciso2&amp;maxResults=20&amp;key=abs&#39;)])</span>
+</pre></div>
+</div>
+<p>In the output, you can see &#8216;include&#8217;, &#8216;maxResults&#8217; in the string
+although we haven&#8217;t specified any values because they are default
+values specified in the schema.</p>
+</div></blockquote>
+<dl class="method">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQuerySchema.build_query_string">
+<code class="descname">build_query_string</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#LocationByQuerySchema.build_query_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQuerySchema.build_query_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method occurs after dumping the data into the class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>data (dict): dictionary of all the query values</dd>
+<dt>Returns:</dt>
+<dd>data (dict): ordered dict of all the values</dd>
+</dl>
+<p>The query string consists of all the values concatenated
+with &#8216;&amp;&#8217;. As part of the location by query services, the url will
+be encoded. If the &#8216;query&#8217; consists of spaces, commas, or other
+special characters all those will be encoded.</p>
+<dl class="docutils">
+<dt>For example:</dt>
+<dd><ul class="first last simple">
+<li>space(&#8216; &#8216;) - %20</li>
+<li>comma(,) - %2C, etc.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="elevations-api">
+<h2>Elevations API<a class="headerlink" href="#elevations-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bingmaps.urls.elevations_build_urls.Elevations">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.elevations_build_urls.</code><code class="descname">Elevations</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#Elevations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.Elevations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main class for Elevations API schema</p>
+<p>Data Fields:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="urls.html#bingmaps.urls.locations_build_urls.LocationByAddressUrl.version" title="bingmaps.urls.locations_build_urls.LocationByAddressUrl.version"><strong>version</strong></a> &#8211; <p>A string containing v and an integer that specifies
+the version of the Bing Maps REST Services.</p>
+<blockquote>
+<div><ul>
+<li>default: v1</li>
+</ul>
+</div></blockquote>
+</li>
+<li><a class="reference internal" href="urls.html#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.restApi" title="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.restApi"><strong>restApi</strong></a> &#8211; <p>A part of the URL path that identifies the REST
+API.</p>
+<blockquote>
+<div><ul>
+<li>default: &#8216;Elevation&#8217; (for Elevations API services)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><a class="reference internal" href="urls.html#bingmaps.urls.locations_build_urls.LocationByPointUrl.resourcePath" title="bingmaps.urls.locations_build_urls.LocationByPointUrl.resourcePath"><strong>resourcePath</strong></a> &#8211; A part of the URL path that specifies a
+resource, such as an address or landmark.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This schema helps in creating the main parameters of all types of
+elevations API based services (List, Polyline, SeaLevel, Bounds). The
+above mentioned data fields make up the main parameters of the
+url.</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><p class="first">The below example can show you a typical example for how the main URL
+parameters can be passed in as a dictionary</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;v1&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;restApi&#39;</span><span class="p">:</span> <span class="s1">&#39;Elevation&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;resourcePath&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>When you dump an empty dictionary, the class helps you in filling the
+dictionary with default values. You can see the same behaviour in the
+below example:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span> <span class="o">=</span> <span class="n">Elevations</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;)])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Elevations class is common for all the elevations based services
+with the same default data.</p>
+</div>
+</dd></dl>
+
+<div class="section" id="elevations-for-latitude-and-longitude-coordinates">
+<h3>Elevations for latitude and longitude coordinates<a class="headerlink" href="#elevations-for-latitude-and-longitude-coordinates" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.elevations_build_urls.Coordinates">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.elevations_build_urls.</code><code class="descname">Coordinates</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#Coordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.Coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherited from <code class="xref py py-class docutils literal"><span class="pre">Elevations</span></code></p>
+<p>Schema for query parameters in which all the fields will be in a ordered
+way. All the fields will be dumped in the same order as mentioned in the
+schema.</p>
+<p>Data Fields for the schema (taken from
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/jj158961.aspx">https://msdn.microsoft.com/en-us/library/jj158961.aspx</a>):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>method[Required]</strong> &#8211; <p>A method for calculating elevations
+(ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field</p>
+<blockquote>
+<div><ul>
+<li>&#8216;List&#8217; [default]: Use this for returning elevations for a given
+pair of coordinates.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>points[Required]</strong> &#8211; A set of coordinates on the Earth to use in
+elevation calculations. The exact use of these points depends on the
+type of elevation request. A set of latitude and longitude values in
+WGS84 decimal degrees. If you are requesting elevations or elevation
+offsets for a set of points, the maximum number of points is 1024.
+Points should be given as <code class="docutils literal"><span class="pre">lat1,long1,lat2,long2,latn,longn</span></code> -
+REQUIRED field</li>
+<li><strong>heights[Optional]</strong> &#8211; <p>A string that specifies which sea level model to
+use to calculate elevation. One of the following values:</p>
+<blockquote>
+<div><ul>
+<li>sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).</li>
+<li>ellipsoid: Use the ellipsoid Earth model (WGS84).</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>o[Optional]</strong> &#8211; A string specifying the output as JSON or xml.</li>
+<li><strong>key[Required]</strong> &#8211; Bing maps key - REQUIRED field</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This schema helps in serializing the data.</p>
+<dl class="docutils">
+<dt>Post-Dump:</dt>
+<dd>After dumping the data, build_query_string builds up the
+queryParameters string. The final value after dumping the data would
+be a string.</dd>
+</dl>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;List&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">15.5467</span><span class="p">,</span> <span class="mf">34.5676</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span> <span class="o">=</span> <span class="n">Coordinates</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;), (&#39;query&#39;, &#39;List?points=15.5467,34.5676&amp;heights=sealevel&amp;key=abs&#39;)])</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="method">
+<dt id="bingmaps.urls.elevations_build_urls.Coordinates.build_query_string">
+<code class="descname">build_query_string</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#Coordinates.build_query_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.Coordinates.build_query_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method occurs after dumping the data into the class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>data (dict): dictionary of all the query values</dd>
+<dt>Returns:</dt>
+<dd>data (dict): ordered dict of all the values</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="elevations-at-equally-spaced-locations-along-a-polyline-path">
+<h3>Elevations at equally-spaced locations along a polyline path<a class="headerlink" href="#elevations-at-equally-spaced-locations-along-a-polyline-path" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.elevations_build_urls.Polyline">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.elevations_build_urls.</code><code class="descname">Polyline</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#Polyline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.Polyline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherited from <code class="xref py py-class docutils literal"><span class="pre">Elevations</span></code></p>
+<p>Schema for query parameters in which all the fields will be in a ordered
+way. All the fields will be dumped in the same order as mentioned in the
+schema.</p>
+<p>Data Fields for the schema (taken from
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/jj158961.aspx">https://msdn.microsoft.com/en-us/library/jj158961.aspx</a>):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>method[Required]</strong> &#8211; <p>A method for calculating elevations
+(ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field</p>
+<blockquote>
+<div><ul>
+<li>&#8216;Polyline&#8217; [default]: Use this for returning elevations for a
+given pair of coordinates.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>points[Required]</strong> &#8211; A set of coordinates on the Earth to use in
+elevation calculations. The exact use of these points depends on the
+type of elevation request. A set of latitude and longitude values in
+WGS84 decimal degrees. If you are requesting elevations or elevation
+offsets for a set of points, the maximum number of points is 1024.
+Points should be at least 2 pairs of latitudes and longitudes for
+Polyline method - It should be a minimum total of 4 points for
+Polyline method. Points should be given as
+<code class="docutils literal"><span class="pre">lat1,long1,lat2,long2,latn,longn</span></code></li>
+<li><strong>heights[Optional]</strong> &#8211; <p>A string that specifies which sea level model to
+use to calculate elevation. One of the following values:</p>
+<blockquote>
+<div><ul>
+<li>sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).</li>
+<li>ellipsoid: Use the ellipsoid Earth model (WGS84).</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>samples[Required]</strong> &#8211; Specifies the number of equally-spaced elevation
+values to provide along a polyline path. A positive integer. The
+maximum number of samples is 1024.</li>
+<li><strong>o[Optional]</strong> &#8211; A string specifying the output as JSON or xml.</li>
+<li><strong>key[Required]</strong> &#8211; Bing maps key - REQUIRED field</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This schema helps in serializing the data.</p>
+<dl class="docutils">
+<dt>Post-Dump:</dt>
+<dd>After dumping the data, build_query_string builds up the
+queryParameters string. The final value after dumping the data would
+be a string.</dd>
+</dl>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;Polyline&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">35.89431</span><span class="p">,</span> <span class="o">-</span><span class="mf">110.72522</span><span class="p">,</span> <span class="mf">35.89393</span><span class="p">,</span> <span class="o">-</span><span class="mf">110.72578</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span> <span class="o">=</span> <span class="n">Polyline</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;), (&#39;query&#39;, &#39;Polyline?points=35.89431,-110.72522,35.89393,-110.72578&amp;heights=sealevel&amp;samples=10&amp;key=abs&#39;)])</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="method">
+<dt id="bingmaps.urls.elevations_build_urls.Polyline.build_query_string">
+<code class="descname">build_query_string</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#Polyline.build_query_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.Polyline.build_query_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method occurs after dumping the data into the class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>data (dict): dictionary of all the query values</dd>
+<dt>Returns:</dt>
+<dd>data (dict): ordered dict of all the values</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="get-offset-at-a-set-of-latitude-and-longitude-coordinates">
+<h3>Get offset at a set of latitude and longitude coordinates<a class="headerlink" href="#get-offset-at-a-set-of-latitude-and-longitude-coordinates" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.elevations_build_urls.Offset">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.elevations_build_urls.</code><code class="descname">Offset</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#Offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.Offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherited from <code class="xref py py-class docutils literal"><span class="pre">Elevations</span></code></p>
+<p>Schema for query parameters in which all the fields will be in a ordered
+way. All the fields will be dumped in the same order as mentioned in the
+schema.</p>
+<p>Data Fields for the schema (taken from
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/jj158961.aspx">https://msdn.microsoft.com/en-us/library/jj158961.aspx</a>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>method[Required]</strong> &#8211; <p>A method for calculating elevations
+(ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field</p>
+<blockquote>
+<div><ul>
+<li>&#8216;SeaLevel&#8217; [default]: Use this for returning elevations for a given
+pair of coordinates.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>points[Required]</strong> &#8211; A set of coordinates on the Earth to use in
+elevation calculations. The exact use of these points depends on the
+type of elevation request. A set of latitude and longitude values in
+WGS84 decimal degrees. If you are requesting elevations or elevation
+offsets for a set of points, the maximum number of points is 1024.
+Points should be given as <code class="docutils literal"><span class="pre">lat1,long1,lat2,long2,latn,longn</span></code> -
+REQUIRED field</li>
+<li><strong>o[Optional]</strong> &#8211; A string specifying the output as JSON or xml.</li>
+<li><strong>key[Required</strong> &#8211; Bing maps key - REQUIRED field</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This schema helps in serializing the data.</p>
+<dl class="docutils">
+<dt>Post-Dump:</dt>
+<dd>After dumping the data, build_query_string builds up the
+queryParameters string. The final value after dumping the data would
+be a string.</dd>
+</dl>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;SeaLevel&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">15.5467</span><span class="p">,</span> <span class="mf">34.5676</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span> <span class="o">=</span> <span class="n">Offset</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;), (&#39;query&#39;, &#39;SeaLevel?points=15.5467,34.5676&amp;key=abs&#39;)])</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="method">
+<dt id="bingmaps.urls.elevations_build_urls.Offset.build_query_string">
+<code class="descname">build_query_string</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#Offset.build_query_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.Offset.build_query_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method occurs after dumping the data into the class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>data (dict): dictionary of all the query values</dd>
+<dt>Returns:</dt>
+<dd>data (dict): ordered dict of all the values</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="get-elevations-within-an-area-on-the-earth-defined-as-a-bounding-box">
+<h3>Get elevations within an area on the Earth defined as a bounding box<a class="headerlink" href="#get-elevations-within-an-area-on-the-earth-defined-as-a-bounding-box" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.elevations_build_urls.BoundingBox">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.elevations_build_urls.</code><code class="descname">BoundingBox</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#BoundingBox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.BoundingBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherited from <code class="xref py py-class docutils literal"><span class="pre">Elevations</span></code></p>
+<p>Schema for query parameters in which all the fields will be in a ordered
+way. All the fields will be dumped in the same order as mentioned in the
+schema.</p>
+<p>Data Fields for the schema (taken from
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/jj158961.aspx">https://msdn.microsoft.com/en-us/library/jj158961.aspx</a>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>method[Required]</strong> &#8211; <p>A method for calculating elevations
+(ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field</p>
+<blockquote>
+<div><ul>
+<li>&#8216;Bounds&#8217; [default]: Use this for returning elevations for a given
+pair of coordinates.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>bounds[Required]</strong> &#8211; <p>Specifies the rectangular area over which to
+provide elevation values. A bounding box defined as a set of WGS84
+latitudes and longitudes in the following order:</p>
+<blockquote>
+<div><ul>
+<li>south latitude, west longitude, north latitude, east longitude</li>
+<li>REQUIRED field</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>rows,cols[Required]</strong> &#8211; Specifies the number of rows and columns to use
+to divide the bounding box area into a grid. The rows and columns that
+define the bounding box each count as two (2) of the rows and columns.
+Elevation values are returned for all vertices of the grid. Integers
+with a value of two (2) or greater. The number of rows and columns
+can define a maximum of 1024 locations (rows * cols &lt;= 1024).</li>
+<li><strong>heights[Optional]</strong> &#8211; <p>A string that specifies which sea level model to
+use to calculate elevation. One of the following values:</p>
+<blockquote>
+<div><ul>
+<li>sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).</li>
+<li>ellipsoid: Use the ellipsoid Earth model (WGS84).</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>o[Optional]</strong> &#8211; A string specifying the output as JSON or xml.</li>
+<li><strong>key[Required]</strong> &#8211; Bing maps key</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This schema helps in serializing the data.</p>
+<dl class="docutils">
+<dt>Post-Dump:</dt>
+<dd>After dumping the data, build_query_string builds up the
+queryParameters string. The final value after dumping the data would
+be a string.</dd>
+</dl>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;Bounds&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">15.5463</span><span class="p">,</span> <span class="mf">34.6577</span><span class="p">,</span> <span class="mf">16.4365</span><span class="p">,</span> <span class="mf">35.3245</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;rows&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;cols&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span> <span class="o">=</span> <span class="n">BoundingBox</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;), (&#39;query&#39;, &#39;Bounds?bounds=15.5463,34.6577,16.4365,35.3245&amp;rows=4&amp;cols=5&amp;heights=sealevel&amp;key=abs&#39;)])</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="method">
+<dt id="bingmaps.urls.elevations_build_urls.BoundingBox.build_query_string">
+<code class="descname">build_query_string</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#BoundingBox.build_query_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.BoundingBox.build_query_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method occurs after dumping the data into the class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>data (dict): dictionary of all the query values</dd>
+<dt>Returns:</dt>
+<dd>data (dict): ordered dict of all the values</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="traffic-incidents-api">
+<h2>Traffic Incidents API<a class="headerlink" href="#traffic-incidents-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bingmaps.urls.traffic_build_urls.TrafficIncidentsSchema">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.traffic_build_urls.</code><code class="descname">TrafficIncidentsSchema</code><span class="sig-paren">(</span><em>extra=None</em>, <em>only=()</em>, <em>exclude=()</em>, <em>prefix=''</em>, <em>strict=False</em>, <em>many=False</em>, <em>context=None</em>, <em>load_only=()</em>, <em>dump_only=()</em>, <em>partial=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/traffic_build_urls.html#TrafficIncidentsSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schema for query parameters in which all the fields will be in a ordered
+way. All the fields will be dumped in the same order as mentioned in the
+schema.</p>
+<p>Data Fields for the schema (taken from
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/hh441726.aspx">https://msdn.microsoft.com/en-us/library/hh441726.aspx</a>):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mapArea[Required]</strong> &#8211; A rectangular area specified as a bounding box.
+The size of the area can be a maximum of 500 km x 500 km. A bounding
+box defines an area by specifying SouthLatitude, WestLongitude,
+NorthLatitude, and EastLongitude values.</li>
+<li><strong>includeLocationCodes[Optional]</strong> &#8211; <p>One of the following
+values:</p>
+<blockquote>
+<div><ul>
+<li>&#8216;true&#8217;</li>
+<li>&#8216;false&#8217; [default]</li>
+</ul>
+</div></blockquote>
+<p>If you want to use the default value, you can omit this parameter from
+the URL request.</p>
+</li>
+<li><strong>severity[Optional]</strong> &#8211; <p>One or more of the following integer
+values:</p>
+<blockquote>
+<div><ul>
+<li>1: LowImpact</li>
+<li>2: Minor</li>
+<li>3: Moderate</li>
+<li>4: Serious</li>
+</ul>
+</div></blockquote>
+<p>The default is to return traffic incidents for all severity levels.</p>
+</li>
+<li><strong>type[Optional]</strong> &#8211; <p>One or more of the following integer
+values:</p>
+<blockquote>
+<div><ul>
+<li>1: Accident</li>
+<li>2: Congestion</li>
+<li>3: DisabledVehicle</li>
+<li>4: MassTransit</li>
+<li>5: Miscellaneous</li>
+<li>6: OtherNews</li>
+<li>7: PlannedEvent</li>
+<li>8: RoadHazard</li>
+<li>9: Construction</li>
+<li>10: Alert</li>
+<li>11: Weather</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>o[Optional]</strong> &#8211; A string specifying the output as JSON or xml.</li>
+<li><strong>key[Required]</strong> &#8211; Bing maps key - REQUIRED field</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This schema helps in serializing the data.</p>
+<dl class="docutils">
+<dt>Post-Dump:</dt>
+<dd>After dumping the data, build_query_string builds up the
+queryParameters string. The final value after dumping the data would
+be a string.</dd>
+</dl>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mapArea&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">37</span><span class="p">,</span> <span class="o">-</span><span class="mi">105</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="o">-</span><span class="mi">94</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;includeLocationCodes&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">TrafficIncidentsSchema</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="go">OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Traffic&#39;), (&#39;resourcePath&#39;, &#39;Incidents&#39;), (&#39;query&#39;, &#39;37.0,-105.0,45.0,-94.0/true?type=5&amp;o=xml&amp;key=abs&#39;)])</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="urls.html" class="btn btn-neutral float-right" title="API Services URLs" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rest_services.html" class="btn btn-neutral" title="API Services" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bharadwaj Yarlagadda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

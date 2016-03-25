@@ -1,0 +1,1043 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Services &mdash; Bingmaps 0.3.7 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_override.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Bingmaps 0.3.7 documentation" href="index.html"/>
+        <link rel="next" title="API Services Schemas" href="schemas.html"/>
+        <link rel="prev" title="Developer Guide" href="devguide.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Bingmaps
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="devguide.html">Developer Guide</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">API Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#locations-api">Locations API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#location-by-address-api">Location By Address API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#location-by-point-api">Location By Point API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#location-by-query-api">Location By Query API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#elevations-api">Elevations API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#traffic-incidents-api">Traffic Incidents API</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="schemas.html">API Services Schemas</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">API Services URLs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="locationsapi.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Release 0.3.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Bingmaps</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>API Services</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/rest_services.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-services">
+<h1>API Services<a class="headerlink" href="#api-services" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="locations-api">
+<h2>Locations API<a class="headerlink" href="#locations-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="location-by-address-api">
+<h3>Location By Address API<a class="headerlink" href="#location-by-address-api" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.apiservices.LocationByAddress">
+<em class="property">class </em><code class="descclassname">bingmaps.apiservices.</code><code class="descname">LocationByAddress</code><span class="sig-paren">(</span><em>data</em>, <em>http_protocol='http'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/locations.html#LocationByAddress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.LocationByAddress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location by address API class</p>
+<p>This class is used to retrieve the output from the given data from the
+user.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">First, the data is used to build a URL which is related to the
+Locations by Address API.</p>
+</li>
+<li><p class="first">Second, this class helps in retrieving the response from the URL built</p>
+</li>
+<li><p class="first">Third, based on the response, this class helps in retrieving all the
+corresponding output data from the response. Some of the output data
+which this class would be retrieving is:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Coordinates (latitude/longitude)</li>
+<li>BoundingBox coordinates (south latitude, west longitude,
+north latitude, east longitude)</li>
+<li>Address</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>The output from the URL can be either JSON/XML based on the output
+parameter mentioned in the data. Even the output response is &#8216;xml&#8217;, this
+class helps in converting the xml response to JSON data first and then
+retrieve all the necessary output from it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; The data that the user will send in to the Location by address
+to retrieve all the respective output from the response</li>
+<li><strong>url</strong> &#8211; The url that gets built based on the user&#8217;s given data</li>
+<li><strong>http_protocol</strong> &#8211; <p>Http protocol for the URL. Can be either of the
+following:</p>
+<blockquote>
+<div><ul>
+<li>http</li>
+<li>https</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>schema</strong> &#8211; The schema that gets used to build the URL and the schema
+is LocationByAddressUrl for location by address API service.</li>
+<li><strong>file_name</strong> &#8211; <p>The filename that the class can write the JSON response
+to.</p>
+<blockquote>
+<div><ul>
+<li>file_name - &#8216;locationByAddress&#8217;</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>locationApiData</strong> &#8211; Response from the URL</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Some of the examples are illustrated in Examples page</p>
+<dl class="method">
+<dt id="bingmaps.apiservices.LocationByAddress.build_url">
+<code class="descname">build_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/locations.html#LocationByAddress.build_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.LocationByAddress.build_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the url and replaces /None/ with empty string</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByAddress.get_address">
+<code class="descname">get_address</code><a class="headerlink" href="#bingmaps.apiservices.LocationByAddress.get_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves addresses from the output JSON/XML response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>address (namedtuple): List of named tuples of addresses</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByAddress.get_bbox">
+<code class="descname">get_bbox</code><a class="headerlink" href="#bingmaps.apiservices.LocationByAddress.get_bbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the bounding box coordinates from the output JSON/XML
+response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>boundingbox (namedtuple): List of named tuples of bounding box
+coordinates</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByAddress.get_coordinates">
+<code class="descname">get_coordinates</code><a class="headerlink" href="#bingmaps.apiservices.LocationByAddress.get_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves coordinates (latitudes/longitudes) from the output
+JSON/XML response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>coordinates (namedtuple): List of named tuples of coordinates
+(latitudes and longitudes)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.LocationByAddress.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/locations.html#LocationByAddress.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.LocationByAddress.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets data from the built url</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByAddress.response">
+<code class="descname">response</code><a class="headerlink" href="#bingmaps.apiservices.LocationByAddress.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns response form the URL</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByAddress.status_code">
+<code class="descname">status_code</code><a class="headerlink" href="#bingmaps.apiservices.LocationByAddress.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns status code from the URL response</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.LocationByAddress.to_json_file">
+<code class="descname">to_json_file</code><span class="sig-paren">(</span><em>path</em>, <em>file_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bingmaps.apiservices.LocationByAddress.to_json_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to write response to a JSON file with the given file name</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="location-by-point-api">
+<h3>Location By Point API<a class="headerlink" href="#location-by-point-api" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.apiservices.LocationByPoint">
+<em class="property">class </em><code class="descclassname">bingmaps.apiservices.</code><code class="descname">LocationByPoint</code><span class="sig-paren">(</span><em>data</em>, <em>http_protocol='http'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/locations.html#LocationByPoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.LocationByPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location by point API class</p>
+<p>This class is used to retrieve the output from the given data from the
+user.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">First, the data is used to build a URL which is related to the
+Location by Point API.</p>
+</li>
+<li><p class="first">Second, this class helps in retrieving the response from the URL built</p>
+</li>
+<li><p class="first">Third, based on the response, this class helps in retrieving all the
+corresponding output data from the response. Some of the output data
+which this class would be retrieving is:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Coordinates (latitude/longitude)</li>
+<li>BoundingBox coordinates (south latitude, west longitude,
+north latitude, east longitude)</li>
+<li>Address</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>The output from the URL can be either JSON/XML based on the output
+parameter mentioned in the data. Even the output response is &#8216;xml&#8217;, this
+class helps in converting the xml response to JSON data first and then
+retrieve all the necessary output from it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; The data that the user will send in to the Location by point
+to retrieve all the respective output from the response</li>
+<li><strong>url</strong> &#8211; The url that gets built based on the user&#8217;s given data</li>
+<li><strong>http_protocol</strong> &#8211; <p>Http protocol for the URL. Can be either of the
+following:</p>
+<blockquote>
+<div><ul>
+<li>http</li>
+<li>https</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>schema</strong> &#8211; The schema that gets used to build the URL and the schema
+is LocationByPointUrl for location by point API service.</li>
+<li><strong>file_name</strong> &#8211; <p>The filename that the class can write the JSON response
+to.</p>
+<blockquote>
+<div><ul>
+<li>file_name - &#8216;locationByPoint&#8217;</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>locationApiData</strong> &#8211; Response from the URL</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Some of the examples are illustrated in Examples page</p>
+<dl class="method">
+<dt id="bingmaps.apiservices.LocationByPoint.build_url">
+<code class="descname">build_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/locations.html#LocationByPoint.build_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.LocationByPoint.build_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the url and replaces /None/ with &#8216;/&#8217;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByPoint.get_address">
+<code class="descname">get_address</code><a class="headerlink" href="#bingmaps.apiservices.LocationByPoint.get_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves addresses from the output JSON/XML response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>address (namedtuple): List of named tuples of addresses</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByPoint.get_bbox">
+<code class="descname">get_bbox</code><a class="headerlink" href="#bingmaps.apiservices.LocationByPoint.get_bbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the bounding box coordinates from the output JSON/XML
+response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>boundingbox (namedtuple): List of named tuples of bounding box
+coordinates</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByPoint.get_coordinates">
+<code class="descname">get_coordinates</code><a class="headerlink" href="#bingmaps.apiservices.LocationByPoint.get_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves coordinates (latitudes/longitudes) from the output
+JSON/XML response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>coordinates (namedtuple): List of named tuples of coordinates
+(latitudes and longitudes)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.LocationByPoint.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/locations.html#LocationByPoint.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.LocationByPoint.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets data from the built url</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByPoint.response">
+<code class="descname">response</code><a class="headerlink" href="#bingmaps.apiservices.LocationByPoint.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns response form the URL</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByPoint.status_code">
+<code class="descname">status_code</code><a class="headerlink" href="#bingmaps.apiservices.LocationByPoint.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns status code from the URL response</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.LocationByPoint.to_json_file">
+<code class="descname">to_json_file</code><span class="sig-paren">(</span><em>path</em>, <em>file_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bingmaps.apiservices.LocationByPoint.to_json_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to write response to a JSON file with the given file name</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="location-by-query-api">
+<h3>Location By Query API<a class="headerlink" href="#location-by-query-api" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.apiservices.LocationByQuery">
+<em class="property">class </em><code class="descclassname">bingmaps.apiservices.</code><code class="descname">LocationByQuery</code><span class="sig-paren">(</span><em>data</em>, <em>http_protocol='http'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/locations.html#LocationByQuery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.LocationByQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Location by query API class</p>
+<p>This class is used to retrieve the output from the given data from the
+user.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">First, the data is used to build a URL which is related to the
+Location by Query API.</p>
+</li>
+<li><p class="first">Second, this class helps in retrieving the response from the URL built</p>
+</li>
+<li><p class="first">Third, based on the response, this class helps in retrieving all the
+corresponding output data from the response. Some of the output data
+which this class would be retrieving is:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Coordinates (latitude/longitude)</li>
+<li>BoundingBox coordinates (south latitude, west longitude,
+north latitude, east longitude)</li>
+<li>Address</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>The output from the URL can be either JSON/XML based on the output
+parameter mentioned in the data. Even the output response is &#8216;xml&#8217;, this
+class helps in converting the xml response to JSON data first and then
+retrieve all the necessary output from it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; The data that the user will send in to the Location by query
+to retrieve all the respective output from the response</li>
+<li><strong>url</strong> &#8211; The url that gets built based on the user&#8217;s given data</li>
+<li><strong>http_protocol</strong> &#8211; <p>Http protocol for the URL. Can be either of the
+following:</p>
+<blockquote>
+<div><ul>
+<li>http</li>
+<li>https</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>schema</strong> &#8211; The schema that gets used to build the URL and the schema
+is LocationByQueryUrl for location by query API service.</li>
+<li><strong>file_name</strong> &#8211; <p>The filename that the class can write the JSON response
+to.</p>
+<blockquote>
+<div><ul>
+<li>file_name - &#8216;locationByQuery&#8217;</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>locationApiData</strong> &#8211; Response from the URL</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Some of the examples are illustrated in Examples page</p>
+<dl class="method">
+<dt id="bingmaps.apiservices.LocationByQuery.build_url">
+<code class="descname">build_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/locations.html#LocationByQuery.build_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.LocationByQuery.build_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the url and replaces /None/ with empty string</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByQuery.get_address">
+<code class="descname">get_address</code><a class="headerlink" href="#bingmaps.apiservices.LocationByQuery.get_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves addresses from the output JSON/XML response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>address (namedtuple): List of named tuples of addresses</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByQuery.get_bbox">
+<code class="descname">get_bbox</code><a class="headerlink" href="#bingmaps.apiservices.LocationByQuery.get_bbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the bounding box coordinates from the output JSON/XML
+response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>boundingbox (namedtuple): List of named tuples of bounding box
+coordinates</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByQuery.get_coordinates">
+<code class="descname">get_coordinates</code><a class="headerlink" href="#bingmaps.apiservices.LocationByQuery.get_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves coordinates (latitudes/longitudes) from the output
+JSON/XML response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>coordinates (namedtuple): List of named tuples of coordinates
+(latitudes and longitudes)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.LocationByQuery.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/locations.html#LocationByQuery.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.LocationByQuery.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets data from the built url</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByQuery.response">
+<code class="descname">response</code><a class="headerlink" href="#bingmaps.apiservices.LocationByQuery.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns response form the URL</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.LocationByQuery.status_code">
+<code class="descname">status_code</code><a class="headerlink" href="#bingmaps.apiservices.LocationByQuery.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns status code from the URL response</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.LocationByQuery.to_json_file">
+<code class="descname">to_json_file</code><span class="sig-paren">(</span><em>path</em>, <em>file_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bingmaps.apiservices.LocationByQuery.to_json_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to write response to a JSON file with the given file name</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="elevations-api">
+<h2>Elevations API<a class="headerlink" href="#elevations-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bingmaps.apiservices.ElevationsApi">
+<em class="property">class </em><code class="descclassname">bingmaps.apiservices.</code><code class="descname">ElevationsApi</code><span class="sig-paren">(</span><em>data</em>, <em>http_protocol='http'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/elevations.html#ElevationsApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.ElevationsApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elevations API class</p>
+<p>This class is used to retrieve the output from the given data from the
+user.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">First, the data is used to build a URL which is related to the
+Elevations API.</p>
+</li>
+<li><p class="first">Second, this class helps in retrieving the response from the URL built</p>
+</li>
+<li><p class="first">Third, based on the response, this class helps in retrieving all the
+corresponding output data from the response. Some of the output data
+which this class would be retrieving is:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Elevations</li>
+<li>Offsets</li>
+<li>Zoom Level</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>The output from the URL can be either JSON/XML based on the output
+parameter mentioned in the data. Even the output response is &#8216;xml&#8217;, this
+class helps in converting the xml response to JSON data first and then
+retrieve all the necessary output from it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; The data that the user will send in to the ElevationsApi to
+retrieve all the respective output from the response</li>
+<li><strong>url</strong> &#8211; The url that gets built based on the user&#8217;s given data</li>
+<li><strong>http_protocol</strong> &#8211; <p>Http protocol for the URL. Can be either of the
+following:</p>
+<blockquote>
+<div><ul>
+<li>http</li>
+<li>https</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>schema</strong> &#8211; The schema that gets used to build the URL and the schema
+is based in the &#8216;method&#8217; field in the data.</li>
+<li><strong>file_name</strong> &#8211; <p>The filename that the class can write the JSON response
+to.</p>
+<blockquote>
+<div><ul>
+<li>file_name - &#8216;elevations&#8217;</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>elevationdata</strong> &#8211; Response from the URL</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Some of the examples are illustrated in Examples page</p>
+<dl class="method">
+<dt id="bingmaps.apiservices.ElevationsApi.build_url">
+<code class="descname">build_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/elevations.html#ElevationsApi.build_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.ElevationsApi.build_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the URL for elevations API services based on the data given
+by the user.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>url (str): URL for the elevations API services</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.ElevationsApi.elevations">
+<code class="descname">elevations</code><a class="headerlink" href="#bingmaps.apiservices.ElevationsApi.elevations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves elevations/offsets from the output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>elevations/offsets (namedtuple): A named tuple of list of
+elevations/offsets</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.ElevationsApi.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/elevations.html#ElevationsApi.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.ElevationsApi.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets data from the given url</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.ElevationsApi.response">
+<code class="descname">response</code><a class="headerlink" href="#bingmaps.apiservices.ElevationsApi.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response from the built URL</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.ElevationsApi.response_to_dict">
+<code class="descname">response_to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/elevations.html#ElevationsApi.response_to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.ElevationsApi.response_to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method helps in returning the output JSON data from the URL
+and also it helps in converting the XML output/response (string) to a
+JSON object</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>data (dict): JSON data from the output/response</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.ElevationsApi.status_code">
+<code class="descname">status_code</code><a class="headerlink" href="#bingmaps.apiservices.ElevationsApi.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status code of the response from the URL</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.ElevationsApi.to_json_file">
+<code class="descname">to_json_file</code><span class="sig-paren">(</span><em>path</em>, <em>file_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/elevations.html#ElevationsApi.to_json_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.ElevationsApi.to_json_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes output to a JSON file with the given file name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.ElevationsApi.zoomlevel">
+<code class="descname">zoomlevel</code><a class="headerlink" href="#bingmaps.apiservices.ElevationsApi.zoomlevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves zoomlevel from the output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>zoomlevel (namedtuple): A namedtuple of zoomlevel from the output
+response</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="traffic-incidents-api">
+<h2>Traffic Incidents API<a class="headerlink" href="#traffic-incidents-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi">
+<em class="property">class </em><code class="descclassname">bingmaps.apiservices.</code><code class="descname">TrafficIncidentsApi</code><span class="sig-paren">(</span><em>data</em>, <em>http_protocol='http'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/trafficincidents.html#TrafficIncidentsApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traffic Incidents API class</p>
+<p>This class is used to retrieve the output from the given data from the
+user.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">First, the data is used to build a URL which is related to the
+Traffic Incidents API.</p>
+</li>
+<li><p class="first">Second, this class helps in retrieving the response from the URL built</p>
+</li>
+<li><p class="first">Third, based on the response, this class helps in retrieving all the
+corresponding output data from the response. Some of the output data
+which this class would be retrieving is:</p>
+<blockquote>
+<div><ul class="simple">
+<li>coordinates</li>
+<li>description</li>
+<li>congestion</li>
+<li>detour info</li>
+<li>road closed info</li>
+<li>incident id</li>
+<li>lane info</li>
+<li>start time of the incident</li>
+<li>end time of the incident</li>
+<li>last modified time of the incident</li>
+<li>severity of the incident</li>
+<li>type of the incident</li>
+<li>verification status</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>The output from the URL can be either JSON/XML based on the output
+parameter mentioned in the data. Even the output response is &#8216;xml&#8217;, this
+class helps in converting the xml response to JSON data first and then
+retrieve all the necessary output from it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; The data that the user will send in to the TrafficIncidentsApi
+to retrieve all the respective output from the response</li>
+<li><strong>url</strong> &#8211; The url that gets built based on the user&#8217;s given data</li>
+<li><strong>http_protocol</strong> &#8211; <p>Http protocol for the URL. Can be either of the
+following:</p>
+<blockquote>
+<div><ul>
+<li>http</li>
+<li>https</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>schema</strong> &#8211; The schema that gets used to build the URL and the schema
+would be .</li>
+<li><strong>file_name</strong> &#8211; <p>The filename that the class can write the JSON response
+to TrafficIncidentsSchema.</p>
+<blockquote>
+<div><ul>
+<li>file_name - &#8216;traffic_incidents&#8217;</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>incidents_data</strong> &#8211; Response from the URL</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Some of the examples are illustrated in Examples page</p>
+<dl class="method">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.build_url">
+<code class="descname">build_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/trafficincidents.html#TrafficIncidentsApi.build_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.build_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the URL for elevations API services based on the data given
+by the user.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>url (str): URL for the elevations API services</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.congestion">
+<code class="descname">congestion</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.congestion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the congestion information of the incident/incidents from
+the output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>congestion(namedtuple): List of named tuples of congestion info of
+the incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.description">
+<code class="descname">description</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the description of the incident/incidents from the output
+response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>description(namedtuple): List of named tuples of descriptions of
+the incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.detour_info">
+<code class="descname">detour_info</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.detour_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the detour information of the incident/incidents from
+the output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>detour_info(namedtuple): List of named tuples of detour info of
+the incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.end_time">
+<code class="descname">end_time</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.end_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the end time of the incident/incidents from the output
+response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>end_time(namedtuple): List of named tuples of end time of the
+incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.get_coordinates">
+<code class="descname">get_coordinates</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.get_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves coordinates (latitudes/longitudes) from the output
+JSON/XML response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>coordinates (namedtuple): List of named tuples of coordinates
+(latitudes and longitudes)</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.incident_id">
+<code class="descname">incident_id</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.incident_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the incident id/ids of the incident/incidents from the
+output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>incident_id(namedtuple): List of named tuples of incident id/ids of
+the incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.is_verified">
+<code class="descname">is_verified</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.is_verified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the verification status of the incident/incidents from the
+output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>verified(namedtuple): List of named tuples of verification status
+of the incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.lane_info">
+<code class="descname">lane_info</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.lane_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the lane info of the incident/incidents from the
+output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>lane_info(namedtuple): List of named tuples of lane info of the
+incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.last_modified">
+<code class="descname">last_modified</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.last_modified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the last modified time stamp of the incident/incidents
+from the output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>last_modified(namedtuple): List of named tuples of last modified
+time stamp of the incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.response">
+<code class="descname">response</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response from the built URL</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.response_to_dict">
+<code class="descname">response_to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/apiservices/trafficincidents.html#TrafficIncidentsApi.response_to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.response_to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method helps in returning the output JSON data from the URL
+and also it helps in converting the XML output/response (string) to a
+JSON object</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>data (dict): JSON data from the output/response</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.road_closed">
+<code class="descname">road_closed</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.road_closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the road closed information for the incident/incidents
+from the output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>road_closed(namedtuple): List of named tuples of road closed
+information for the incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.severity">
+<code class="descname">severity</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.severity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the severity for the incident/incidents from the
+output response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>severity(namedtuple): List of named tuples of severity for the
+incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.start_time">
+<code class="descname">start_time</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.start_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the start time of the incident/incidents from the output
+response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>start_time(namedtuple): List of named tuples of start time of the
+incident/incidents</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.status_code">
+<code class="descname">status_code</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status code of the response from the URL</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.apiservices.TrafficIncidentsApi.type">
+<code class="descname">type</code><a class="headerlink" href="#bingmaps.apiservices.TrafficIncidentsApi.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the type of the incident/incidents from the output
+response</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>type(namedtuple): List of named tuples of type of the
+incident/incidents</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="schemas.html" class="btn btn-neutral float-right" title="API Services Schemas" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="devguide.html" class="btn btn-neutral" title="Developer Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bharadwaj Yarlagadda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

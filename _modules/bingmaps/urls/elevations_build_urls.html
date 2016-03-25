@@ -1,0 +1,859 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bingmaps.urls.elevations_build_urls &mdash; Bingmaps 0.3.7 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/theme_override.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Bingmaps 0.3.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Bingmaps
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../devguide.html">Developer Guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_services.html">API Services</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../schemas.html">API Services Schemas</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls.html">API Services URLs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../locationsapi.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Release 0.3.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Bingmaps</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>bingmaps.urls.elevations_build_urls</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bingmaps.urls.elevations_build_urls</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">marshmallow</span> <span class="kn">import</span> <span class="n">fields</span><span class="p">,</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">post_dump</span><span class="p">,</span> <span class="n">validate</span>
+
+
+<div class="viewcode-block" id="ElevationsUrl"><a class="viewcode-back" href="../../../urls.html#bingmaps.urls.elevations_build_urls.ElevationsUrl">[docs]</a><span class="k">class</span> <span class="nc">ElevationsUrl</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class helps in building a url for elevations API service.</span>
+
+<span class="sd">    :ivar data: Data required for building up the URL</span>
+<span class="sd">    :ivar protocol: http protocol for the url</span>
+<span class="sd">    :ivar schema: Elevations schema to which the data will be dumped</span>
+
+<span class="sd">    All the URL values are retrieved from the schema.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            &gt;&gt;&gt; data = {&#39;method&#39;: &#39;Polyline&#39;,</span>
+<span class="sd">            ...         &#39;points&#39;: [35.89431,</span>
+<span class="sd">            ...                    -110.72522,</span>
+<span class="sd">            ...                    35.89393,</span>
+<span class="sd">            ...                    -110.72578],</span>
+<span class="sd">            ...         &#39;samples&#39;: 10,</span>
+<span class="sd">            ...         &#39;key&#39;: &#39;abs&#39;}</span>
+<span class="sd">            &gt;&gt;&gt; url = ElevationsUrl(data, &#39;http&#39;, Polyline())</span>
+<span class="sd">            &gt;&gt;&gt; url.main_url</span>
+<span class="sd">            &#39;dev.virtualearth.net&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.protocol</span>
+<span class="sd">            &#39;http:/&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.resourcePath</span>
+
+<span class="sd">            &gt;&gt;&gt; url.restApi</span>
+<span class="sd">            &#39;Elevation&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.rest</span>
+<span class="sd">            &#39;REST&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.version</span>
+<span class="sd">            &#39;v1&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.query</span>
+<span class="sd">            &#39;Polyline?points=35.89431,-110.72522,35.89393,-110.72578&amp;h\</span>
+<span class="sd">eights=sealevel&amp;samples=10&amp;key=abs&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_protocol</span> <span class="o">=</span> <span class="n">protocol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_values</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">schema_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
+        <span class="n">is_valid_schema</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">is_valid_schema</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">is_valid_schema</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">schema</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property helps in returning the http protocol to be used as</span>
+<span class="sd">        part of the URL.</span>
+
+<span class="sd">        :ivar http_protocol: The http protocol passed in (http/https)</span>
+
+<span class="sd">        :getter: Returns a string relevant to the http</span>
+<span class="sd">            protocol</span>
+<span class="sd">              - http: ``http:/``</span>
+<span class="sd">              - https: ``https:/``</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_protocol</span> <span class="o">==</span> <span class="s1">&#39;http&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;http:/&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;https:/&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">main_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property helps in returning the main URL used in bingmaps rest</span>
+<span class="sd">        services</span>
+
+<span class="sd">        :getter: Returns a</span>
+<span class="sd">            URL</span>
+<span class="sd">              - ``dev.virtualearth.net``</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;dev.virtualearth.net&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property make the URL accessible for REST services.</span>
+
+<span class="sd">        :getter: Returns a string saying that the URL is a REST service</span>
+<span class="sd">            URL</span>
+<span class="sd">              - ``REST``</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;REST&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property gives the version of the Bing Maps REST services</span>
+
+<span class="sd">        :getter: Returns a string of Bing Maps REST services</span>
+<span class="sd">            version</span>
+<span class="sd">              - ``v1`` for Elevations services</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;version&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">restApi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property gives a part of the URL that identifies the REST API</span>
+
+<span class="sd">        :getter: Returns a part of the URL that identifies the REST</span>
+<span class="sd">            API</span>
+<span class="sd">              - ``Elevations`` for Elevations services</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;restApi&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">[</span><span class="s1">&#39;restApi&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">resourcePath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property gives a part of the URL that specifies a resource</span>
+<span class="sd">        such as an address or landmark.</span>
+
+<span class="sd">        :getter: Returns a string that identifies the resource path such as</span>
+<span class="sd">            address or landmark</span>
+<span class="sd">              - ``None`` for Elevations services</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;resourcePath&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">[</span><span class="s1">&#39;resourcePath&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property helps in retrieving the query part of the URL</span>
+
+<span class="sd">        :getter: Returns a part of the URL which consist of all the query</span>
+<span class="sd">            parameters.</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Elevations"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.elevations_build_urls.Elevations">[docs]</a><span class="k">class</span> <span class="nc">Elevations</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Main class for Elevations API schema</span>
+
+<span class="sd">    Data Fields:</span>
+
+<span class="sd">    :ivar version: A string containing v and an integer that specifies</span>
+<span class="sd">        the version of the Bing Maps REST Services.</span>
+<span class="sd">          - default: v1</span>
+<span class="sd">    :ivar restApi: A part of the URL path that identifies the REST</span>
+<span class="sd">        API.</span>
+<span class="sd">          - default: &#39;Elevation&#39; (for Elevations API services)</span>
+<span class="sd">    :ivar resourcePath: A part of the URL path that specifies a</span>
+<span class="sd">        resource, such as an address or landmark.</span>
+
+<span class="sd">    This schema helps in creating the main parameters of all types of</span>
+<span class="sd">    elevations API based services (List, Polyline, SeaLevel, Bounds). The</span>
+<span class="sd">    above mentioned data fields make up the main parameters of the</span>
+<span class="sd">    url.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        The below example can show you a typical example for how the main URL</span>
+<span class="sd">        parameters can be passed in as a dictionary</span>
+<span class="sd">        ::</span>
+
+<span class="sd">            &gt;&gt;&gt; data = {&#39;version&#39;: &#39;v1&#39;,</span>
+<span class="sd">            ...         &#39;restApi&#39;: &#39;Elevation&#39;,</span>
+<span class="sd">            ...         &#39;resourcePath&#39;: &#39;&#39;}</span>
+
+<span class="sd">        When you dump an empty dictionary, the class helps you in filling the</span>
+<span class="sd">        dictionary with default values. You can see the same behaviour in the</span>
+<span class="sd">        below example:</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            &gt;&gt;&gt; data = {}</span>
+<span class="sd">            &gt;&gt;&gt; schema = Elevations()</span>
+<span class="sd">            &gt;&gt;&gt; schema.dump(data).data</span>
+<span class="sd">            OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;)])</span>
+
+<span class="sd">    .. note:: Elevations class is common for all the elevations based services</span>
+<span class="sd">        with the same default data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span>
+        <span class="s1">&#39;v1&#39;</span>
+    <span class="p">)</span>
+    <span class="n">restApi</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span>
+        <span class="s1">&#39;Elevation&#39;</span>
+    <span class="p">)</span>
+    <span class="n">resourcePath</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Meta class helps in ordering all the fields in the specified order</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">)</span>
+        <span class="n">ordered</span> <span class="o">=</span> <span class="bp">True</span></div>
+
+
+<div class="viewcode-block" id="Coordinates"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.elevations_build_urls.Coordinates">[docs]</a><span class="k">class</span> <span class="nc">Coordinates</span><span class="p">(</span><span class="n">Elevations</span><span class="p">,</span> <span class="n">Schema</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Inherited from :class:`Elevations`</span>
+
+<span class="sd">    Schema for query parameters in which all the fields will be in a ordered</span>
+<span class="sd">    way. All the fields will be dumped in the same order as mentioned in the</span>
+<span class="sd">    schema.</span>
+
+<span class="sd">    Data Fields for the schema (taken from</span>
+<span class="sd">    https://msdn.microsoft.com/en-us/library/jj158961.aspx):</span>
+
+<span class="sd">    :ivar method[Required]: A method for calculating elevations</span>
+<span class="sd">        (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field</span>
+<span class="sd">          - &#39;List&#39; [default]: Use this for returning elevations for a given</span>
+<span class="sd">            pair of coordinates.</span>
+<span class="sd">    :ivar points[Required]:  A set of coordinates on the Earth to use in</span>
+<span class="sd">        elevation calculations. The exact use of these points depends on the</span>
+<span class="sd">        type of elevation request. A set of latitude and longitude values in</span>
+<span class="sd">        WGS84 decimal degrees. If you are requesting elevations or elevation</span>
+<span class="sd">        offsets for a set of points, the maximum number of points is 1024.</span>
+<span class="sd">        Points should be given as ``lat1,long1,lat2,long2,latn,longn`` -</span>
+<span class="sd">        REQUIRED field</span>
+<span class="sd">    :ivar heights[Optional]: A string that specifies which sea level model to</span>
+<span class="sd">        use to calculate elevation. One of the following values:</span>
+<span class="sd">          - sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).</span>
+<span class="sd">          - ellipsoid: Use the ellipsoid Earth model (WGS84).</span>
+<span class="sd">    :ivar o[Optional]: A string specifying the output as JSON or xml.</span>
+<span class="sd">    :ivar key[Required]: Bing maps key - REQUIRED field</span>
+
+<span class="sd">    This schema helps in serializing the data.</span>
+
+<span class="sd">    Post-Dump:</span>
+<span class="sd">        After dumping the data, build_query_string builds up the</span>
+<span class="sd">        queryParameters string. The final value after dumping the data would</span>
+<span class="sd">        be a string.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            &gt;&gt;&gt; data = {&#39;method&#39;: &#39;List&#39;,</span>
+<span class="sd">            ...         &#39;points&#39;: [15.5467, 34.5676],</span>
+<span class="sd">            ...         &#39;key&#39;: &#39;abs&#39;}</span>
+<span class="sd">            &gt;&gt;&gt; schema = Coordinates()</span>
+<span class="sd">            &gt;&gt;&gt; schema.dump(data).data</span>
+<span class="sd">            OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;), (&#39;query\</span>
+<span class="sd">&#39;, &#39;List?points=15.5467,34.5676&amp;heights=sealevel&amp;key=abs&#39;)])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Equal</span><span class="p">(</span>
+            <span class="s1">&#39;List&#39;</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="s1">&#39;The method should be List&#39;</span>
+        <span class="p">),</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;method for calculating elevations should&#39;</span>
+                                    <span class="s1">&#39;be specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Length</span><span class="p">(</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="s1">&#39;Both latitude and longitude should be entered&#39;</span>
+        <span class="p">),</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Latitudes, Longitudes not specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">heights</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;sealevel&#39;</span>
+    <span class="p">)</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">()</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Need Bing maps key&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;heights&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">)</span>
+        <span class="n">ordered</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="nd">@post_dump</span>
+<div class="viewcode-block" id="Coordinates.build_query_string"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.elevations_build_urls.Coordinates.build_query_string">[docs]</a>    <span class="k">def</span> <span class="nf">build_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method occurs after dumping the data into the class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (dict): dictionary of all the query values</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data (dict): ordered dict of all the values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">keys_to_be_removed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;method&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;points&#39;</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+                        <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                    <span class="n">query</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;{0}={1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+                    <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">querystring</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;{0}?{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">],</span> <span class="n">querystring</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">keys_to_be_removed</span><span class="p">)):</span>
+            <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data</span></div></div>
+
+
+<div class="viewcode-block" id="Polyline"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.elevations_build_urls.Polyline">[docs]</a><span class="k">class</span> <span class="nc">Polyline</span><span class="p">(</span><span class="n">Elevations</span><span class="p">,</span> <span class="n">Schema</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Inherited from :class:`Elevations`</span>
+
+<span class="sd">    Schema for query parameters in which all the fields will be in a ordered</span>
+<span class="sd">    way. All the fields will be dumped in the same order as mentioned in the</span>
+<span class="sd">    schema.</span>
+
+<span class="sd">    Data Fields for the schema (taken from</span>
+<span class="sd">    https://msdn.microsoft.com/en-us/library/jj158961.aspx):</span>
+
+<span class="sd">    :ivar method[Required]: A method for calculating elevations</span>
+<span class="sd">        (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field</span>
+<span class="sd">          - &#39;Polyline&#39; [default]: Use this for returning elevations for a</span>
+<span class="sd">            given pair of coordinates.</span>
+<span class="sd">    :ivar points[Required]:  A set of coordinates on the Earth to use in</span>
+<span class="sd">        elevation calculations. The exact use of these points depends on the</span>
+<span class="sd">        type of elevation request. A set of latitude and longitude values in</span>
+<span class="sd">        WGS84 decimal degrees. If you are requesting elevations or elevation</span>
+<span class="sd">        offsets for a set of points, the maximum number of points is 1024.</span>
+<span class="sd">        Points should be at least 2 pairs of latitudes and longitudes for</span>
+<span class="sd">        Polyline method - It should be a minimum total of 4 points for</span>
+<span class="sd">        Polyline method. Points should be given as</span>
+<span class="sd">        ``lat1,long1,lat2,long2,latn,longn``</span>
+<span class="sd">    :ivar heights[Optional]: A string that specifies which sea level model to</span>
+<span class="sd">        use to calculate elevation. One of the following values:</span>
+<span class="sd">          - sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).</span>
+<span class="sd">          - ellipsoid: Use the ellipsoid Earth model (WGS84).</span>
+<span class="sd">    :ivar samples[Required]: Specifies the number of equally-spaced elevation</span>
+<span class="sd">        values to provide along a polyline path. A positive integer. The</span>
+<span class="sd">        maximum number of samples is 1024.</span>
+<span class="sd">    :ivar o[Optional]: A string specifying the output as JSON or xml.</span>
+<span class="sd">    :ivar key[Required]: Bing maps key - REQUIRED field</span>
+
+<span class="sd">    This schema helps in serializing the data.</span>
+
+<span class="sd">    Post-Dump:</span>
+<span class="sd">        After dumping the data, build_query_string builds up the</span>
+<span class="sd">        queryParameters string. The final value after dumping the data would</span>
+<span class="sd">        be a string.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            &gt;&gt;&gt; data = {&#39;method&#39;: &#39;Polyline&#39;,</span>
+<span class="sd">            ...         &#39;points&#39;: [35.89431, -110.72522, 35.89393, -110.72578],</span>
+<span class="sd">            ...         &#39;samples&#39;: 10,</span>
+<span class="sd">            ...         &#39;key&#39;: &#39;abs&#39;}</span>
+<span class="sd">            &gt;&gt;&gt; schema = Polyline()</span>
+<span class="sd">            &gt;&gt;&gt; schema.dump(data).data</span>
+<span class="sd">            OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;), (&#39;query\</span>
+<span class="sd">&#39;, &#39;Polyline?points=35.89431,-110.72522,35.89393,-110.72578&amp;heights=sealevel&amp;\</span>
+<span class="sd">samples=10&amp;key=abs&#39;)])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Equal</span><span class="p">(</span>
+            <span class="s1">&#39;Polyline&#39;</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="s1">&#39;The method should be Polyline&#39;</span>
+        <span class="p">),</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;method for calculating elevations should&#39;</span>
+                                    <span class="s1">&#39;be specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Length</span><span class="p">(</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="s1">&#39;At least 2 locations should be provided&#39;</span>
+        <span class="p">),</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Latitudes, Longitudes not specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">heights</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;sealevel&#39;</span>
+    <span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;need a samples value&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">()</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Need Bing maps key&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;heights&#39;</span><span class="p">,</span> <span class="s1">&#39;samples&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">)</span>
+        <span class="n">ordered</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="nd">@post_dump</span>
+<div class="viewcode-block" id="Polyline.build_query_string"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.elevations_build_urls.Polyline.build_query_string">[docs]</a>    <span class="k">def</span> <span class="nf">build_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method occurs after dumping the data into the class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (dict): dictionary of all the query values</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data (dict): ordered dict of all the values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">keys_to_be_removed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;method&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;points&#39;</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+                        <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                    <span class="n">query</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;{0}={1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+                    <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">querystring</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;{0}?{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">],</span> <span class="n">querystring</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">keys_to_be_removed</span><span class="p">)):</span>
+            <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data</span></div></div>
+
+
+<div class="viewcode-block" id="Offset"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.elevations_build_urls.Offset">[docs]</a><span class="k">class</span> <span class="nc">Offset</span><span class="p">(</span><span class="n">Elevations</span><span class="p">,</span> <span class="n">Schema</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Inherited from :class:`Elevations`</span>
+
+<span class="sd">    Schema for query parameters in which all the fields will be in a ordered</span>
+<span class="sd">    way. All the fields will be dumped in the same order as mentioned in the</span>
+<span class="sd">    schema.</span>
+
+<span class="sd">    Data Fields for the schema (taken from</span>
+<span class="sd">    https://msdn.microsoft.com/en-us/library/jj158961.aspx:</span>
+
+<span class="sd">    :ivar method[Required]: A method for calculating elevations</span>
+<span class="sd">        (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field</span>
+<span class="sd">          - &#39;SeaLevel&#39; [default]: Use this for returning elevations for a given</span>
+<span class="sd">            pair of coordinates.</span>
+<span class="sd">    :ivar points[Required]:  A set of coordinates on the Earth to use in</span>
+<span class="sd">        elevation calculations. The exact use of these points depends on the</span>
+<span class="sd">        type of elevation request. A set of latitude and longitude values in</span>
+<span class="sd">        WGS84 decimal degrees. If you are requesting elevations or elevation</span>
+<span class="sd">        offsets for a set of points, the maximum number of points is 1024.</span>
+<span class="sd">        Points should be given as ``lat1,long1,lat2,long2,latn,longn`` -</span>
+<span class="sd">        REQUIRED field</span>
+<span class="sd">    :ivar o[Optional]: A string specifying the output as JSON or xml.</span>
+<span class="sd">    :ivar key[Required: Bing maps key - REQUIRED field</span>
+
+<span class="sd">    This schema helps in serializing the data.</span>
+
+<span class="sd">    Post-Dump:</span>
+<span class="sd">        After dumping the data, build_query_string builds up the</span>
+<span class="sd">        queryParameters string. The final value after dumping the data would</span>
+<span class="sd">        be a string.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            &gt;&gt;&gt; data = {&#39;method&#39;: &#39;SeaLevel&#39;,</span>
+<span class="sd">            ...         &#39;points&#39;: [15.5467, 34.5676],</span>
+<span class="sd">            ...         &#39;key&#39;: &#39;abs&#39;}</span>
+<span class="sd">            &gt;&gt;&gt; schema = Offset()</span>
+<span class="sd">            &gt;&gt;&gt; schema.dump(data).data</span>
+<span class="sd">            OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;), (&#39;query\</span>
+<span class="sd">&#39;, &#39;SeaLevel?points=15.5467,34.5676&amp;key=abs&#39;)])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Equal</span><span class="p">(</span>
+            <span class="s1">&#39;SeaLevel&#39;</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="s1">&#39;The method should be SeaLevel&#39;</span>
+        <span class="p">),</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;method for calculating elevations should&#39;</span>
+                                    <span class="s1">&#39;be specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Length</span><span class="p">(</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="s1">&#39;Both latitude and longitude should be entered&#39;</span>
+        <span class="p">),</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Latitudes, Longitudes not specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">()</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Need Bing maps key&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">)</span>
+        <span class="n">ordered</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="nd">@post_dump</span>
+<div class="viewcode-block" id="Offset.build_query_string"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.elevations_build_urls.Offset.build_query_string">[docs]</a>    <span class="k">def</span> <span class="nf">build_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method occurs after dumping the data into the class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (dict): dictionary of all the query values</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data (dict): ordered dict of all the values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">keys_to_be_removed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;method&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;points&#39;</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+                        <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                    <span class="n">query</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;{0}={1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+                    <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">querystring</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;{0}?{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">],</span> <span class="n">querystring</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">keys_to_be_removed</span><span class="p">)):</span>
+            <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data</span></div></div>
+
+
+<div class="viewcode-block" id="BoundingBox"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.elevations_build_urls.BoundingBox">[docs]</a><span class="k">class</span> <span class="nc">BoundingBox</span><span class="p">(</span><span class="n">Elevations</span><span class="p">,</span> <span class="n">Schema</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Inherited from :class:`Elevations`</span>
+
+<span class="sd">    Schema for query parameters in which all the fields will be in a ordered</span>
+<span class="sd">    way. All the fields will be dumped in the same order as mentioned in the</span>
+<span class="sd">    schema.</span>
+
+<span class="sd">    Data Fields for the schema (taken from</span>
+<span class="sd">    https://msdn.microsoft.com/en-us/library/jj158961.aspx:</span>
+
+<span class="sd">    :ivar method[Required]: A method for calculating elevations</span>
+<span class="sd">        (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field</span>
+<span class="sd">          - &#39;Bounds&#39; [default]: Use this for returning elevations for a given</span>
+<span class="sd">            pair of coordinates.</span>
+<span class="sd">    :ivar bounds[Required]: Specifies the rectangular area over which to</span>
+<span class="sd">        provide elevation values. A bounding box defined as a set of WGS84</span>
+<span class="sd">        latitudes and longitudes in the following order:</span>
+<span class="sd">          - south latitude, west longitude, north latitude, east longitude</span>
+<span class="sd">          - REQUIRED field</span>
+<span class="sd">    :ivar rows,cols[Required]: Specifies the number of rows and columns to use</span>
+<span class="sd">        to divide the bounding box area into a grid. The rows and columns that</span>
+<span class="sd">        define the bounding box each count as two (2) of the rows and columns.</span>
+<span class="sd">        Elevation values are returned for all vertices of the grid. Integers</span>
+<span class="sd">        with a value of two (2) or greater. The number of rows and columns</span>
+<span class="sd">        can define a maximum of 1024 locations (rows * cols &lt;= 1024).</span>
+<span class="sd">    :ivar heights[Optional]: A string that specifies which sea level model to</span>
+<span class="sd">        use to calculate elevation. One of the following values:</span>
+<span class="sd">          - sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).</span>
+<span class="sd">          - ellipsoid: Use the ellipsoid Earth model (WGS84).</span>
+<span class="sd">    :ivar o[Optional]: A string specifying the output as JSON or xml.</span>
+<span class="sd">    :ivar key[Required]: Bing maps key</span>
+
+<span class="sd">    This schema helps in serializing the data.</span>
+
+<span class="sd">    Post-Dump:</span>
+<span class="sd">        After dumping the data, build_query_string builds up the</span>
+<span class="sd">        queryParameters string. The final value after dumping the data would</span>
+<span class="sd">        be a string.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            &gt;&gt;&gt; data = {&#39;method&#39;: &#39;Bounds&#39;,</span>
+<span class="sd">            ...         &#39;bounds&#39;: [15.5463, 34.6577, 16.4365, 35.3245],</span>
+<span class="sd">            ...         &#39;rows&#39;: 4,</span>
+<span class="sd">            ...         &#39;cols&#39;: 5,</span>
+<span class="sd">            ...         &#39;key&#39;: &#39;abs&#39;}</span>
+<span class="sd">            &gt;&gt;&gt; schema = BoundingBox()</span>
+<span class="sd">            &gt;&gt;&gt; schema.dump(data).data</span>
+<span class="sd">            OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Elevation&#39;), (&#39;query\</span>
+<span class="sd">&#39;, &#39;Bounds?bounds=15.5463,34.6577,16.4365,35.3245&amp;rows=4&amp;cols=5&amp;heights=\</span>
+<span class="sd">sealevel&amp;key=abs&#39;)])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Equal</span><span class="p">(</span>
+            <span class="s1">&#39;Bounds&#39;</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="s1">&#39;The method should be Bounds&#39;</span>
+        <span class="p">),</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;method for calculating elevations should&#39;</span>
+                                    <span class="s1">&#39;be specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">bounds</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Length</span><span class="p">(</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="s1">&#39;All four should be entered: south latitude, west longitude,&#39;</span>
+                  <span class="s1">&#39;north latitude and east longitude&#39;</span>
+        <span class="p">),</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Bounds not specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Number of rows should be specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Number of columns should be specified&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">heights</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;sealevel&#39;</span>
+    <span class="p">)</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">()</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Need bing maps key&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">,</span> <span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="s1">&#39;bounds&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;rows&#39;</span><span class="p">,</span> <span class="s1">&#39;cols&#39;</span><span class="p">,</span> <span class="s1">&#39;heights&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">)</span>
+        <span class="n">ordered</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="nd">@post_dump</span>
+<div class="viewcode-block" id="BoundingBox.build_query_string"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.elevations_build_urls.BoundingBox.build_query_string">[docs]</a>    <span class="k">def</span> <span class="nf">build_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method occurs after dumping the data into the class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (dict): dictionary of all the query values</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data (dict): ordered dict of all the values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">keys_to_be_removed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;method&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;bounds&#39;</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+                        <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                    <span class="n">query</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;{0}={1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+                    <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">querystring</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;{0}?{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">],</span> <span class="n">querystring</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">keys_to_be_removed</span><span class="p">)):</span>
+            <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bharadwaj Yarlagadda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,1316 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Services URLs &mdash; Bingmaps 0.3.7 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_override.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Bingmaps 0.3.7 documentation" href="index.html"/>
+        <link rel="next" title="Examples" href="locationsapi.html"/>
+        <link rel="prev" title="API Services Schemas" href="schemas.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Bingmaps
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="devguide.html">Developer Guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rest_services.html">API Services</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="schemas.html">API Services Schemas</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">API Services URLs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#locations-api">Locations API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#location-by-address">Location By Address</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#location-by-point">Location By Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#location-by-query">Location By Query</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#elevations-api">Elevations API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#traffic-incidents-api">Traffic Incidents API</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="locationsapi.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Release 0.3.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Bingmaps</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>API Services URLs</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/urls.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-services-urls">
+<h1>API Services URLs<a class="headerlink" href="#api-services-urls" title="Permalink to this headline">¶</a></h1>
+<p>Most of the URLs used as part of the API services will be unstructured URLs</p>
+<div class="section" id="locations-api">
+<h2>Locations API<a class="headerlink" href="#locations-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="location-by-address">
+<h3>Location By Address<a class="headerlink" href="#location-by-address" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressUrl">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.locations_build_urls.</code><code class="descname">LocationByAddressUrl</code><span class="sig-paren">(</span><em>data</em>, <em>httpprotocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#LocationByAddressUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class helps in building a url for location by address service.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; Data required for building up the URL</li>
+<li><strong>httpprotocol</strong> &#8211; http protocol for the url</li>
+<li><strong>schema</strong> &#8211; location by address schema to which the data will be dumped</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>All the URL values are retrieved from the schema.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;adminDistrict&#39;</span><span class="p">:</span> <span class="s1">&#39;WA&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;locality&#39;</span><span class="p">:</span> <span class="s1">&#39;Seattle&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;te&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;includeNeighborhood&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_address</span> <span class="o">=</span> <span class="n">LocationByAddressUrl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;http&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">main_url</span>
+<span class="go">&#39;dev.virtualearth.net&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">protocol</span>
+<span class="go">&#39;http:/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">resourcePath</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">restApi</span>
+<span class="go">&#39;Locations&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">rest</span>
+<span class="go">&#39;REST&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;v1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">query</span>
+<span class="go">&#39;?adminDistrict=WA&amp;locality=Seattle&amp;c=te&amp;o=xml&amp;includeNeighborhood=1&amp;include=ciso2&amp;maxResults=20&amp;key=abs&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressUrl.main_url">
+<code class="descname">main_url</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressUrl.main_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the main URL used in bingmaps rest
+services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">dev.virtualearth.net</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressUrl.protocol">
+<code class="descname">protocol</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressUrl.protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the http protocol to be used as
+part of the URL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><p class="first"><strong>http_protocol</strong> &#8211; The http protocol passed in (http/https)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string relevant to the http
+protocol</p>
+<blockquote>
+<div><ul class="simple">
+<li>http: <code class="docutils literal"><span class="pre">http:/</span></code></li>
+<li>https: <code class="docutils literal"><span class="pre">https:/</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressUrl.query">
+<code class="descname">query</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressUrl.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in retrieving the query part of the URL</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body">Returns a part of the URL which consist of all the query
+parameters. The query is formatted with a <code class="docutils literal"><span class="pre">?</span></code> in front of it.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressUrl.resourcePath">
+<code class="descname">resourcePath</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressUrl.resourcePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that specifies a resource
+such as an address or landmark.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string that identifies the resource path such as
+address or landmark</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">None</span></code> for Locations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressUrl.rest">
+<code class="descname">rest</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressUrl.rest" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property make the URL accessible for REST services.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string saying that the URL is a REST service
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">REST</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressUrl.restApi">
+<code class="descname">restApi</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressUrl.restApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that identifies the REST API</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a part of the URL that identifies the REST
+API</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">Locations</span></code> for Locations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByAddressUrl.version">
+<code class="descname">version</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByAddressUrl.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives the version of the Bing Maps REST services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string of Bing Maps REST services
+version</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">v1</span></code> for Locations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="location-by-point">
+<h3>Location By Point<a class="headerlink" href="#location-by-point" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointUrl">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.locations_build_urls.</code><code class="descname">LocationByPointUrl</code><span class="sig-paren">(</span><em>data</em>, <em>httpprotocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#LocationByPointUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class helps in building a url for location by point service.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; Data required for building up the URL</li>
+<li><strong>httpprotocol</strong> &#8211; http protocol for the url</li>
+<li><strong>schema</strong> &#8211; location by point schema to which the data will be dumped</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>All the URL values are retrieved from the schema.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;point&#39;</span><span class="p">:</span> <span class="s1">&#39;47.64054,-122.12934&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;includeEntityTypes&#39;</span><span class="p">:</span> <span class="s1">&#39;Address&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;te&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;includeNeighborhood&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>         <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_point</span> <span class="o">=</span> <span class="n">LocationByPointUrl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;http&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">main_url</span>
+<span class="go">&#39;dev.virtualearth.net&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">protocol</span>
+<span class="go">&#39;http:/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">resourcePath</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">restApi</span>
+<span class="go">&#39;Locations&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">rest</span>
+<span class="go">&#39;REST&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;v1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">query</span>
+<span class="go">&#39;47.64054,-122.12934?includeEntityTypes=Address&amp;includeNeighborhood=1&amp;include=ciso2&amp;c=te&amp;o=xml&amp;maxResults=20&amp;key=abs&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointUrl.main_url">
+<code class="descname">main_url</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointUrl.main_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the main URL used in bingmaps rest
+services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">dev.virtualearth.net</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointUrl.protocol">
+<code class="descname">protocol</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointUrl.protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the http protocol to be used as
+part of the URL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><p class="first"><strong>http_protocol</strong> &#8211; The http protocol passed in (http/https)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string relevant to the http
+protocol</p>
+<blockquote>
+<div><ul class="simple">
+<li>http: <code class="docutils literal"><span class="pre">http:/</span></code></li>
+<li>https: <code class="docutils literal"><span class="pre">https:/</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointUrl.query">
+<code class="descname">query</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointUrl.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in retrieving the query part of the URL</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body">Returns a part of the URL which consist of all the query
+parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointUrl.resourcePath">
+<code class="descname">resourcePath</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointUrl.resourcePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that specifies a resource
+such as an address or landmark.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string that identifies the resource path such as
+address or landmark</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">None</span></code> for Locations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointUrl.rest">
+<code class="descname">rest</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointUrl.rest" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property make the URL accessible for REST services.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string saying that the URL is a REST service
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">REST</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointUrl.restApi">
+<code class="descname">restApi</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointUrl.restApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that identifies the REST API</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a part of the URL that identifies the REST
+API</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">Locations</span></code> for Locations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByPointUrl.version">
+<code class="descname">version</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByPointUrl.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives the version of the Bing Maps REST services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string of Bing Maps REST services
+version</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">v1</span></code> for Locations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="location-by-query">
+<h3>Location By Query<a class="headerlink" href="#location-by-query" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQueryUrl">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.locations_build_urls.</code><code class="descname">LocationByQueryUrl</code><span class="sig-paren">(</span><em>data</em>, <em>httpprotocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/locations_build_urls.html#LocationByQueryUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQueryUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class helps in building a url for location by query service.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; Data required for building up the URL</li>
+<li><strong>httpprotocol</strong> &#8211; http protocol for the url</li>
+<li><strong>schema</strong> &#8211; location by query schema to which the data will be dumped</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>All the URL values are retrieved from the schema.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="s1">&#39;1014 Oatney Ridge Ln.,Morrisville,NC-27560&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_query</span> <span class="o">=</span> <span class="n">LocationByQueryUrl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;http&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">main_url</span>
+<span class="go">&#39;dev.virtualearth.net&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">protocol</span>
+<span class="go">&#39;http:/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">resourcePath</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">restApi</span>
+<span class="go">&#39;Locations&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">rest</span>
+<span class="go">&#39;REST&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;v1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">query</span>
+<span class="go">&#39;?q=1014%20Oatney%20Ridge%20Ln.%2CMorrisville%2CNC-27560&amp;includeNeighborhood=0&amp;include=ciso2&amp;maxResults=20&amp;key=abs&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQueryUrl.main_url">
+<code class="descname">main_url</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQueryUrl.main_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the main URL used in bingmaps rest
+services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">dev.virtualearth.net</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQueryUrl.protocol">
+<code class="descname">protocol</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQueryUrl.protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the http protocol to be used as
+part of the URL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><p class="first"><strong>http_protocol</strong> &#8211; The http protocol passed in (http/https)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string relevant to the http
+protocol</p>
+<blockquote>
+<div><ul class="simple">
+<li>http: <code class="docutils literal"><span class="pre">http:/</span></code></li>
+<li>https: <code class="docutils literal"><span class="pre">https:/</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQueryUrl.query">
+<code class="descname">query</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQueryUrl.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in retrieving the query part of the URL</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body">Returns a part of the URL which consist of all the query
+parameters. The query is formatted with a <code class="docutils literal"><span class="pre">?</span></code> in front of it.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQueryUrl.resourcePath">
+<code class="descname">resourcePath</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQueryUrl.resourcePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that specifies a resource
+such as an address or landmark.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string that identifies the resource path such as
+address or landmark</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">None</span></code> for Locations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQueryUrl.rest">
+<code class="descname">rest</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQueryUrl.rest" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property make the URL accessible for REST services.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string saying that the URL is a REST service
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">REST</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQueryUrl.restApi">
+<code class="descname">restApi</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQueryUrl.restApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that identifies the REST API</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a part of the URL that identifies the REST
+API</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">Locations</span></code> for Locations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.locations_build_urls.LocationByQueryUrl.version">
+<code class="descname">version</code><a class="headerlink" href="#bingmaps.urls.locations_build_urls.LocationByQueryUrl.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives the version of the Bing Maps REST services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string of Bing Maps REST services
+version</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">v1</span></code> for Locations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="elevations-api">
+<h2>Elevations API<a class="headerlink" href="#elevations-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bingmaps.urls.elevations_build_urls.ElevationsUrl">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.elevations_build_urls.</code><code class="descname">ElevationsUrl</code><span class="sig-paren">(</span><em>data</em>, <em>protocol</em>, <em>schema</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/elevations_build_urls.html#ElevationsUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.ElevationsUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class helps in building a url for elevations API service.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; Data required for building up the URL</li>
+<li><a class="reference internal" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.protocol" title="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.protocol"><strong>protocol</strong></a> &#8211; http protocol for the url</li>
+<li><strong>schema</strong> &#8211; Elevations schema to which the data will be dumped</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>All the URL values are retrieved from the schema.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;Polyline&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">35.89431</span><span class="p">,</span>
+<span class="gp">... </span>                   <span class="o">-</span><span class="mf">110.72522</span><span class="p">,</span>
+<span class="gp">... </span>                   <span class="mf">35.89393</span><span class="p">,</span>
+<span class="gp">... </span>                   <span class="o">-</span><span class="mf">110.72578</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="n">ElevationsUrl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="n">Polyline</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">main_url</span>
+<span class="go">&#39;dev.virtualearth.net&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">protocol</span>
+<span class="go">&#39;http:/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">resourcePath</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">restApi</span>
+<span class="go">&#39;Elevation&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">rest</span>
+<span class="go">&#39;REST&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;v1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">query</span>
+<span class="go">&#39;Polyline?points=35.89431,-110.72522,35.89393,-110.72578&amp;heights=sealevel&amp;samples=10&amp;key=abs&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="attribute">
+<dt id="bingmaps.urls.elevations_build_urls.ElevationsUrl.main_url">
+<code class="descname">main_url</code><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.ElevationsUrl.main_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the main URL used in bingmaps rest
+services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">dev.virtualearth.net</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.elevations_build_urls.ElevationsUrl.protocol">
+<code class="descname">protocol</code><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.ElevationsUrl.protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the http protocol to be used as
+part of the URL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><p class="first"><strong>http_protocol</strong> &#8211; The http protocol passed in (http/https)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string relevant to the http
+protocol</p>
+<blockquote>
+<div><ul class="simple">
+<li>http: <code class="docutils literal"><span class="pre">http:/</span></code></li>
+<li>https: <code class="docutils literal"><span class="pre">https:/</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.elevations_build_urls.ElevationsUrl.query">
+<code class="descname">query</code><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.ElevationsUrl.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in retrieving the query part of the URL</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body">Returns a part of the URL which consist of all the query
+parameters.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.elevations_build_urls.ElevationsUrl.resourcePath">
+<code class="descname">resourcePath</code><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.ElevationsUrl.resourcePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that specifies a resource
+such as an address or landmark.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string that identifies the resource path such as
+address or landmark</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">None</span></code> for Elevations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.elevations_build_urls.ElevationsUrl.rest">
+<code class="descname">rest</code><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.ElevationsUrl.rest" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property make the URL accessible for REST services.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string saying that the URL is a REST service
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">REST</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.elevations_build_urls.ElevationsUrl.restApi">
+<code class="descname">restApi</code><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.ElevationsUrl.restApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that identifies the REST API</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a part of the URL that identifies the REST
+API</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">Elevations</span></code> for Elevations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.elevations_build_urls.ElevationsUrl.version">
+<code class="descname">version</code><a class="headerlink" href="#bingmaps.urls.elevations_build_urls.ElevationsUrl.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives the version of the Bing Maps REST services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string of Bing Maps REST services
+version</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">v1</span></code> for Elevations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="traffic-incidents-api">
+<h2>Traffic Incidents API<a class="headerlink" href="#traffic-incidents-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl">
+<em class="property">class </em><code class="descclassname">bingmaps.urls.traffic_build_urls.</code><code class="descname">TrafficIncidentsUrl</code><span class="sig-paren">(</span><em>data</em>, <em>schema</em>, <em>protocol='http'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bingmaps/urls/traffic_build_urls.html#TrafficIncidentsUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class helps in building a url for elevations API service.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; Data required for building up the URL</li>
+<li><a class="reference internal" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.protocol" title="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.protocol"><strong>protocol</strong></a> &#8211; http protocol for the url</li>
+<li><strong>schema</strong> &#8211; Elevations schema to which the data will be dumped</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>All the URL values are retrieved from the schema.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mapArea&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">37</span><span class="p">,</span> <span class="o">-</span><span class="mi">105</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="o">-</span><span class="mi">94</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;includeLocationCodes&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="s1">&#39;xml&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;abs&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="n">TrafficIncidentsUrl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">TrafficIncidentsSchema</span><span class="p">(),</span>
+<span class="gp">... </span>                          <span class="s1">&#39;http&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">main_url</span>
+<span class="go">&#39;dev.virtualearth.net&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">protocol</span>
+<span class="go">&#39;http:/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">resourcePath</span>
+<span class="go">&#39;Incidents&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">restApi</span>
+<span class="go">&#39;Traffic&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">rest</span>
+<span class="go">&#39;REST&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;v1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span><span class="o">.</span><span class="n">query</span>
+<span class="go">&#39;37.0,-105.0,45.0,-94.0/true?type=5&amp;o=xml&amp;key=abs&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="attribute">
+<dt id="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.main_url">
+<code class="descname">main_url</code><a class="headerlink" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.main_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the main URL used in bingmaps rest
+services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">dev.virtualearth.net</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.protocol">
+<code class="descname">protocol</code><a class="headerlink" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in returning the http protocol to be used as
+part of the URL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><p class="first"><strong>http_protocol</strong> &#8211; The http protocol passed in (http/https)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string relevant to the http
+protocol</p>
+<blockquote>
+<div><ul class="simple">
+<li>http: <code class="docutils literal"><span class="pre">http:/</span></code></li>
+<li>https: <code class="docutils literal"><span class="pre">https:/</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.query">
+<code class="descname">query</code><a class="headerlink" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property helps in retrieving the query part of the URL</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body">Returns a part of the URL which consist of all the query
+parameters.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.resourcePath">
+<code class="descname">resourcePath</code><a class="headerlink" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.resourcePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that specifies a resource
+such as an address or landmark.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string that identifies the resource path such as
+address or landmark</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">None</span></code> for Elevations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.rest">
+<code class="descname">rest</code><a class="headerlink" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.rest" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property make the URL accessible for REST services.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string saying that the URL is a REST service
+URL</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">REST</span></code></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.restApi">
+<code class="descname">restApi</code><a class="headerlink" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.restApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives a part of the URL that identifies the REST API</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a part of the URL that identifies the REST
+API</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">Elevations</span></code> for Elevations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.version">
+<code class="descname">version</code><a class="headerlink" href="#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property gives the version of the Bing Maps REST services</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Getter:</th><td class="field-body"><p class="first">Returns a string of Bing Maps REST services
+version</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">v1</span></code> for Elevations services</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="locationsapi.html" class="btn btn-neutral float-right" title="Examples" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="schemas.html" class="btn btn-neutral" title="API Services Schemas" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bharadwaj Yarlagadda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

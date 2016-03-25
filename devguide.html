@@ -1,0 +1,418 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Developer Guide &mdash; Bingmaps 0.3.7 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_override.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Bingmaps 0.3.7 documentation" href="index.html"/>
+        <link rel="next" title="API Services" href="rest_services.html"/>
+        <link rel="prev" title="Links" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Bingmaps
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Developer Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pre-setup">Pre-Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#initial-setup-of-python-environment">Initial Setup of Python Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-on-a-virtual-environment">Working on a Virtual Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#development-tasks">Development Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#env-new">env.new</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#env-install">env.install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#env-remove">env.remove</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#env-clean">env.clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tests-unit">tests.unit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tests-style">tests.style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tests-errors">tests.errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docs-build">docs.build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docs-serve">docs.serve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docs-publish">docs.publish</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rest_services.html">API Services</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="schemas.html">API Services Schemas</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">API Services URLs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="locationsapi.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Release 0.3.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Bingmaps</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Developer Guide</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/devguide.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="developer-guide">
+<h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
+<p>Development work should generally take place on a properly configured development server which has all system dependancies installed.</p>
+<div class="section" id="pre-setup">
+<h2>Pre-Setup<a class="headerlink" href="#pre-setup" title="Permalink to this headline">¶</a></h2>
+<p>This project makes use of <code class="docutils literal"><span class="pre">pew</span></code> for managing Python virtualenvs. If you are using <code class="docutils literal"><span class="pre">bash</span></code>, it would be useful to have something similar to the following in your <code class="docutils literal"><span class="pre">~/.bashrc</span></code> file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>### &gt;&gt;&gt; Override with your specific paths you want to use &lt;&lt;&lt; ###
+WORKSPACE=$USER_DIR
+export PROJECT_HOME=$WORKSPACE/projects
+export WORKON_HOME=$HOME/.virtualenvs
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">PROJECT_HOME</span></code> variable is set to a projects folder in the workspace. You can change <code class="docutils literal"><span class="pre">projects</span></code> name to the name of folder in which your project resides. <code class="docutils literal"><span class="pre">WORKON_HOME</span></code> variable is
+path for the virtual environment. The default path for the virtual environment will be <code class="docutils literal"><span class="pre">/Users/&lt;username&gt;/.local/share/virtualenvs</span></code>. A symlink for the virtualenvs folder would be created in the user&#8217;s directory.
+If there is no symlink created, you can create one. The symlink would be:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>.virtualenvs -&gt; /Users/&lt;username&gt;/.local/share/virtualenvs
+</pre></div>
+</div>
+</div>
+<div class="section" id="initial-setup-of-python-environment">
+<h2>Initial Setup of Python Environment<a class="headerlink" href="#initial-setup-of-python-environment" title="Permalink to this headline">¶</a></h2>
+<p>Python development should be taken place in a virtual environment. You can create a virtual environment for the project using invoke. The name
+of the created virtual environment is going to be <code class="docutils literal"><span class="pre">bingmaps</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke env
+</pre></div>
+</div>
+<p>The above command helps in creating the virtual environment with all system dependancies.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>All the invoke tasks must be executed from the root folder of the project.</li>
+<li>All the invoke tasks will run better in Linux/Mac. These might not be compatible with Windows as the commands are different.</li>
+<li>The project is entirely system-independent except for invoke tasks.</li>
+<li>When you run <code class="docutils literal"><span class="pre">invoke</span> <span class="pre">env</span></code> command multiple times, the virtual environment will be deleted and created again with all the system dependencies each time.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="working-on-a-virtual-environment">
+<h2>Working on a Virtual Environment<a class="headerlink" href="#working-on-a-virtual-environment" title="Permalink to this headline">¶</a></h2>
+<p>In order to work in the virtual environment created, you have to run the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ pew workon bingmaps
+</pre></div>
+</div>
+<p>If you want to exit from the current virtual environment, you have to run the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>bingmaps$ exit
+</pre></div>
+</div>
+</div>
+<div class="section" id="development-tasks">
+<h2>Development Tasks<a class="headerlink" href="#development-tasks" title="Permalink to this headline">¶</a></h2>
+<p>There are several tasks specified in this project. You can get a list of all the available tasks through the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke [--list|-l]
+# OR
+$ inv [--list|-l]
+</pre></div>
+</div>
+<p>For a detailed help on a command, run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ inv --help &lt;command&gt;
+</pre></div>
+</div>
+<div class="section" id="env-new">
+<h3>env.new<a class="headerlink" href="#env-new" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in creating a new virtual environment with the package&#8217;s name <code class="docutils literal"><span class="pre">bingmaps</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke env.new
+# OR
+$ inv env.new
+</pre></div>
+</div>
+</div>
+<div class="section" id="env-install">
+<h3>env.install<a class="headerlink" href="#env-install" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in installing all the system dependencies inside the virtual environment created (<code class="docutils literal"><span class="pre">bingmaps</span></code>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke env.install
+# OR
+$ inv env.install
+</pre></div>
+</div>
+</div>
+<div class="section" id="env-remove">
+<h3>env.remove<a class="headerlink" href="#env-remove" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in removing/deleting the virtual environment (<code class="docutils literal"><span class="pre">bingmaps</span></code>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke env.remove
+# OR
+$ inv env.remove
+</pre></div>
+</div>
+</div>
+<div class="section" id="env-clean">
+<h3>env.clean<a class="headerlink" href="#env-clean" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in removing some of the project independent folders/files:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke env.clean
+# OR
+$ inv env.clean
+</pre></div>
+</div>
+<p>Some of the project independent folders/files are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">__pycache__</span></code></li>
+<li><code class="docutils literal"><span class="pre">.cache</span></code></li>
+<li><code class="docutils literal"><span class="pre">.tox</span></code></li>
+<li><code class="docutils literal"><span class="pre">.coverage</span></code></li>
+<li><code class="docutils literal"><span class="pre">.egg</span></code></li>
+<li><code class="docutils literal"><span class="pre">.egg*</span></code></li>
+<li><code class="docutils literal"><span class="pre">dist</span></code></li>
+<li><code class="docutils literal"><span class="pre">build</span></code></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>When you run <code class="docutils literal"><span class="pre">inv</span> <span class="pre">env</span></code> command, the above env tasks run in an order (<code class="docutils literal"><span class="pre">env.clean</span></code>, <code class="docutils literal"><span class="pre">env.remove</span></code>, <code class="docutils literal"><span class="pre">env.new</span></code>, <code class="docutils literal"><span class="pre">env.install</span></code>)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="tests-unit">
+<h3>tests.unit<a class="headerlink" href="#tests-unit" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in running all the unit tests:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke test.unit
+# OR
+$ inv test.unit
+</pre></div>
+</div>
+</div>
+<div class="section" id="tests-style">
+<h3>tests.style<a class="headerlink" href="#tests-style" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in running style checker (pep8 validations):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke test.style
+# OR
+$ inv test.style
+</pre></div>
+</div>
+</div>
+<div class="section" id="tests-errors">
+<h3>tests.errors<a class="headerlink" href="#tests-errors" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in running static error analysis (pylint validations):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke test.errors
+# OR
+$ inv test.errors
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>When you run <code class="docutils literal"><span class="pre">inv</span> <span class="pre">tests</span></code> command, the above tests tasks run in an order (<code class="docutils literal"><span class="pre">tests.errors</span></code>, <code class="docutils literal"><span class="pre">tests.style</span></code>, <code class="docutils literal"><span class="pre">tests.unit</span></code>)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="docs-build">
+<h3>docs.build<a class="headerlink" href="#docs-build" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in building the documentation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke docs.build
+# OR
+$ inv docs.build
+</pre></div>
+</div>
+</div>
+<div class="section" id="docs-serve">
+<h3>docs.serve<a class="headerlink" href="#docs-serve" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in running a simple server and you can view <code class="docutils literal"><span class="pre">index.html</span></code> can be viewed in a browser:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke docs.serve
+# OR
+$ inv docs.serve
+</pre></div>
+</div>
+</div>
+<div class="section" id="docs-publish">
+<h3>docs.publish<a class="headerlink" href="#docs-publish" title="Permalink to this headline">¶</a></h3>
+<p>This command helps in building and pushing the docs to repository&#8217;s github pages:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ invoke docs.publish
+# OR
+$ inv docs.publish
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>When you run <code class="docutils literal"><span class="pre">inv</span> <span class="pre">docs</span></code> command, the above docs tasks run in an order (<code class="docutils literal"><span class="pre">docs.build</span></code>, <code class="docutils literal"><span class="pre">docs.serve</span></code>)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rest_services.html" class="btn btn-neutral float-right" title="API Services" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Links" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bharadwaj Yarlagadda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

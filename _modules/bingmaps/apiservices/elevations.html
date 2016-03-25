@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bingmaps.apiservices.elevations &mdash; Bingmaps 0.3.7 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/theme_override.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Bingmaps 0.3.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Bingmaps
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../devguide.html">Developer Guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_services.html">API Services</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../schemas.html">API Services Schemas</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls.html">API Services URLs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../locationsapi.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Release 0.3.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Bingmaps</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>bingmaps.apiservices.elevations</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bingmaps.apiservices.elevations</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">bingmaps.urls</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ElevationsUrl</span><span class="p">,</span>
+    <span class="n">Coordinates</span><span class="p">,</span>
+    <span class="n">Offset</span><span class="p">,</span>
+    <span class="n">Polyline</span><span class="p">,</span>
+    <span class="n">BoundingBox</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">xmltodict</span>
+
+
+<div class="viewcode-block" id="ElevationsApi"><a class="viewcode-back" href="../../../rest_services.html#bingmaps.apiservices.ElevationsApi">[docs]</a><span class="k">class</span> <span class="nc">ElevationsApi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Elevations API class</span>
+
+<span class="sd">    This class is used to retrieve the output from the given data from the</span>
+<span class="sd">    user.</span>
+<span class="sd">      - First, the data is used to build a URL which is related to the</span>
+<span class="sd">        Elevations API.</span>
+<span class="sd">      - Second, this class helps in retrieving the response from the URL built</span>
+<span class="sd">      - Third, based on the response, this class helps in retrieving all the</span>
+<span class="sd">        corresponding output data from the response. Some of the output data</span>
+<span class="sd">        which this class would be retrieving is:</span>
+<span class="sd">          - Elevations</span>
+<span class="sd">          - Offsets</span>
+<span class="sd">          - Zoom Level</span>
+
+<span class="sd">    The output from the URL can be either JSON/XML based on the output</span>
+<span class="sd">    parameter mentioned in the data. Even the output response is &#39;xml&#39;, this</span>
+<span class="sd">    class helps in converting the xml response to JSON data first and then</span>
+<span class="sd">    retrieve all the necessary output from it.</span>
+
+<span class="sd">    :ivar data: The data that the user will send in to the ElevationsApi to</span>
+<span class="sd">        retrieve all the respective output from the response</span>
+<span class="sd">    :ivar url: The url that gets built based on the user&#39;s given data</span>
+<span class="sd">    :ivar http_protocol: Http protocol for the URL. Can be either of the</span>
+<span class="sd">        following:</span>
+<span class="sd">          - http</span>
+<span class="sd">          - https</span>
+<span class="sd">    :ivar schema: The schema that gets used to build the URL and the schema</span>
+<span class="sd">        is based in the &#39;method&#39; field in the data.</span>
+<span class="sd">    :ivar file_name: The filename that the class can write the JSON response</span>
+<span class="sd">        to.</span>
+<span class="sd">          - file_name - &#39;elevations&#39;</span>
+<span class="sd">    :ivar elevationdata: Response from the URL</span>
+
+<span class="sd">    Some of the examples are illustrated in Examples page</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">http_protocol</span><span class="o">=</span><span class="s1">&#39;http&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_protocol</span> <span class="o">=</span> <span class="n">http_protocol</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;No data given&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;List&#39;</span><span class="p">:</span>
+            <span class="n">schema</span> <span class="o">=</span> <span class="n">Coordinates</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Polyline&#39;</span><span class="p">:</span>
+            <span class="n">schema</span> <span class="o">=</span> <span class="n">Polyline</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;SeaLevel&#39;</span><span class="p">:</span>
+            <span class="n">schema</span> <span class="o">=</span> <span class="n">Offset</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Bounds&#39;</span><span class="p">:</span>
+            <span class="n">schema</span> <span class="o">=</span> <span class="n">BoundingBox</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;method should be either of &#39;</span>
+                           <span class="s1">&#39;List/Polyline/SeaLevel/Bounds&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="n">ElevationsUrl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">http_protocol</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;elevations&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elevationdata</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ElevationsApi.build_url"><a class="viewcode-back" href="../../../rest_services.html#bingmaps.apiservices.ElevationsApi.build_url">[docs]</a>    <span class="k">def</span> <span class="nf">build_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Builds the URL for elevations API services based on the data given</span>
+<span class="sd">        by the user.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            url (str): URL for the elevations API services</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;{protocol}/{url}/{rest}/{version}/{restapi}/{rscpath}/&#39;</span> \
+              <span class="s1">&#39;{query}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">protocol</span><span class="p">,</span>
+                               <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">main_url</span><span class="p">,</span>
+                               <span class="n">rest</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span>
+                               <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+                               <span class="n">restapi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">restApi</span><span class="p">,</span>
+                               <span class="n">rscpath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">resourcePath</span><span class="p">,</span>
+                               <span class="n">query</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">url</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/None/&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ElevationsApi.get_data"><a class="viewcode-back" href="../../../rest_services.html#bingmaps.apiservices.ElevationsApi.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets data from the given url&quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_url</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elevationdata</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">elevationdata</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">elevationdata</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">get_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">resourceSets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_to_dict</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resourceSets</span><span class="p">[</span><span class="s1">&#39;resourceSets&#39;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">rsc</span> <span class="k">for</span> <span class="n">rsc</span> <span class="ow">in</span> <span class="n">resource</span><span class="p">[</span><span class="s1">&#39;resources&#39;</span><span class="p">]]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">resourcesSets</span> <span class="o">=</span> <span class="n">resourceSets</span><span class="p">[</span><span class="s1">&#39;Response&#39;</span><span class="p">][</span><span class="s1">&#39;ResourceSets&#39;</span><span class="p">]</span>
+                <span class="n">resourceSet</span> <span class="o">=</span> <span class="n">resourcesSets</span><span class="p">[</span><span class="s1">&#39;ResourceSet&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resourceSet</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">resourceSet</span><span class="p">[</span><span class="s1">&#39;Resources&#39;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resourceSet</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">rsc</span> <span class="k">for</span> <span class="n">rsc</span> <span class="ow">in</span> <span class="n">resourceSet</span><span class="p">[</span><span class="s1">&#39;Resources&#39;</span><span class="p">]]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Response from the built URL&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elevationdata</span><span class="o">.</span><span class="n">text</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">status_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Status code of the response from the URL&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elevationdata</span><span class="o">.</span><span class="n">status_code</span>
+
+<div class="viewcode-block" id="ElevationsApi.response_to_dict"><a class="viewcode-back" href="../../../rest_services.html#bingmaps.apiservices.ElevationsApi.response_to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">response_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method helps in returning the output JSON data from the URL</span>
+<span class="sd">        and also it helps in converting the XML output/response (string) to a</span>
+<span class="sd">        JSON object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data (dict): JSON data from the output/response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elevationdata</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">elevationdata</span><span class="o">.</span><span class="n">text</span><span class="p">)))</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">elevations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves elevations/offsets from the output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            elevations/offsets (namedtuple): A named tuple of list of</span>
+<span class="sd">            elevations/offsets</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_resource</span><span class="p">()</span>
+        <span class="n">elevations</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;elevations_data&#39;</span><span class="p">,</span> <span class="s1">&#39;elevations&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">elevations</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;elevations&#39;</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resources</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">elevations</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;offsets&#39;</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resources</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;ElevationData&#39;</span><span class="p">][</span><span class="s1">&#39;Elevations&#39;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">elevations</span><span class="p">(</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;ElevationData&#39;</span><span class="p">][</span><span class="s1">&#39;Elevations&#39;</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">offsets</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;offsets_data&#39;</span><span class="p">,</span> <span class="s1">&#39;offsets&#39;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;SeaLevelData&#39;</span><span class="p">][</span><span class="s1">&#39;Offsets&#39;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                        <span class="k">return</span> <span class="n">offsets</span><span class="p">(</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;SeaLevelData&#39;</span><span class="p">][</span><span class="s1">&#39;Offsets&#39;</span><span class="p">])</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">zoomlevel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves zoomlevel from the output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            zoomlevel (namedtuple): A namedtuple of zoomlevel from the output</span>
+<span class="sd">            response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_resource</span><span class="p">()</span>
+        <span class="n">zoomlevel</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;zoomlevel&#39;</span><span class="p">,</span> <span class="s1">&#39;zoomLevel&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">zoomlevel</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;zoomLevel&#39;</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resources</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;ElevationData&#39;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">zoomlevel</span><span class="p">(</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;ElevationData&#39;</span><span class="p">][</span><span class="s1">&#39;ZoomLevel&#39;</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resources</span><span class="p">[</span><span class="s1">&#39;SeaLevelData&#39;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                        <span class="n">zoom</span> <span class="o">=</span> <span class="n">resources</span><span class="p">[</span><span class="s1">&#39;SeaLevelData&#39;</span><span class="p">][</span><span class="s1">&#39;ZoomLevel&#39;</span><span class="p">]</span>
+                        <span class="k">return</span> <span class="n">zoomlevel</span><span class="p">(</span><span class="n">zoom</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ElevationsApi.to_json_file"><a class="viewcode-back" href="../../../rest_services.html#bingmaps.apiservices.ElevationsApi.to_json_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_json_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes output to a JSON file with the given file name&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_to_json</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_to_json</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">file_name</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">write_to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">file_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span>
+                               <span class="s1">&#39;{0}.{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span>
+                                                <span class="s1">&#39;json&#39;</span><span class="p">)),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bharadwaj Yarlagadda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

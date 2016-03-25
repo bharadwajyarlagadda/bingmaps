@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bingmaps.urls.traffic_build_urls &mdash; Bingmaps 0.3.7 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/theme_override.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Bingmaps 0.3.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Bingmaps
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../devguide.html">Developer Guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_services.html">API Services</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../schemas.html">API Services Schemas</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls.html">API Services URLs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../locationsapi.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Release 0.3.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Bingmaps</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>bingmaps.urls.traffic_build_urls</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bingmaps.urls.traffic_build_urls</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">marshmallow</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">post_dump</span><span class="p">,</span> <span class="n">validate</span><span class="p">,</span> <span class="n">pre_dump</span>
+
+
+<div class="viewcode-block" id="TrafficIncidentsUrl"><a class="viewcode-back" href="../../../urls.html#bingmaps.urls.traffic_build_urls.TrafficIncidentsUrl">[docs]</a><span class="k">class</span> <span class="nc">TrafficIncidentsUrl</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class helps in building a url for elevations API service.</span>
+
+<span class="sd">    :ivar data: Data required for building up the URL</span>
+<span class="sd">    :ivar protocol: http protocol for the url</span>
+<span class="sd">    :ivar schema: Elevations schema to which the data will be dumped</span>
+
+<span class="sd">    All the URL values are retrieved from the schema.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            &gt;&gt;&gt; data = {&#39;mapArea&#39;: [37, -105, 45, -94],</span>
+<span class="sd">            ...         &#39;includeLocationCodes&#39;: &#39;true&#39;,</span>
+<span class="sd">            ...         &#39;type&#39;: [5],</span>
+<span class="sd">            ...         &#39;o&#39;: &#39;xml&#39;,</span>
+<span class="sd">            ...         &#39;key&#39;: &#39;abs&#39;}</span>
+<span class="sd">            &gt;&gt;&gt; url = TrafficIncidentsUrl(data, TrafficIncidentsSchema(),</span>
+<span class="sd">            ...                           &#39;http&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; url.main_url</span>
+<span class="sd">            &#39;dev.virtualearth.net&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.protocol</span>
+<span class="sd">            &#39;http:/&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.resourcePath</span>
+<span class="sd">            &#39;Incidents&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.restApi</span>
+<span class="sd">            &#39;Traffic&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.rest</span>
+<span class="sd">            &#39;REST&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.version</span>
+<span class="sd">            &#39;v1&#39;</span>
+<span class="sd">            &gt;&gt;&gt; url.query</span>
+<span class="sd">            &#39;37.0,-105.0,45.0,-94.0/true?type=5&amp;o=xml&amp;key=abs&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;http&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_protocol</span> <span class="o">=</span> <span class="n">protocol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_values</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">schema_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
+        <span class="n">is_valid_schema</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">is_valid_schema</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">is_valid_schema</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">schema</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property helps in returning the http protocol to be used as</span>
+<span class="sd">        part of the URL.</span>
+
+<span class="sd">        :ivar http_protocol: The http protocol passed in (http/https)</span>
+
+<span class="sd">        :getter: Returns a string relevant to the http</span>
+<span class="sd">            protocol</span>
+<span class="sd">              - http: ``http:/``</span>
+<span class="sd">              - https: ``https:/``</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_protocol</span> <span class="o">==</span> <span class="s1">&#39;http&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;http:/&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;https:/&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">main_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property helps in returning the main URL used in bingmaps rest</span>
+<span class="sd">        services</span>
+
+<span class="sd">        :getter: Returns a</span>
+<span class="sd">            URL</span>
+<span class="sd">              - ``dev.virtualearth.net``</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;dev.virtualearth.net&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property make the URL accessible for REST services.</span>
+
+<span class="sd">        :getter: Returns a string saying that the URL is a REST service</span>
+<span class="sd">            URL</span>
+<span class="sd">              - ``REST``</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;REST&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property gives the version of the Bing Maps REST services</span>
+
+<span class="sd">        :getter: Returns a string of Bing Maps REST services</span>
+<span class="sd">            version</span>
+<span class="sd">              - ``v1`` for Elevations services</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;version&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">restApi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property gives a part of the URL that identifies the REST API</span>
+
+<span class="sd">        :getter: Returns a part of the URL that identifies the REST</span>
+<span class="sd">            API</span>
+<span class="sd">              - ``Elevations`` for Elevations services</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;restApi&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">[</span><span class="s1">&#39;restApi&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">resourcePath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property gives a part of the URL that specifies a resource</span>
+<span class="sd">        such as an address or landmark.</span>
+
+<span class="sd">        :getter: Returns a string that identifies the resource path such as</span>
+<span class="sd">            address or landmark</span>
+<span class="sd">              - ``None`` for Elevations services</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;resourcePath&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">[</span><span class="s1">&#39;resourcePath&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This property helps in retrieving the query part of the URL</span>
+
+<span class="sd">        :getter: Returns a part of the URL which consist of all the query</span>
+<span class="sd">            parameters.</span>
+<span class="sd">        :type: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema_dict</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">]</span></div>
+
+
+<span class="k">class</span> <span class="nc">MainParams</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span>
+        <span class="s1">&#39;v1&#39;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
+    <span class="n">restApi</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span>
+        <span class="s1">&#39;Traffic&#39;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
+    <span class="n">resourcePath</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span>
+        <span class="s1">&#39;Incidents&#39;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="TrafficIncidentsSchema"><a class="viewcode-back" href="../../../schemas.html#bingmaps.urls.traffic_build_urls.TrafficIncidentsSchema">[docs]</a><span class="k">class</span> <span class="nc">TrafficIncidentsSchema</span><span class="p">(</span><span class="n">MainParams</span><span class="p">,</span> <span class="n">Schema</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Schema for query parameters in which all the fields will be in a ordered</span>
+<span class="sd">    way. All the fields will be dumped in the same order as mentioned in the</span>
+<span class="sd">    schema.</span>
+
+<span class="sd">    Data Fields for the schema (taken from</span>
+<span class="sd">    https://msdn.microsoft.com/en-us/library/hh441726.aspx):</span>
+
+<span class="sd">    :ivar mapArea[Required]: A rectangular area specified as a bounding box.</span>
+<span class="sd">        The size of the area can be a maximum of 500 km x 500 km. A bounding</span>
+<span class="sd">        box defines an area by specifying SouthLatitude, WestLongitude,</span>
+<span class="sd">        NorthLatitude, and EastLongitude values.</span>
+<span class="sd">    :ivar includeLocationCodes[Optional]:  One of the following</span>
+<span class="sd">        values:</span>
+<span class="sd">          - &#39;true&#39;</span>
+<span class="sd">          - &#39;false&#39; [default]</span>
+<span class="sd">        If you want to use the default value, you can omit this parameter from</span>
+<span class="sd">        the URL request.</span>
+<span class="sd">    :ivar severity[Optional]: One or more of the following integer</span>
+<span class="sd">        values:</span>
+<span class="sd">          - 1: LowImpact</span>
+<span class="sd">          - 2: Minor</span>
+<span class="sd">          - 3: Moderate</span>
+<span class="sd">          - 4: Serious</span>
+<span class="sd">        The default is to return traffic incidents for all severity levels.</span>
+<span class="sd">    :ivar type[Optional]: One or more of the following integer</span>
+<span class="sd">        values:</span>
+<span class="sd">          - 1: Accident</span>
+<span class="sd">          - 2: Congestion</span>
+<span class="sd">          - 3: DisabledVehicle</span>
+<span class="sd">          - 4: MassTransit</span>
+<span class="sd">          - 5: Miscellaneous</span>
+<span class="sd">          - 6: OtherNews</span>
+<span class="sd">          - 7: PlannedEvent</span>
+<span class="sd">          - 8: RoadHazard</span>
+<span class="sd">          - 9: Construction</span>
+<span class="sd">          - 10: Alert</span>
+<span class="sd">          - 11: Weather</span>
+<span class="sd">    :ivar o[Optional]: A string specifying the output as JSON or xml.</span>
+<span class="sd">    :ivar key[Required]: Bing maps key - REQUIRED field</span>
+
+<span class="sd">    This schema helps in serializing the data.</span>
+
+<span class="sd">    Post-Dump:</span>
+<span class="sd">        After dumping the data, build_query_string builds up the</span>
+<span class="sd">        queryParameters string. The final value after dumping the data would</span>
+<span class="sd">        be a string.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            &gt;&gt;&gt; data = {&#39;mapArea&#39;: [37, -105, 45, -94],</span>
+<span class="sd">            ...         &#39;includeLocationCodes&#39;: &#39;true&#39;,</span>
+<span class="sd">            ...         &#39;type&#39;: [5],</span>
+<span class="sd">            ...         &#39;o&#39;: &#39;xml&#39;,</span>
+<span class="sd">            ...         &#39;key&#39;: &#39;abs&#39;}</span>
+<span class="sd">            &gt;&gt;&gt; query = TrafficIncidentsSchema()</span>
+<span class="sd">            &gt;&gt;&gt; query.dump(data).data</span>
+<span class="sd">            OrderedDict([(&#39;version&#39;, &#39;v1&#39;), (&#39;restApi&#39;, &#39;Traffic&#39;), \</span>
+<span class="sd">(&#39;resourcePath&#39;, &#39;Incidents&#39;), (&#39;query&#39;, \</span>
+<span class="sd">&#39;37.0,-105.0,45.0,-94.0/true?type=5&amp;o=xml&amp;key=abs&#39;)])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mapArea</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">Float</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;All the four coordinates required&#39;</span><span class="p">},</span>
+        <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="o">.</span><span class="n">Length</span><span class="p">(</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="s1">&#39;All the four coordinates should be entered: south latitude,&#39;</span>
+                  <span class="s1">&#39;west longitude, north latitude and east longitude in the &#39;</span>
+                  <span class="s1">&#39;same order&#39;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">includeLocationCodes</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;false&#39;</span>
+    <span class="p">)</span>
+    <span class="n">severity</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">Int</span>
+    <span class="p">)</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">Int</span>
+    <span class="p">)</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">()</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Bing Maps API key required&#39;</span><span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">,</span> <span class="s1">&#39;mapArea&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;includeLocationCodes&#39;</span><span class="p">,</span> <span class="s1">&#39;severity&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">)</span>
+        <span class="n">ordered</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="nd">@post_dump</span>
+    <span class="k">def</span> <span class="nf">build_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method occurs after dumping the data into the class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (dict): dictionary of all the query values</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data (dict): ordered dict of all the values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_part_one</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">query_part_two</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">keys_to_be_removed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="s1">&#39;restApi&#39;</span><span class="p">,</span> <span class="s1">&#39;resourcePath&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;mapArea&#39;</span><span class="p">:</span>
+                    <span class="n">query_part_one</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="p">))</span>
+                    <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;includeLocationCodes&#39;</span><span class="p">:</span>
+                    <span class="n">query_part_one</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                    <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+                    <span class="n">query_part_two</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;{0}={1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+                    <span class="n">keys_to_be_removed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys_to_be_removed</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;{0}?{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">query_part_one</span><span class="p">),</span>
+                                         <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">query_part_two</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bharadwaj Yarlagadda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

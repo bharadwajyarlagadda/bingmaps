@@ -1,0 +1,801 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Examples &mdash; Bingmaps 0.3.7 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_override.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Bingmaps 0.3.7 documentation" href="index.html"/>
+        <link rel="next" title="Release 0.3.7" href="changelog.html"/>
+        <link rel="prev" title="API Services URLs" href="urls.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Bingmaps
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="devguide.html">Developer Guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rest_services.html">API Services</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="schemas.html">API Services Schemas</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="urls.html">API Services URLs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#locations-api">Locations API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#find-a-location-by-address">Find a Location by Address</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#find-a-location-by-point">Find a Location by Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#find-a-location-by-query">Find a Location by Query</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#elevations-api">Elevations API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#elevations-for-latitude-and-longitude-coordinates">Elevations for latitude and longitude coordinates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#elevations-at-equally-spaced-locations-along-a-polyline-path">Elevations at equally-spaced locations along a polyline path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-offset-at-a-set-of-latitude-and-longitude-coordinates">Get offset at a set of latitude and longitude coordinates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-elevations-within-an-area-on-the-earth-defined-as-a-bounding-box">Get elevations within an area on the Earth defined as a bounding box</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#traffic-incidents-api">Traffic Incidents API</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Release 0.3.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Bingmaps</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Examples</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/locationsapi.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="locations-api">
+<h2>Locations API<a class="headerlink" href="#locations-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="find-a-location-by-address">
+<h3>Find a Location by Address<a class="headerlink" href="#find-a-location-by-address" title="Permalink to this headline">¶</a></h3>
+<p>Data Fields which you can give for location by address API service:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">adminDistrict[Optional]: A string that contains a subdivision, such as the abbreviation of a US state</p>
+</li>
+<li><p class="first">locality[Optional]: A string that contains the locality, such as a US city</p>
+</li>
+<li><p class="first">postalCode[Optional]: An integer value that contains the postal code, such as a US ZIP Code</p>
+</li>
+<li><p class="first">addressLine[Optional]: A string specifying the street line of an address</p>
+</li>
+<li><p class="first">countryRegion[Optional]: A string specifying the ISO country code</p>
+</li>
+<li><p class="first">c[Optional]: A string specifying the culture parameter</p>
+</li>
+<li><dl class="first docutils">
+<dt>o[Optional]: A string for specifying the format of output(response) Ex. - xml/json</dt>
+<dd><ul class="first last simple">
+<li>If empty, default output would be a JSON data string</li>
+<li>If given xml, the output would be an xml data string</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>includeNeighborhood[Optional]: One of the following values</dt>
+<dd><ul class="first last simple">
+<li>1: Include neighborhood information when available</li>
+<li>0 [default]: Do not include neighborhood information</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>include[Optional]: The only value for this parameter is ciso2. When you specify include=ciso2, the two-letter ISO country code is included for addresses in the response</dt>
+<dd><ul class="first last simple">
+<li>default=&#8217;ciso2&#8217;</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>maxResults[Optional]: An integer between 1 and 20 (number of results)</dt>
+<dd><ul class="first last simple">
+<li>default=20</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>key[Required]: Bing maps api key</dt>
+<dd><ul class="first last simple">
+<li>Required</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>The general output format for the location API services can be found at <a class="reference external" href="https://msdn.microsoft.com/en-us/library/ff701725.aspx">https://msdn.microsoft.com/en-us/library/ff701725.aspx</a></p>
+<p>The below example can help you on how the package helps you to retrieve the data from Location By Address API service (Please check <a class="reference internal" href="rest_services.html#bingmaps.apiservices.LocationByAddress" title="bingmaps.apiservices.LocationByAddress"><code class="xref py py-class docutils literal"><span class="pre">bingmaps.apiservices.LocationByAddress</span></code></a> for more methods):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bingmaps.apiservices</span> <span class="kn">import</span> <span class="n">LocationByAddress</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;Av6_H8GIYQyP-DLQwLOKDknW64QfmVgJmVpfiSO861v0x_j1pLPCOW6s-70nCzEW&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;adminDistrict&#39;</span><span class="p">:</span> <span class="s1">&#39;WA&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;locality&#39;</span><span class="p">:</span> <span class="s1">&#39;Seattle&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_address</span> <span class="o">=</span> <span class="n">LocationByAddress</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">)</span>
+<span class="go">[coordinates(latitude=47.60356903076172, longitude=-122.32945251464844)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">loc_by_address</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">coord</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
+<span class="go">47.60356903076172 -122.32945251464844</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">get_address</span><span class="p">)</span>   
+<span class="go">[{&#39;locality&#39;: &#39;Seattle&#39;, &#39;countryRegionIso2&#39;: &#39;US&#39;, &#39;adminDistrict&#39;: &#39;WA&#39;, &#39;adminDistrict2&#39;: &#39;King Co.&#39;, &#39;formattedAddress&#39;: &#39;Seattle, WA&#39;, &#39;countryRegion&#39;: &#39;United States&#39;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_address</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">)</span>
+<span class="go">[boundingbox(southlatitude=47.253395080566406, westlongitude=-123.16571807861328, northlatitude=47.94615936279297, eastlongitude=-121.5034408569336)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">bbox_coord</span> <span class="ow">in</span> <span class="n">loc_by_address</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">bbox_coord</span><span class="o">.</span><span class="n">southlatitude</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">bbox_coord</span><span class="o">.</span><span class="n">westlongitude</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">bbox_coord</span><span class="o">.</span><span class="n">northlatitude</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">bbox_coord</span><span class="o">.</span><span class="n">eastlongitude</span><span class="p">)</span>
+<span class="go">47.253395080566406</span>
+<span class="go">-123.16571807861328</span>
+<span class="go">47.94615936279297</span>
+<span class="go">-121.5034408569336</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="find-a-location-by-point">
+<h3>Find a Location by Point<a class="headerlink" href="#find-a-location-by-point" title="Permalink to this headline">¶</a></h3>
+<p>Data Fields which you can give for location by point API service:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">point[Required]: A point on the Earth specified by a latitude and longitude.</p>
+</li>
+<li><dl class="first docutils">
+<dt>includeEntityTypes[Optional]: A comma separated list of entity types selected from the following options:</dt>
+<dd><ul class="first simple">
+<li>Address</li>
+<li>Neighborhood</li>
+<li>PopulatedPlace</li>
+<li>Postcode1</li>
+<li>AdminDivision1</li>
+<li>AdminDivision2</li>
+<li>CountryRegion</li>
+</ul>
+<p class="last">These entity types are ordered from the most specific entity to the
+least specific entity. When entities of more than one entity type are
+found, only the most specific entity is returned. For example, if you
+specify Address and AdminDistrict1 as entity types and entities were
+found for both types, only the Address entity information is returned
+in the response. One exception to this rule is when both
+PopulatedPlace and Neighborhood entity types are specified and
+information is found for both. In this case, the information for both
+entity types is returned. Also, more than one Neighborhood may be
+returned because the area covered by two different neighborhoods can
+overlap.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>includeNeighborhood[Optional]: One of the following values:</dt>
+<dd><ul class="first last simple">
+<li>1: Include neighborhood information when available.</li>
+<li>0 [default]: Do not include neighborhood information.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>include[Optional]: The only value for this parameter is ciso2. When you specify include=ciso2, the two-letter ISO country code is included</dt>
+<dd><p class="first last">for addresses in the response.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">c[Optional]: A string specifying the culture parameter</p>
+</li>
+<li><dl class="first docutils">
+<dt>o[Optional]: A string for specifying the format of output(response) Ex. - xml/json</dt>
+<dd><ul class="first last simple">
+<li>If empty, default output would be a JSON data string</li>
+<li>If given xml, the output would be an xml data string</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>maxResults[Optional]: An integer between 1 and 20 (number of results)</dt>
+<dd><ul class="first last simple">
+<li>default=20</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>key[Required]: Bing maps api key</dt>
+<dd><ul class="first last simple">
+<li>Required</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>The general output format for the location API services can be found at <a class="reference external" href="https://msdn.microsoft.com/en-us/library/ff701725.aspx">https://msdn.microsoft.com/en-us/library/ff701725.aspx</a></p>
+<p>The below example can help you on how the package helps you to retrieve the data from Location By Point API service (Please check <a class="reference internal" href="rest_services.html#bingmaps.apiservices.LocationByPoint" title="bingmaps.apiservices.LocationByPoint"><code class="xref py py-class docutils literal"><span class="pre">bingmaps.apiservices.LocationByPoint</span></code></a> for more methods):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bingmaps.apiservices</span> <span class="kn">import</span> <span class="n">LocationByPoint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;Av6_H8GIYQyP-DLQwLOKDknW64QfmVgJmVpfiSO861v0x_j1pLPCOW6s-70nCzEW&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;point&#39;</span><span class="p">:</span> <span class="s1">&#39;39.904211,116.407395&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;includeEntityTypes&#39;</span><span class="p">:</span> <span class="s1">&#39;PopulatedPlace&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_point</span> <span class="o">=</span> <span class="n">LocationByPoint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">)</span>
+<span class="go">[coordinates(latitude=39.91387176513672, longitude=116.37654113769531)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">loc_by_point</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
+<span class="go">39.91387176513672</span>
+<span class="go">116.37654113769531</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">get_address</span><span class="p">)</span>     
+<span class="go">[{&#39;locality&#39;: &#39;Beijing (Peking)&#39;, &#39;countryRegion&#39;: &#39;China&#39;, &#39;countryRegionIso2&#39;: &#39;CN&#39;, &#39;formattedAddress&#39;: &#39;Beijing (Peking), China&#39;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_point</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">)</span>
+<span class="go">[boundingbox(southlatitude=39.8636474609375, westlongitude=116.27059173583984, northlatitude=39.96409606933594, eastlongitude=116.48249053955078)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">bbox_coord</span> <span class="ow">in</span> <span class="n">loc_by_point</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">bbox_coord</span><span class="o">.</span><span class="n">southlatitude</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">bbox_coord</span><span class="o">.</span><span class="n">westlongitude</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">bbox_coord</span><span class="o">.</span><span class="n">northlatitude</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">bbox_coord</span><span class="o">.</span><span class="n">eastlongitude</span><span class="p">)</span>
+<span class="go">39.8636474609375</span>
+<span class="go">116.27059173583984</span>
+<span class="go">39.96409606933594</span>
+<span class="go">116.48249053955078</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="find-a-location-by-query">
+<h3>Find a Location by Query<a class="headerlink" href="#find-a-location-by-query" title="Permalink to this headline">¶</a></h3>
+<p>Data Fields which you can give for location by query API service:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">q[Required]: A string (query) that contains information about a location, such as an address or landmark name.</p>
+</li>
+<li><dl class="first docutils">
+<dt>includeNeighborhood[Optional]: One of the following values:</dt>
+<dd><ul class="first last simple">
+<li>1: Include neighborhood information when available.</li>
+<li>0 [default]: Do not include neighborhood information.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>include[Optional]: One or more of the following options:</dt>
+<dd><ul class="first last simple">
+<li>queryParse: Specifies that the response shows how the query string
+was parsed into address values, such as addressLine, locality,
+adminDistrict, and postalCode.</li>
+<li>ciso2: Specifies to include the two-letter ISO country code. If you specify more than one include value, separate the values with a comma.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">c[Optional]: A string specifying the culture parameter</p>
+</li>
+<li><dl class="first docutils">
+<dt>o[Optional]: A string for specifying the format of output(response) Ex. - xml/json</dt>
+<dd><ul class="first last simple">
+<li>If empty, default output would be a JSON data string</li>
+<li>If given xml, the output would be an xml data string</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>maxResults[Optional]: An integer between 1 and 20 (number of results)</dt>
+<dd><ul class="first last simple">
+<li>default=20</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>key[Required]: Bing maps api key</dt>
+<dd><ul class="first last simple">
+<li>Required</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>The general output format for the location API services can be found at <a class="reference external" href="https://msdn.microsoft.com/en-us/library/ff701725.aspx">https://msdn.microsoft.com/en-us/library/ff701725.aspx</a></p>
+<p>The below example can help you on how the package helps you to retrieve the data from Location By Query API service (Please check <a class="reference internal" href="rest_services.html#bingmaps.apiservices.LocationByQuery" title="bingmaps.apiservices.LocationByQuery"><code class="xref py py-class docutils literal"><span class="pre">bingmaps.apiservices.LocationByQuery</span></code></a> for more methods):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bingmaps.apiservices</span> <span class="kn">import</span> <span class="n">LocationByQuery</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;Av6_H8GIYQyP-DLQwLOKDknW64QfmVgJmVpfiSO861v0x_j1pLPCOW6s-70nCzEW&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="s1">&#39;7266 Canterbury Court Oshkosh, WI 54901&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loc_by_query</span> <span class="o">=</span> <span class="n">LocationByQuery</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">)</span>
+<span class="go">[coordinates(latitude=44.0088005065918, longitude=-88.57089233398438), coordinates(latitude=44.26647186279297, longitude=-88.36396789550781), coordinates(latitude=44.268680572509766, longitude=-88.36396026611328)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">loc_by_query</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
+<span class="go">44.0088005065918</span>
+<span class="go">-88.57089233398438</span>
+<span class="go">44.26647186279297</span>
+<span class="go">-88.36396789550781</span>
+<span class="go">44.268680572509766</span>
+<span class="go">-88.36396026611328</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">get_address</span><span class="p">)</span>     
+<span class="go">[{&#39;countryRegion&#39;: &#39;United States&#39;, &#39;adminDistrict&#39;: &#39;WI&#39;, &#39;postalCode&#39;: &#39;54902&#39;, &#39;addressLine&#39;: &#39;Canterbury Dr&#39;, &#39;formattedAddress&#39;: &#39;Canterbury Dr, Oshkosh, WI 54902&#39;, &#39;adminDistrict2&#39;: &#39;Winnebago Co.&#39;, &#39;locality&#39;: &#39;Oshkosh&#39;, &#39;countryRegionIso2&#39;: &#39;US&#39;}, {&#39;countryRegion&#39;: &#39;United States&#39;, &#39;adminDistrict&#39;: &#39;WI&#39;, &#39;postalCode&#39;: &#39;54915&#39;, &#39;addressLine&#39;: &#39;Canterbury Ct&#39;, &#39;formattedAddress&#39;: &#39;Canterbury Ct, Appleton, WI 54915&#39;, &#39;adminDistrict2&#39;: &#39;Outagamie Co.&#39;, &#39;locality&#39;: &#39;Appleton&#39;, &#39;countryRegionIso2&#39;: &#39;US&#39;}, {&#39;countryRegion&#39;: &#39;United States&#39;, &#39;adminDistrict&#39;: &#39;WI&#39;, &#39;postalCode&#39;: &#39;54915&#39;, &#39;addressLine&#39;: &#39;N Canterbury Dr&#39;, &#39;formattedAddress&#39;: &#39;N Canterbury Dr, Appleton, WI 54915&#39;, &#39;adminDistrict2&#39;: &#39;Outagamie Co.&#39;, &#39;locality&#39;: &#39;Appleton&#39;, &#39;countryRegionIso2&#39;: &#39;US&#39;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">loc_by_query</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">)</span>
+<span class="go">[boundingbox(southlatitude=44.00493778902112, westlongitude=-88.57805267570657, northlatitude=44.01266322416247, eastlongitude=-88.56373199226218), boundingbox(southlatitude=44.26260914522229, westlongitude=-88.3711595479266, northlatitude=44.270334580363645, eastlongitude=-88.35677624308903), boundingbox(southlatitude=44.26481785493909, westlongitude=-88.37115218873478, northlatitude=44.27254329008044, eastlongitude=-88.35676834349178)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="elevations-api">
+<h2>Elevations API<a class="headerlink" href="#elevations-api" title="Permalink to this headline">¶</a></h2>
+<p>There are 4 methods in elevations API services: List/Polyline/SeaLevel/Bounds</p>
+<div class="section" id="elevations-for-latitude-and-longitude-coordinates">
+<h3>Elevations for latitude and longitude coordinates<a class="headerlink" href="#elevations-for-latitude-and-longitude-coordinates" title="Permalink to this headline">¶</a></h3>
+<p>Data Fields which you can give for getting elevations for latitude and longitude coordinates:</p>
+<blockquote>
+<div><ul class="simple">
+<li>method[Required]: A method for calculating elevations (ex. List/Polyline/SeaLevel/Bounds)
+- &#8216;List&#8217; [default]: Use this for returning elevations for a given pair of coordinates.</li>
+<li>points[Required]:  A set of coordinates on the Earth to use in
+elevation calculations. The exact use of these points depends on the
+type of elevation request. A set of latitude and longitude values in
+WGS84 decimal degrees. If you are requesting elevations or elevation
+offsets for a set of points, the maximum number of points is 1024.
+Points should be given as <code class="docutils literal"><span class="pre">lat1,long1,lat2,long2,latn,longn</span></code></li>
+<li>heights[Optional]: A string that specifies which sea level model to use to calculate elevation. One of the following values:
+- sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).
+- ellipsoid: Use the ellipsoid Earth model (WGS84).</li>
+<li>o[Optional]: A string specifying the output as JSON or xml.</li>
+<li>key[Required]: Bing maps key</li>
+</ul>
+</div></blockquote>
+<p>The general output format for the elvations API services can be found at <a class="reference external" href="https://msdn.microsoft.com/en-us/library/hh441730.aspx">https://msdn.microsoft.com/en-us/library/hh441730.aspx</a></p>
+<p>The below example can help you on how the package helps you to retrieve elevations from latitudes and longitude coordinates (Please check <a class="reference internal" href="rest_services.html#bingmaps.apiservices.ElevationsApi" title="bingmaps.apiservices.ElevationsApi"><code class="xref py py-class docutils literal"><span class="pre">bingmaps.apiservices.ElevationsApi</span></code></a> for more methods):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bingmaps.apiservices</span> <span class="kn">import</span> <span class="n">ElevationsApi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;Av6_H8GIYQyP-DLQwLOKDknW64QfmVgJmVpfiSO861v0x_j1pLPCOW6s-70nCzEW&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;List&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">15.5467</span><span class="p">,</span> <span class="mf">34.5676</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elevations</span> <span class="o">=</span> <span class="n">ElevationsApi</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">elevations</span><span class="p">)</span>
+<span class="go">[elevations_data(elevations=[471])]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">elevation</span> <span class="ow">in</span> <span class="n">elevations</span><span class="o">.</span><span class="n">elevations</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">elevation</span><span class="o">.</span><span class="n">elevations</span><span class="p">)</span>
+<span class="go">[471]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">zoomlevel</span><span class="p">)</span>
+<span class="go">[zoomlevel(zoomLevel=11)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">zlevel</span> <span class="ow">in</span> <span class="n">elevations</span><span class="o">.</span><span class="n">zoomlevel</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">zlevel</span><span class="o">.</span><span class="n">zoomLevel</span><span class="p">)</span>
+<span class="go">11</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="elevations-at-equally-spaced-locations-along-a-polyline-path">
+<h3>Elevations at equally-spaced locations along a polyline path<a class="headerlink" href="#elevations-at-equally-spaced-locations-along-a-polyline-path" title="Permalink to this headline">¶</a></h3>
+<p>Data Fields which you can give for getting Elevations at equally-spaced locations along a polyline path:</p>
+<blockquote>
+<div><ul class="simple">
+<li>method[Required]: A method for calculating elevations (ex. List/Polyline/SeaLevel/Bounds)
+- &#8216;Polyline&#8217; [default]: Use this for returning elevations for a given pair of coordinates.</li>
+<li>points[Required]:  A set of coordinates on the Earth to use in
+elevation calculations. The exact use of these points depends on the
+type of elevation request. A set of latitude and longitude values in
+WGS84 decimal degrees. If you are requesting elevations or elevation
+offsets for a set of points, the maximum number of points is 1024.
+Points should be at least 2 pairs of latitudes and longitudes for
+Polyline method - It should be a minimum total of 4 points for
+Polyline method. Points should be given as
+<code class="docutils literal"><span class="pre">lat1,long1,lat2,long2,latn,longn</span></code></li>
+<li>heights[Optional]: A string that specifies which sea level model to use to calculate elevation. One of the following values:
+- sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).
+- ellipsoid: Use the ellipsoid Earth model (WGS84).</li>
+<li>samples[Required]: Specifies the number of equally-spaced elevation
+values to provide along a polyline path. A positive integer. The
+maximum number of samples is 1024.</li>
+<li>o[Optional]: A string specifying the output as JSON or xml.</li>
+<li>key[Required]: Bing maps key</li>
+</ul>
+</div></blockquote>
+<p>The general output format for the elvations API services can be found at <a class="reference external" href="https://msdn.microsoft.com/en-us/library/hh441730.aspx">https://msdn.microsoft.com/en-us/library/hh441730.aspx</a></p>
+<p>The below example can help you on how the package helps you to retrieve elevations at equally-spaced locations along a polyline path (Please check <a class="reference internal" href="rest_services.html#bingmaps.apiservices.ElevationsApi" title="bingmaps.apiservices.ElevationsApi"><code class="xref py py-class docutils literal"><span class="pre">bingmaps.apiservices.ElevationsApi</span></code></a> for more methods):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bingmaps.apiservices</span> <span class="kn">import</span> <span class="n">ElevationsApi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;Av6_H8GIYQyP-DLQwLOKDknW64QfmVgJmVpfiSO861v0x_j1pLPCOW6s-70nCzEW&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;Polyline&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">35.89431</span><span class="p">,</span> <span class="o">-</span><span class="mf">110.72522</span><span class="p">,</span> <span class="mf">35.89393</span><span class="p">,</span> <span class="o">-</span><span class="mf">110.72578</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elevations</span> <span class="o">=</span> <span class="n">ElevationsApi</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">elevations</span><span class="p">)</span>
+<span class="go">[elevations_data(elevations=[1776, 1775, 1775, 1775, 1775, 1775, 1775, 1775, 1775, 1775])]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">elevation</span> <span class="ow">in</span> <span class="n">elevations</span><span class="o">.</span><span class="n">elevations</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">elevation</span><span class="o">.</span><span class="n">elevations</span><span class="p">)</span>
+<span class="go">[1776, 1775, 1775, 1775, 1775, 1775, 1775, 1775, 1775, 1775]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">zoomlevel</span><span class="p">)</span>
+<span class="go">[zoomlevel(zoomLevel=14)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-offset-at-a-set-of-latitude-and-longitude-coordinates">
+<h3>Get offset at a set of latitude and longitude coordinates<a class="headerlink" href="#get-offset-at-a-set-of-latitude-and-longitude-coordinates" title="Permalink to this headline">¶</a></h3>
+<p>Data Fields which you can give for getting offset at a set of latitude and longitude coordinates:</p>
+<blockquote>
+<div><ul class="simple">
+<li>method[Required]: A method for calculating elevations (ex. List/Polyline/SeaLevel/Bounds)
+- &#8216;SeaLevel&#8217; [default]: Use this for returning elevations for a given pair of coordinates.</li>
+<li>points[Required]:  A set of coordinates on the Earth to use in
+elevation calculations. The exact use of these points depends on the
+type of elevation request. A set of latitude and longitude values in
+WGS84 decimal degrees. If you are requesting elevations or elevation
+offsets for a set of points, the maximum number of points is 1024.
+Points should be given as <code class="docutils literal"><span class="pre">lat1,long1,lat2,long2,latn,longn</span></code></li>
+<li>o[Optional]: A string specifying the output as JSON or xml.</li>
+<li>key[Required: Bing maps key</li>
+</ul>
+</div></blockquote>
+<p>The general output format for the elvations API services can be found at <a class="reference external" href="https://msdn.microsoft.com/en-us/library/hh441730.aspx">https://msdn.microsoft.com/en-us/library/hh441730.aspx</a></p>
+<p>The below example can help you on how the package helps you to retrieve elevations at a set of latitude and longitude coordinates (Please check <a class="reference internal" href="rest_services.html#bingmaps.apiservices.ElevationsApi" title="bingmaps.apiservices.ElevationsApi"><code class="xref py py-class docutils literal"><span class="pre">bingmaps.apiservices.ElevationsApi</span></code></a> for more methods):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bingmaps.apiservices</span> <span class="kn">import</span> <span class="n">ElevationsApi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;Av6_H8GIYQyP-DLQwLOKDknW64QfmVgJmVpfiSO861v0x_j1pLPCOW6s-70nCzEW&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;SeaLevel&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">15.5467</span><span class="p">,</span> <span class="mf">34.5676</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elevations</span> <span class="o">=</span> <span class="n">ElevationsApi</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">elevations</span><span class="p">)</span>
+<span class="go">[elevations_data(elevations=[0])]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">zoomlevel</span><span class="p">)</span>
+<span class="go">[zoomlevel(zoomLevel=14)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-elevations-within-an-area-on-the-earth-defined-as-a-bounding-box">
+<h3>Get elevations within an area on the Earth defined as a bounding box<a class="headerlink" href="#get-elevations-within-an-area-on-the-earth-defined-as-a-bounding-box" title="Permalink to this headline">¶</a></h3>
+<p>Data Fields which you can give for getting elevations within an area on the Earth defined as a bounding box:</p>
+<blockquote>
+<div><ul class="simple">
+<li>method[Required]: A method for calculating elevations (ex. List/Polyline/SeaLevel/Bounds)
+- &#8216;Bounds&#8217; [default]: Use this for returning elevations for a given pair of coordinates.</li>
+<li>bounds[Required]: Specifies the rectangular area over which to
+provide elevation values. A bounding box defined as a set of WGS84
+latitudes and longitudes in the following order:
+- south latitude, west longitude, north latitude, east longitude
+- REQUIRED field</li>
+<li>rows,cols[Required]: Specifies the number of rows and columns to use
+to divide the bounding box area into a grid. The rows and columns that
+define the bounding box each count as two (2) of the rows and columns.
+Elevation values are returned for all vertices of the grid. Integers
+with a value of two (2) or greater. The number of rows and columns
+can define a maximum of 1024 locations (rows * cols &lt;= 1024).</li>
+<li>heights[Optional]: A string that specifies which sea level model to
+use to calculate elevation. One of the following values:
+- sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).
+- ellipsoid: Use the ellipsoid Earth model (WGS84).</li>
+<li>o[Optional]: A string specifying the output as JSON or xml.</li>
+<li>key[Required]: Bing maps key</li>
+</ul>
+</div></blockquote>
+<p>The general output format for the elvations API services can be found at <a class="reference external" href="https://msdn.microsoft.com/en-us/library/hh441730.aspx">https://msdn.microsoft.com/en-us/library/hh441730.aspx</a></p>
+<p>The below example can help you on how the package helps you to retrieve elevations within an area on the Earth defined as a bounding box (Please check <a class="reference internal" href="rest_services.html#bingmaps.apiservices.ElevationsApi" title="bingmaps.apiservices.ElevationsApi"><code class="xref py py-class docutils literal"><span class="pre">bingmaps.apiservices.ElevationsApi</span></code></a> for more methods):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bingmaps.apiservices</span> <span class="kn">import</span> <span class="n">ElevationsApi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;Av6_H8GIYQyP-DLQwLOKDknW64QfmVgJmVpfiSO861v0x_j1pLPCOW6s-70nCzEW&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;Bounds&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;bounds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">15.5463</span><span class="p">,</span> <span class="mf">34.6577</span><span class="p">,</span> <span class="mf">16.4365</span><span class="p">,</span> <span class="mf">35.3245</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;rows&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;cols&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elevations</span> <span class="o">=</span> <span class="n">ElevationsApi</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">elevations</span><span class="p">)</span>
+<span class="go">[elevations_data(elevations=[482, 467, 464, 457, 452, 432, 419, 418, 422, 419, 394, 394, 399, 403, 409, 386, 387, 397, 396, 401])]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">elevations</span><span class="o">.</span><span class="n">zoomlevel</span><span class="p">)</span>
+<span class="go">[zoomlevel(zoomLevel=9)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="traffic-incidents-api">
+<h2>Traffic Incidents API<a class="headerlink" href="#traffic-incidents-api" title="Permalink to this headline">¶</a></h2>
+<p>Data Fields which you can give for Traffic Incidents API service:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>mapArea[Required]: A rectangular area specified as a bounding box. The size of the area can be a maximum of 500 km x 500 km. A bounding</dt>
+<dd><p class="first last">box defines an area by specifying SouthLatitude, WestLongitude,
+NorthLatitude, and EastLongitude values.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>includeLocationCodes[Optional]:  One of the following values:</dt>
+<dd><ul class="first simple">
+<li>&#8216;true&#8217;</li>
+<li>&#8216;false&#8217; [default]</li>
+</ul>
+<p class="last">If you want to use the default value, you can omit this parameter from
+the URL request.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>severity[Optional]: One or more of the following integer values:</dt>
+<dd><ul class="first simple">
+<li>1: LowImpact</li>
+<li>2: Minor</li>
+<li>3: Moderate</li>
+<li>4: Serious</li>
+</ul>
+<p class="last">The default is to return traffic incidents for all severity levels.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>type[Optional]: One or more of the following integer values:</dt>
+<dd><ul class="first last simple">
+<li>1: Accident</li>
+<li>2: Congestion</li>
+<li>3: DisabledVehicle</li>
+<li>4: MassTransit</li>
+<li>5: Miscellaneous</li>
+<li>6: OtherNews</li>
+<li>7: PlannedEvent</li>
+<li>8: RoadHazard</li>
+<li>9: Construction</li>
+<li>10: Alert</li>
+<li>11: Weather</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">o[Optional]: A string specifying the output as JSON or xml.</p>
+</li>
+<li><p class="first">key[Required]: Bing maps key - REQUIRED field</p>
+</li>
+</ul>
+</div></blockquote>
+<p>The general output format for the Traffic Incidents API services can be found at <a class="reference external" href="https://msdn.microsoft.com/en-us/library/hh441730.aspx">https://msdn.microsoft.com/en-us/library/hh441730.aspx</a></p>
+<p>The below example can help you on how the package helps you to retrieve the data from Traffic Incidents API service (Please check <a class="reference internal" href="rest_services.html#bingmaps.apiservices.TrafficIncidentsApi" title="bingmaps.apiservices.TrafficIncidentsApi"><code class="xref py py-class docutils literal"><span class="pre">bingmaps.apiservices.TrafficIncidentsApi</span></code></a> for more methods):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bingmaps.apiservices</span> <span class="kn">import</span> <span class="n">TrafficIncidentsApi</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;Av6_H8GIYQyP-DLQwLOKDknW64QfmVgJmVpfiSO861v0x_j1pLPCOW6s-70nCzEW&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mapArea&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">37</span><span class="p">,</span> <span class="o">-</span><span class="mi">105</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="o">-</span><span class="mi">94</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;includeLocationCodes&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s1">&#39;severity&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">incidents</span> <span class="o">=</span> <span class="n">TrafficIncidentsApi</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">congestion</span><span class="p">)</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>    
+<span class="go">[description(description=&#39;Between Floyd Blvd/Exit 147A and I-129/US-75/US-20/Exit 144 - Construction work.&#39;), description(description=&#39;At I-29 - Construction work. Lane closed.&#39;), description(description=&#39;Between I-29 and Louise Ave/Exit 1 - Construction work.&#39;), description(description=&#39;Between US-75/Industrial Road/Exit 143 and Floyd Blvd/Exit 147A - Construction work. Lane closed. Contraflow.&#39;), description(description=&#39;At I-29 - Construction work. Lane closed.&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">detour_info</span><span class="p">)</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">incident_id</span><span class="p">)</span>    
+<span class="go">[incident_id(incident_id=499108686961573047), incident_id(incident_id=4181860463540379194), incident_id(incident_id=163095513463170197), incident_id(incident_id=990321114056185509), incident_id(incident_id=1250781520351805422)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">incident_id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">incident_id</span><span class="p">)</span>     
+<span class="go">499108686961573047</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">)</span>    
+<span class="go">[coordinates(latitude=42.48766, longitude=-96.39704), coordinates(latitude=41.220444, longitude=-95.832393), coordinates(latitude=43.49234, longitude=-96.78513), coordinates(latitude=42.44252, longitude=-96.3752), coordinates(latitude=41.21952, longitude=-95.83334)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">incidents</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>    
+<span class="go">42.48766 -96.39704</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">lane_info</span><span class="p">)</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>     
+<span class="go">[start_time(start_time=&#39;/Date(1458053489000)/&#39;), start_time(start_time=&#39;/Date(1458053489000)/&#39;), start_time(start_time=&#39;/Date(1458053489000)/&#39;), start_time(start_time=&#39;/Date(1458053489000)/&#39;), start_time(start_time=&#39;/Date(1458053489000)/&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">end_time</span><span class="p">)</span>   
+<span class="go">[end_time(end_time=&#39;/Date(1458870690000)/&#39;), end_time(end_time=&#39;/Date(1481644800000)/&#39;), end_time(end_time=&#39;/Date(1458939600000)/&#39;), end_time(end_time=&#39;/Date(1481644800000)/&#39;), end_time(end_time=&#39;/Date(1458870690000)/&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">is_verified</span><span class="p">)</span>    
+<span class="go">[verified(verified=True), verified(verified=True), verified(verified=True), verified(verified=True), verified(verified=True)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">last_modified</span><span class="p">)</span>  
+<span class="go">last_modified(last_modified=&#39;/Date(1458866786528)/&#39;), last_modified(last_modified=&#39;/Date(1458866693135)/&#39;), last_modified(last_modified=&#39;/Date(1458866786528)/&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">severity</span><span class="p">)</span>   
+<span class="go">[severity(severity=3), severity(severity=3), severity(severity=3), severity(severity=3), severity(severity=3)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">incidents</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>   
+<span class="go">[type(type=9), type(type=9), type(type=9), type(type=9), type(type=9)]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Most of the outputs above are list of named tuples.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Release 0.3.7" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="urls.html" class="btn btn-neutral" title="API Services URLs" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bharadwaj Yarlagadda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

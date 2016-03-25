@@ -1,0 +1,634 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bingmaps.apiservices.trafficincidents &mdash; Bingmaps 0.3.7 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/theme_override.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Bingmaps 0.3.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Bingmaps
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../devguide.html">Developer Guide</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_services.html">API Services</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../schemas.html">API Services Schemas</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../urls.html">API Services URLs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../locationsapi.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Release 0.3.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Bingmaps</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>bingmaps.apiservices.trafficincidents</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bingmaps.apiservices.trafficincidents</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">bingmaps.urls</span> <span class="kn">import</span> <span class="n">TrafficIncidentsUrl</span><span class="p">,</span> <span class="n">TrafficIncidentsSchema</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">xmltodict</span>
+
+
+<div class="viewcode-block" id="TrafficIncidentsApi"><a class="viewcode-back" href="../../../rest_services.html#bingmaps.apiservices.TrafficIncidentsApi">[docs]</a><span class="k">class</span> <span class="nc">TrafficIncidentsApi</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Traffic Incidents API class</span>
+
+<span class="sd">    This class is used to retrieve the output from the given data from the</span>
+<span class="sd">    user.</span>
+<span class="sd">      - First, the data is used to build a URL which is related to the</span>
+<span class="sd">        Traffic Incidents API.</span>
+<span class="sd">      - Second, this class helps in retrieving the response from the URL built</span>
+<span class="sd">      - Third, based on the response, this class helps in retrieving all the</span>
+<span class="sd">        corresponding output data from the response. Some of the output data</span>
+<span class="sd">        which this class would be retrieving is:</span>
+<span class="sd">          - coordinates</span>
+<span class="sd">          - description</span>
+<span class="sd">          - congestion</span>
+<span class="sd">          - detour info</span>
+<span class="sd">          - road closed info</span>
+<span class="sd">          - incident id</span>
+<span class="sd">          - lane info</span>
+<span class="sd">          - start time of the incident</span>
+<span class="sd">          - end time of the incident</span>
+<span class="sd">          - last modified time of the incident</span>
+<span class="sd">          - severity of the incident</span>
+<span class="sd">          - type of the incident</span>
+<span class="sd">          - verification status</span>
+
+<span class="sd">    The output from the URL can be either JSON/XML based on the output</span>
+<span class="sd">    parameter mentioned in the data. Even the output response is &#39;xml&#39;, this</span>
+<span class="sd">    class helps in converting the xml response to JSON data first and then</span>
+<span class="sd">    retrieve all the necessary output from it.</span>
+
+<span class="sd">    :ivar data: The data that the user will send in to the TrafficIncidentsApi</span>
+<span class="sd">        to retrieve all the respective output from the response</span>
+<span class="sd">    :ivar url: The url that gets built based on the user&#39;s given data</span>
+<span class="sd">    :ivar http_protocol: Http protocol for the URL. Can be either of the</span>
+<span class="sd">        following:</span>
+<span class="sd">          - http</span>
+<span class="sd">          - https</span>
+<span class="sd">    :ivar schema: The schema that gets used to build the URL and the schema</span>
+<span class="sd">        would be .</span>
+<span class="sd">    :ivar file_name: The filename that the class can write the JSON response</span>
+<span class="sd">        to TrafficIncidentsSchema.</span>
+<span class="sd">          - file_name - &#39;traffic_incidents&#39;</span>
+<span class="sd">    :ivar incidents_data: Response from the URL</span>
+
+<span class="sd">    Some of the examples are illustrated in Examples page</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">http_protocol</span><span class="o">=</span><span class="s1">&#39;http&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_protocol</span> <span class="o">=</span> <span class="n">http_protocol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="n">TrafficIncidentsUrl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>
+                                          <span class="n">TrafficIncidentsSchema</span><span class="p">(),</span>
+                                          <span class="n">http_protocol</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">incidents_data</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TrafficIncidentsApi.build_url"><a class="viewcode-back" href="../../../rest_services.html#bingmaps.apiservices.TrafficIncidentsApi.build_url">[docs]</a>    <span class="k">def</span> <span class="nf">build_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Builds the URL for elevations API services based on the data given</span>
+<span class="sd">        by the user.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            url (str): URL for the elevations API services</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;{protocol}/{url}/{rest}/{version}/{restapi}/{rscpath}/&#39;</span> \
+              <span class="s1">&#39;{query}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">protocol</span><span class="p">,</span>
+                               <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">main_url</span><span class="p">,</span>
+                               <span class="n">rest</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">rest</span><span class="p">,</span>
+                               <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+                               <span class="n">restapi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">restApi</span><span class="p">,</span>
+                               <span class="n">rscpath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">resourcePath</span><span class="p">,</span>
+                               <span class="n">query</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">url</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Response from the built URL&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">incidents_data</span><span class="o">.</span><span class="n">text</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">status_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Status code of the response from the URL&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">incidents_data</span><span class="o">.</span><span class="n">status_code</span>
+
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets data from the given url&quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_url</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">incidents_data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">incidents_data</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">incidents_data</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">resourceSets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_to_dict</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resourceSets</span><span class="p">[</span><span class="s1">&#39;resourceSets&#39;</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">rsc</span> <span class="k">for</span> <span class="n">rsc</span> <span class="ow">in</span> <span class="n">resource</span><span class="p">[</span><span class="s1">&#39;resources&#39;</span><span class="p">]]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">resourcesSets</span> <span class="o">=</span> <span class="n">resourceSets</span><span class="p">[</span><span class="s1">&#39;Response&#39;</span><span class="p">][</span><span class="s1">&#39;ResourceSets&#39;</span><span class="p">]</span>
+                <span class="n">resourceSet</span> <span class="o">=</span> <span class="n">resourcesSets</span><span class="p">[</span><span class="s1">&#39;ResourceSet&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resourceSet</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">resourceSet</span><span class="p">[</span><span class="s1">&#39;Resources&#39;</span><span class="p">]]</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resourceSet</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">rsc</span> <span class="k">for</span> <span class="n">rsc</span> <span class="ow">in</span> <span class="n">resourceSet</span><span class="p">[</span><span class="s1">&#39;Resources&#39;</span><span class="p">]]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TrafficIncidentsApi.response_to_dict"><a class="viewcode-back" href="../../../rest_services.html#bingmaps.apiservices.TrafficIncidentsApi.response_to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">response_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method helps in returning the output JSON data from the URL</span>
+<span class="sd">        and also it helps in converting the XML output/response (string) to a</span>
+<span class="sd">        JSON object</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            data (dict): JSON data from the output/response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incidents_data</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">incidents_data</span><span class="o">.</span><span class="n">text</span><span class="p">)))</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">get_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves coordinates (latitudes/longitudes) from the output</span>
+<span class="sd">        JSON/XML response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            coordinates (namedtuple): List of named tuples of coordinates</span>
+<span class="sd">            (latitudes and longitudes)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">coordinates</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;coordinates&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">coordinates</span><span class="p">(</span><span class="o">*</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;point&#39;</span><span class="p">][</span><span class="s1">&#39;coordinates&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resource_list</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                        <span class="n">resource_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">resource_list</span><span class="p">]</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">coordinates</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;ToPoint&#39;</span><span class="p">][</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span>
+                                        <span class="n">resource</span><span class="p">[</span><span class="s1">&#39;ToPoint&#39;</span><span class="p">][</span><span class="s1">&#39;Longitude&#39;</span><span class="p">])</span>
+                            <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">traffic_incident</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_resource</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;TrafficIncident&#39;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;TrafficIncident&#39;</span><span class="p">]]</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;TrafficIncident&#39;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">resource</span><span class="p">[</span><span class="s1">&#39;TrafficIncident&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">resource_list</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the description of the incident/incidents from the output</span>
+<span class="sd">        response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            description(namedtuple): List of named tuples of descriptions of</span>
+<span class="sd">            the incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">description</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">description</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;Description&#39;</span><span class="p">])</span>
+                            <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">congestion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the congestion information of the incident/incidents from</span>
+<span class="sd">        the output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            congestion(namedtuple): List of named tuples of congestion info of</span>
+<span class="sd">            the incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">congestion</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;congestion&#39;</span><span class="p">,</span> <span class="s1">&#39;congestion&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">congestion</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;congestion&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">congestion</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;CongestionInfo&#39;</span><span class="p">])</span>
+                            <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">detour_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the detour information of the incident/incidents from</span>
+<span class="sd">        the output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            detour_info(namedtuple): List of named tuples of detour info of</span>
+<span class="sd">            the incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">detour_info</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;detour_info&#39;</span><span class="p">,</span> <span class="s1">&#39;detour_info&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">detour_info</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;detour&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">detour_info</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;detourInfo&#39;</span><span class="p">])</span>
+                            <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">start_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the start time of the incident/incidents from the output</span>
+<span class="sd">        response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            start_time(namedtuple): List of named tuples of start time of the</span>
+<span class="sd">            incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="s1">&#39;start_time&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">start_time</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">start_time</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;StartTimeUTC&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">end_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the end time of the incident/incidents from the output</span>
+<span class="sd">        response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            end_time(namedtuple): List of named tuples of end time of the</span>
+<span class="sd">            incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="s1">&#39;end_time&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">end_time</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">end_time</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;EndTimeUTC&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">incident_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the incident id/ids of the incident/incidents from the</span>
+<span class="sd">        output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            incident_id(namedtuple): List of named tuples of incident id/ids of</span>
+<span class="sd">            the incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">incident_id</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;incident_id&#39;</span><span class="p">,</span> <span class="s1">&#39;incident_id&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">incident_id</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;incidentId&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">incident_id</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;IncidentId&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lane_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the lane info of the incident/incidents from the</span>
+<span class="sd">        output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            lane_info(namedtuple): List of named tuples of lane info of the</span>
+<span class="sd">            incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">lane_info</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;lane_info&#39;</span><span class="p">,</span> <span class="s1">&#39;lane_info&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">lane_info</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;lane&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">lane_info</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;LaneInfo&#39;</span><span class="p">])</span>
+                            <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_modified</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the last modified time stamp of the incident/incidents</span>
+<span class="sd">        from the output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            last_modified(namedtuple): List of named tuples of last modified</span>
+<span class="sd">            time stamp of the incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">last_modified</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;last_modified&#39;</span><span class="p">,</span> <span class="s1">&#39;last_modified&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">last_modified</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;lastModified&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">last_modified</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;LastModifiedUTC&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">road_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the road closed information for the incident/incidents</span>
+<span class="sd">        from the output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            road_closed(namedtuple): List of named tuples of road closed</span>
+<span class="sd">            information for the incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">road_closed</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;road_closed&#39;</span><span class="p">,</span> <span class="s1">&#39;road_closed&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">road_closed</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;roadClosed&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">road_closed</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;RoadClosed&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">severity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the severity for the incident/incidents from the</span>
+<span class="sd">        output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            severity(namedtuple): List of named tuples of severity for the</span>
+<span class="sd">            incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">severity</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;severity&#39;</span><span class="p">,</span> <span class="s1">&#39;severity&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">severity</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;severity&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">severity</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;Severity&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the type of the incident/incidents from the output</span>
+<span class="sd">        response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            type(namedtuple): List of named tuples of type of the</span>
+<span class="sd">            incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;Type&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_verified</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the verification status of the incident/incidents from the</span>
+<span class="sd">        output response</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            verified(namedtuple): List of named tuples of verification status</span>
+<span class="sd">            of the incident/incidents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traffic_incident</span><span class="p">()</span>
+        <span class="n">verified</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;verified&#39;</span><span class="p">,</span> <span class="s1">&#39;verified&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">resource_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">verified</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;verified&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">verified</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="s1">&#39;Verified&#39;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resource_list</span><span class="p">]</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Bharadwaj Yarlagadda.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.3.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
