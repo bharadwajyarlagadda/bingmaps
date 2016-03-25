@@ -158,36 +158,41 @@ class Location(Schema):
 
 
 class LocationByAddressSchema(Location, Schema):
-    """Schema for query parameters in which all the fields will be in a ordered
+    """Inherits from :class:`Location`
+
+    Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
-    Data Fields for the schema:
+    Data Fields for the schema (taken from
+    https://msdn.microsoft.com/en-us/library/ff701714.aspx):
 
-    :ivar adminDistrict: A string that contains a subdivision, such as the
-        abbreviation of a US state
-    :ivar locality: A string that contains the locality, such as a US city
-    :ivar postalCode: An integer value that contains the postal code, such as a
-          US ZIP Code
-    :ivar addressLine: A string specifying the street line of an address
-    :ivar countryRegion: A string specifying the ISO country code
-    :ivar c: A string specifying the culture parameter
-    :ivar o: A string for specifying the format of output(response) Ex. -
-        xml/json
+    :ivar adminDistrict[Optional]: A string that contains a subdivision, such
+        as the abbreviation of a US state
+    :ivar locality[Optional]: A string that contains the locality, such as a
+        US city
+    :ivar postalCode[Optional]: An integer value that contains the postal
+        code, such as a US ZIP Code
+    :ivar addressLine[Optional]: A string specifying the street line of an
+        address
+    :ivar countryRegion[Optional]: A string specifying the ISO country code
+    :ivar c[Optional]: A string specifying the culture parameter
+    :ivar o[Optional]: A string for specifying the format of output(response)
+        Ex. - xml/json
           - If empty, default output would be a JSON data string
           - If given xml, the output would be an xml data string
-    :ivar includeNeighborhood: One of the following
+    :ivar includeNeighborhood[Optional]: One of the following
         values
           - 1: Include neighborhood information when available
           - 0 [default]: Do not include neighborhood information
-    :ivar include: The only value for this parameter is ciso2. When you
-        specify include=ciso2, the two-letter ISO country code is included
+    :ivar include[Optional]: The only value for this parameter is ciso2. When
+        you specify include=ciso2, the two-letter ISO country code is included
         for addresses in the response
           - default='ciso2'
-    :ivar maxResults: An integer between 1 and 20 (number of
+    :ivar maxResults[Optional]: An integer between 1 and 20 (number of
         results)
           - default=20
-    :ivar key: Bing maps api key
+    :ivar key[Required]: Bing maps api key
           - Required
 
     This schema helps in serializing the data.
@@ -328,15 +333,19 @@ includeNeighborhood=1&include=ciso2&maxResults=20&key=abs'
 
 
 class LocationByPointSchema(Location, Schema):
-    """Schema for query parameters in which all the fields will be in a ordered
+    """Inherits from :class:`Location`
+
+    Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
-    Data Fields for the schema:
+    Data Fields for the schema (taken from
+    https://msdn.microsoft.com/en-us/library/ff701710.aspx):
 
-    :ivar point: A point on the Earth specified by a latitude and longitude.
-    :ivar includeEntityTypes: A comma separated list of entity types selected
-        from the following options:
+    :ivar point[Required]: A point on the Earth specified by a latitude and
+        longitude.
+    :ivar includeEntityTypes[Optional]: A comma separated list of entity types
+        selected from the following options:
           - Address
           - Neighborhood
           - PopulatedPlace
@@ -355,22 +364,22 @@ class LocationByPointSchema(Location, Schema):
         entity types is returned. Also, more than one Neighborhood may be
         returned because the area covered by two different neighborhoods can
         overlap.
-    :ivar includeNeighborhood: One of the following
+    :ivar includeNeighborhood[Optional]: One of the following
         values:
           - 1: Include neighborhood information when available.
           - 0 [default]: Do not include neighborhood information.
-    :ivar include: The only value for this parameter is ciso2. When you
-        specify include=ciso2, the two-letter ISO country code is included
+    :ivar include[Optional]: The only value for this parameter is ciso2. When
+        you specify include=ciso2, the two-letter ISO country code is included
         for addresses in the response.
-    :ivar c: A string specifying the culture parameter
-    :ivar o: A string for specifying the format of output(response) Ex. -
-        xml/json
+    :ivar c[Optional]: A string specifying the culture parameter
+    :ivar o[Optional]: A string for specifying the format of output(response)
+        Ex. - xml/json
           - If empty, default output would be a JSON data string
           - If given xml, the output would be an xml data string
-    :ivar maxResults: An integer between 1 and 20 (number of
+    :ivar maxResults[Optional]: An integer between 1 and 20 (number of
         results)
           - default=20
-    :ivar key: Bing maps api
+    :ivar key[Required]: Bing maps api
         key
           - Required
 
@@ -402,7 +411,10 @@ includeNeighborhood=1&include=ciso2&c=te&o=xml&maxResults=20&key=abs')])
         although we haven't specified any values because they are default
         values specified in the schema.
     """
-    point = fields.Str()
+    point = fields.Str(
+        required=True,
+        error_messages={'required': 'coordinates should be provided'}
+    )
     includeEntityTypes = fields.Str()
     includeNeighborhood = fields.Int(
         default=0
@@ -503,19 +515,22 @@ includeNeighborhood=1&include=ciso2&c=te&o=xml&maxResults=20&key=abs'
 
 
 class LocationByQuerySchema(Location, Schema):
-    """Schema for query parameters in which all the fields will be in a ordered
+    """Inherits from :class:`Location`
+
+    Schema for query parameters in which all the fields will be in a ordered
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
-    Data Fields for the schema:
+    Data Fields for the schema (taken from
+    https://msdn.microsoft.com/en-us/library/ff701711.aspx):
 
-    :ivar q: A string (query) that contains information about a location, such
-        as an address or landmark name.
-    :ivar includeNeighborhood: One of the following
+    :ivar q[Required]: A string (query) that contains information about a
+        location, such as an address or landmark name.
+    :ivar includeNeighborhood[Optional]: One of the following
         values:
           - 1: Include neighborhood information when available.
           - 0 [default]: Do not include neighborhood information.
-    :ivar include: One or more of the following
+    :ivar include[Optional]: One or more of the following
         options:
           - queryParse: Specifies that the response shows how the query string
             was parsed into address values, such as addressLine, locality,
@@ -523,15 +538,15 @@ class LocationByQuerySchema(Location, Schema):
           - ciso2: Specifies to include the two-letter ISO country code.
         If you specify more than one include value, separate the values with a
         comma.
-    :ivar c: A string specifying the culture parameter
-    :ivar o: A string for specifying the format of output(response) Ex. -
-        xml/json
+    :ivar c[Optional]: A string specifying the culture parameter
+    :ivar o[Optional]: A string for specifying the format of output(response)
+        Ex. - xml/json
           - If empty, default output would be a JSON data string
           - If given xml, the output would be an xml data string
-    :ivar maxResults: An integer between 1 and 20 (number of
+    :ivar maxResults[Optional]: An integer between 1 and 20 (number of
         results)
           - default=20
-    :ivar key: Bing maps api
+    :ivar key[Required]: Bing maps api
         key
           - Required
 

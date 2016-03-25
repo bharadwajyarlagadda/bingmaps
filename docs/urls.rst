@@ -1,5 +1,5 @@
-REST Services URLs
-******************
+API Services URLs
+*****************
 
 Most of the URLs used as part of the API services will be unstructured URLs
 

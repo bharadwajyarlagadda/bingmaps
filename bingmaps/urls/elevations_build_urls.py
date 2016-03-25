@@ -209,25 +209,26 @@ class Coordinates(Elevations, Schema):
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
-    Data Fields for the schema:
+    Data Fields for the schema (taken from
+    https://msdn.microsoft.com/en-us/library/jj158961.aspx):
 
-    :ivar method: A method for calculating elevations
+    :ivar method[Required]: A method for calculating elevations
         (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field
           - 'List' [default]: Use this for returning elevations for a given
             pair of coordinates.
-    :ivar points:  A set of coordinates on the Earth to use in elevation
-        calculations. The exact use of these points depends on the type of
-        elevation request. A set of latitude and longitude values in WGS84
-        decimal degrees. If you are requesting elevations or elevation offsets
-        for a set of points, the maximum number of points is 1024.
+    :ivar points[Required]:  A set of coordinates on the Earth to use in
+        elevation calculations. The exact use of these points depends on the
+        type of elevation request. A set of latitude and longitude values in
+        WGS84 decimal degrees. If you are requesting elevations or elevation
+        offsets for a set of points, the maximum number of points is 1024.
         Points should be given as ``lat1,long1,lat2,long2,latn,longn`` -
         REQUIRED field
-    :ivar heights: A string that specifies which sea level model to use to
-        calculate elevation. One of the following values:
+    :ivar heights[Optional]: A string that specifies which sea level model to
+        use to calculate elevation. One of the following values:
           - sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).
           - ellipsoid: Use the ellipsoid Earth model (WGS84).
-    :ivar o: A string specifying the output as JSON or xml.
-    :ivar key: Bing maps key - REQUIRED field
+    :ivar o[Optional]: A string specifying the output as JSON or xml.
+    :ivar key[Required]: Bing maps key - REQUIRED field
 
     This schema helps in serializing the data.
 
@@ -315,30 +316,31 @@ class Polyline(Elevations, Schema):
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
-    Data Fields for the schema:
+    Data Fields for the schema (taken from
+    https://msdn.microsoft.com/en-us/library/jj158961.aspx):
 
-    :ivar method: A method for calculating elevations
+    :ivar method[Required]: A method for calculating elevations
         (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field
           - 'Polyline' [default]: Use this for returning elevations for a
             given pair of coordinates.
-    :ivar points:  A set of coordinates on the Earth to use in elevation
-        calculations. The exact use of these points depends on the type of
-        elevation request. A set of latitude and longitude values in WGS84
-        decimal degrees. If you are requesting elevations or elevation offsets
-        for a set of points, the maximum number of points is 1024. Points
-        should be at least 2 pairs of latitudes and longitudes for Polyline
-        method - It should be a minimum total of 4 points for Polyline method.
-        Points should be given as ``lat1,long1,lat2,long2,latn,longn`` -
-        REQUIRED field
-    :ivar heights: A string that specifies which sea level model to use to
-        calculate elevation. One of the following values:
+    :ivar points[Required]:  A set of coordinates on the Earth to use in
+        elevation calculations. The exact use of these points depends on the
+        type of elevation request. A set of latitude and longitude values in
+        WGS84 decimal degrees. If you are requesting elevations or elevation
+        offsets for a set of points, the maximum number of points is 1024.
+        Points should be at least 2 pairs of latitudes and longitudes for
+        Polyline method - It should be a minimum total of 4 points for
+        Polyline method. Points should be given as
+        ``lat1,long1,lat2,long2,latn,longn``
+    :ivar heights[Optional]: A string that specifies which sea level model to
+        use to calculate elevation. One of the following values:
           - sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).
           - ellipsoid: Use the ellipsoid Earth model (WGS84).
-    :ivar samples: Specifies the number of equally-spaced elevation values to
-        provide along a polyline path. A positive integer. The maximum number
-        of samples is 1024.
-    :ivar o: A string specifying the output as JSON or xml.
-    :ivar key: Bing maps key - REQUIRED field
+    :ivar samples[Required]: Specifies the number of equally-spaced elevation
+        values to provide along a polyline path. A positive integer. The
+        maximum number of samples is 1024.
+    :ivar o[Optional]: A string specifying the output as JSON or xml.
+    :ivar key[Required]: Bing maps key - REQUIRED field
 
     This schema helps in serializing the data.
 
@@ -432,21 +434,22 @@ class Offset(Elevations, Schema):
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
-    Data Fields for the schema:
+    Data Fields for the schema (taken from
+    https://msdn.microsoft.com/en-us/library/jj158961.aspx:
 
-    :ivar method: A method for calculating elevations
+    :ivar method[Required]: A method for calculating elevations
         (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field
           - 'SeaLevel' [default]: Use this for returning elevations for a given
             pair of coordinates.
-    :ivar points:  A set of coordinates on the Earth to use in elevation
-        calculations. The exact use of these points depends on the type of
-        elevation request. A set of latitude and longitude values in WGS84
-        decimal degrees. If you are requesting elevations or elevation offsets
-        for a set of points, the maximum number of points is 1024.
+    :ivar points[Required]:  A set of coordinates on the Earth to use in
+        elevation calculations. The exact use of these points depends on the
+        type of elevation request. A set of latitude and longitude values in
+        WGS84 decimal degrees. If you are requesting elevations or elevation
+        offsets for a set of points, the maximum number of points is 1024.
         Points should be given as ``lat1,long1,lat2,long2,latn,longn`` -
         REQUIRED field
-    :ivar o: A string specifying the output as JSON or xml.
-    :ivar key: Bing maps key - REQUIRED field
+    :ivar o[Optional]: A string specifying the output as JSON or xml.
+    :ivar key[Required: Bing maps key - REQUIRED field
 
     This schema helps in serializing the data.
 
@@ -531,29 +534,30 @@ class BoundingBox(Elevations, Schema):
     way. All the fields will be dumped in the same order as mentioned in the
     schema.
 
-    Data Fields for the schema:
+    Data Fields for the schema (taken from
+    https://msdn.microsoft.com/en-us/library/jj158961.aspx:
 
-    :ivar method: A method for calculating elevations
+    :ivar method[Required]: A method for calculating elevations
         (ex. List/Polyline/SeaLevel/Bounds) - REQUIRED field
           - 'Bounds' [default]: Use this for returning elevations for a given
             pair of coordinates.
-    :ivar bounds: Specifies the rectangular area over which to provide
-        elevation values. A bounding box defined as a set of WGS84 latitudes
-        and longitudes in the following order:
+    :ivar bounds[Required]: Specifies the rectangular area over which to
+        provide elevation values. A bounding box defined as a set of WGS84
+        latitudes and longitudes in the following order:
           - south latitude, west longitude, north latitude, east longitude
           - REQUIRED field
-    :ivar rows,cols: Specifies the number of rows and columns to use to
-        divide the bounding box area into a grid. The rows and columns that
+    :ivar rows,cols[Required]: Specifies the number of rows and columns to use
+        to divide the bounding box area into a grid. The rows and columns that
         define the bounding box each count as two (2) of the rows and columns.
         Elevation values are returned for all vertices of the grid. Integers
         with a value of two (2) or greater. The number of rows and columns
         can define a maximum of 1024 locations (rows * cols <= 1024).
-    :ivar heights: A string that specifies which sea level model to use to
-        calculate elevation. One of the following values:
+    :ivar heights[Optional]: A string that specifies which sea level model to
+        use to calculate elevation. One of the following values:
           - sealevel [default]: Use the geoid Earth model (EGM2008 2.5’).
           - ellipsoid: Use the ellipsoid Earth model (WGS84).
-    :ivar o: A string specifying the output as JSON or xml.
-    :ivar key: Bing maps key - REQUIRED field
+    :ivar o[Optional]: A string specifying the output as JSON or xml.
+    :ivar key[Required]: Bing maps key
 
     This schema helps in serializing the data.
 

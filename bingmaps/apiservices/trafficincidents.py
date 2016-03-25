@@ -56,7 +56,6 @@ class TrafficIncidentsApi(object):
         self.schema = TrafficIncidentsUrl(data,
                                           TrafficIncidentsSchema(),
                                           http_protocol)
-        self.file_name = 'traffic_incidents'
         self.incidents_data = None
         self.get_data()
 

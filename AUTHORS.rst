@@ -3,4 +3,4 @@ Authors
 
 Lead
 ====
-Bharadwaj Yarlagadda
+Bharadwaj Yarlagadda, yarlagaddabharadwaj@gmail.com

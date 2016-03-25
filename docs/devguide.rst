@@ -65,9 +65,9 @@ There are several tasks specified in this project. You can get a list of all the
 
 ::
 
-    $ invoke [--list] [-l]
+    $ invoke [--list|-l]
     # OR
-    $ inv [--list] [-l]
+    $ inv [--list|-l]
 
 For a detailed help on a command, run:
 
