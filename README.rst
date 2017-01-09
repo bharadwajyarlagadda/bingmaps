@@ -20,3 +20,5 @@ You can install the package using pip:
 
    pip install bingmaps
 
+
+.. note:: Project restructuring in progress. Updates will be notified.
