@@ -21,4 +21,8 @@ You can install the package using pip:
    pip install bingmaps
 
 
+<<<<<<< b162f0d14bc3b5846eccfdc1518fc3a5a6e17bbe
 .. note:: Project restructuring in progress. Updates will be notified.
+=======
+.. note:: Project restructuring in progress. Updates will be notified.
+>>>>>>> Added a note to show the users that api is being restructured
