@@ -18,11 +18,11 @@ EXPECTED = [
     'includeNeighborhood=0&include=ciso2&maxResults=20&key={0}'.format(
         BING_MAPS_KEY
     ),
-    {'version': 'v1', 'restApi': 'Locations', 'query':
-     'q=1014%20Oatney%20Ridge%20Ln.%2C%20Morrisville%2C%20NC-27560&'
-     'includeNeighborhood=0&include=ciso2&maxResults=20&key={0}'.format(
-        BING_MAPS_KEY
-     )}
+    {'version': 'v1',
+     'restApi': 'Locations',
+     'query': ('q=1014%20Oatney%20Ridge%20Ln.%2C%20Morrisville%2C%20NC-27560&'
+               'includeNeighborhood=0&include=ciso2&maxResults=20&key={0}'
+               .format(BING_MAPS_KEY))}
 ]
 
 

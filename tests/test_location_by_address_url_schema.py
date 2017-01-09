@@ -88,7 +88,7 @@ def test_build_url_https_protocol(data, expected):
 def test_schema_without_key_exception(data):
     with pytest.raises(KeyError) as exc:
         loc_by_address = LocationByAddress(data, https_protocol)
-        schema = loc_by_address.build_url()
+        loc_by_address.build_url()
         assert exc == {'queryParameters': {'key': ['Please provide a key']}}
 
 
@@ -97,5 +97,5 @@ def test_schema_without_key_exception(data):
 ])
 def test_schema_no_data(data):
     with pytest.raises(TypeError) as exc:
-        loc_by_address = LocationByAddress(data)
+        LocationByAddress(data)
         assert exc == "No data given"
