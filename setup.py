@@ -36,7 +36,7 @@ exec(read(os.path.join('bingmaps',
                        '__pkg__.py')), pkg)
 
 requirements = os.path.join('requirements',
-                            'production.txt')
+                            'requirements.txt')
 readme = read('README.rst')
 changelog = read('CHANGELOG.rst')
 install_requires = read(requirements).split()
