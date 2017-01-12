@@ -1,20 +1,23 @@
-.. image:: https://img.shields.io/github/license/mashape/apistatus.svg
-   :target: http://opensource.org/licenses/MIT
-.. image:: https://travis-ci.org/bharadwajyarlagadda/bingmaps.svg?branch=develop
-   :target: https://travis-ci.org/bharadwajyarlagadda/bingmaps
-.. image:: https://coveralls.io/repos/github/bharadwajyarlagadda/bingmaps/badge.svg?branch=develop
-   :target: https://coveralls.io/github/bharadwajyarlagadda/bingmaps?branch=develop
+********
+bingmaps
+********
+
+|version| |travis| |coveralls| |license|
+
+Python implementation of retrieving the data from Bing Maps REST services.
 
 Links
 =====
 
-This package is a python implementation of retrieving the data from bing maps API services
  - Project link: https://github.com/bharadwajyarlagadda/bingmaps
- - Bing Maps API services: https://msdn.microsoft.com/en-us/library/ff701713.aspx
+ - Bing Maps REST services: https://msdn.microsoft.com/en-us/library/ff701713.aspx
  - Project Documentation: http://bharadwajyarlagadda.github.io/bingmaps
  - Pypi: https://pypi.python.org/pypi/bingmaps/
 
-You can install the package using pip:
+Quickstart
+==========
+
+Install using pip:
 
 ::
 
@@ -22,3 +25,15 @@ You can install the package using pip:
 
 
 .. note:: Project restructuring in progress. Updates will be notified.
+
+.. |version| image:: https://img.shields.io/pypi/v/bingmaps.svg?style=flat-square
+    :target: https://pypi.python.org/pypi/bingmaps/
+
+.. |travis| image:: https://img.shields.io/travis/bharadwajyarlagadda/bingmaps/master.svg?style=flat-square
+    :target: https://travis-ci.org/bharadwajyarlagadda/bingmaps
+
+.. |coveralls| image:: https://img.shields.io/coveralls/bharadwajyarlagadda/bingmaps/master.svg?style=flat-square
+    :target: https://coveralls.io/r/bharadwajyarlagadda/bingmaps
+
+.. |license| image:: https://img.shields.io/pypi/l/bingmaps.svg?style=flat-square
+    :target: https://pypi.python.org/pypi/bingmaps/
